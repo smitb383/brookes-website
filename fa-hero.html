@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion's Alchemists</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Bizkea';
+  src: url('./fonts-bizkea/un%20Bizkea.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+body {
+  background: #180C1A;
+  font-family: 'Sora', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  animation: pageFadeIn 0.6s ease both;
+}
+
+/* ═══ NAV ═══ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 16px 80px;
+}
+.nav-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 13px 28px;
+  border-radius: 10px;
+  background: rgba(24,12,26,0.35);
+  backdrop-filter: blur(32px) saturate(1.4);
+  -webkit-backdrop-filter: blur(32px) saturate(1.4);
+  border: 1px solid rgba(200,196,218,0.08);
+  border-top: 1px solid rgba(200,196,218,0.14);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 1px 0 rgba(200,196,218,0.04) inset;
+}
+.nav-back,
+.nav-next {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(208,212,224,0.5);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+  transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+.nav-back:hover,
+.nav-next:hover {
+  color: #C8ECDC;
+  text-shadow: 0 0 10px rgba(200,236,220,0.2), 0 0 24px rgba(200,236,220,0.08);
+}
+.nav-arrow {
+  width: 14px; height: 13px;
+  fill: rgba(208,212,224,0.4);
+  flex-shrink: 0;
+  transition: fill 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+}
+.nav-back:hover .nav-arrow-left {
+  fill: #C8ECDC;
+  transform: translate(-4px, 0) rotate(90deg);
+  filter: drop-shadow(0 0 6px rgba(200,236,220,0.25));
+}
+.nav-next:hover .nav-arrow-right {
+  fill: #C8ECDC;
+  transform: rotate(-90deg) translateY(4px);
+  filter: drop-shadow(0 0 6px rgba(200,236,220,0.25));
+}
+.nav-arrow-left { transform: rotate(90deg); }
+.nav-arrow-right { transform: rotate(-90deg); }
+.nav-links {
+  display: flex; gap: 36px;
+  justify-content: center;
+  flex: 1;
+}
+.nav-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(208,212,224,0.55);
+  text-decoration: none;
+  transition: color 0.5s ease, text-shadow 0.5s ease, letter-spacing 0.5s ease;
+}
+.nav-link:hover {
+  color: #C8ECDC;
+  letter-spacing: 0.22em;
+  text-shadow: 0 0 10px rgba(200,236,220,0.2), 0 0 24px rgba(200,236,220,0.08);
+}
+
+/* ═══ HERO ENTRANCE ANIMATIONS ═══ */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes heroScaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.img-primary {
+  animation: heroScaleIn 1.4s ease-out 0.2s both;
+}
+.img-secondary {
+  animation: heroScaleIn 1.4s ease-out 0.5s both;
+}
+.hero-title {
+  animation: heroFadeUp 1.2s ease-out 0.6s both;
+}
+.hero-info > div:first-child {
+  animation: heroFadeUp 1s ease-out 1.0s both;
+}
+.hero-info > div:last-child {
+  animation: heroFadeUp 1s ease-out 1.2s both;
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows:
+    90px
+    auto
+    100px
+    auto
+    auto
+    1fr
+  ;
+  column-gap: 0;
+  row-gap: 0;
+  padding: 0 80px 40px;
+  min-height: 100vh;
+}
+
+/* Images */
+.img-primary,
+.img-secondary {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.img-primary {
+  grid-column: 1 / 8;
+  scale: 1.07;
+  transform-origin: top left;
+  grid-row: 2 / 3;
+  aspect-ratio: 16 / 9;
+  max-height: calc(66vh - 90px);
+  align-self: start;
+  z-index: 1;
+}
+.img-secondary {
+  grid-column: 7 / 13;
+  scale: 0.93;
+  transform-origin: top right;
+  grid-row: 2 / 4;
+  aspect-ratio: 4 / 3;
+  max-height: calc(66vh - 90px);
+  margin-top: 90px;
+  z-index: 2;
+  align-self: start;
+  justify-self: start;
+  clip-path: inset(0 0 10% 0);
+}
+.img-primary img,
+.img-secondary img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.img-primary img {
+  object-position: center 35%;
+  filter: saturate(0.65) brightness(0.7);
+}
+.img-secondary img {
+  object-position: center 35%;
+  filter: saturate(0.65) brightness(0.65);
+}
+
+/* Gradient vignette */
+.img-primary::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, transparent 25%, rgba(24,12,26,0.7) 85%, rgba(24,12,26,1) 96%),
+    linear-gradient(90deg, rgba(24,12,26,0.4) 0%, transparent 25%, transparent 75%, rgba(24,12,26,0.3) 100%);
+  pointer-events: none;
+}
+.img-secondary::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, transparent 20%, rgba(24,12,26,0.7) 78%, rgba(24,12,26,1) 88%),
+    linear-gradient(90deg, rgba(24,12,26,0.4) 0%, transparent 25%, transparent 75%, rgba(24,12,26,0.3) 100%);
+  pointer-events: none;
+}
+.img-primary::after,
+.img-secondary::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(24,12,26,0.35) 100%);
+  pointer-events: none;
+}
+
+/* Title */
+.hero-title {
+  grid-column: 1 / 11;
+  grid-row: 2 / 3;
+  align-self: end;
+  z-index: 3;
+  margin-left: -24px;
+  transform: translateY(35%);
+  font-family: 'Bizkea', sans-serif;
+  font-size: 108px;
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: 0.01em;
+  color: rgba(200,196,218,0.56);
+  text-shadow:
+    0 2px 16px rgba(0,0,0,0.5),
+    0 0 50px rgba(24,12,26,0.6),
+    0 4px 24px rgba(0,0,0,0.3);
+}
+
+/* Ornate glyphs: ss01 on specific letters */
+.gl { font-feature-settings: "ss01" 1; }
+/* Discretionary ligature pair */
+.dlig { font-feature-settings: "dlig" 1; }
+/* Combined ornate + ligature */
+.gl-dlig { font-feature-settings: "ss01" 1, "dlig" 1; }
+/* O with star/diamond interior */
+.o-star { font-feature-settings: "ss03" 1; }
+
+/* Info grid — pinned to bottom of viewport */
+.hero-info {
+  grid-column: 1 / -1;
+  grid-row: 6 / 7;
+  align-self: end;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 4vw, 64px);
+  align-items: start;
+}
+.hero-role-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(7px, 0.7vw, 9px); font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(138,136,152,0.4);
+  margin-bottom: clamp(8px, 1vh, 14px);
+}
+.hero-role-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(14px, 1.2vw, 17px); font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: rgba(208,212,224,0.48);
+}
+.hero-desc {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(13px, 1.1vw, 16px); font-weight: 300;
+  line-height: 1.7;
+  color: rgba(208,212,224,0.43);
+  margin-top: clamp(16px, 2vh, 28px);
+  margin-bottom: clamp(24px, 3vh, 48px);
+}
+.hero-desc strong {
+  font-weight: 400;
+  color: rgba(208,212,224,0.6);
+}
+.hero-meta-row {
+  display: flex; gap: clamp(32px, 5vw, 80px);
+  padding-top: 16px;
+  border-top: 1px solid rgba(138,136,152,0.06);
+}
+.hero-meta { display: flex; flex-direction: column; gap: 6px; }
+.hero-meta-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(138,136,152,0.28);
+}
+.hero-meta-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(10px, 0.9vw, 12px); font-weight: 300; font-style: italic;
+  color: rgba(195,190,210,0.4);
+}
+
+/* ═══ DECK EMBED ═══ */
+.deck-section {
+  background: #180C1A;
+  padding: 100px 100px 120px;
+}
+.deck-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(138,136,152,0.08);
+}
+.deck-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(138,136,152,0.4);
+}
+.deck-hint {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 400; font-style: italic;
+  color: rgba(138,136,152,0.25);
+}
+.deck-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(138,136,152,0.1);
+  box-shadow: 0 12px 48px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.15);
+}
+.deck-frame iframe {
+  width: 100%;
+  height: calc(100% + 48px);
+  border: none;
+}
+
+/* ═══ ROLE SECTION ═══ */
+.role-section-wrap {
+  background: #F6F4FF;
+  position: relative;
+}
+.role-scroll {
+  height: 900vh;
+  position: relative;
+}
+.role-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+.role-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 120px 60px 60px;
+  position: relative;
+  height: 100%;
+}
+.role-title {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 96px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: rgba(92,92,112,0.45);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 52px;
+}
+.role-rule {
+  border: none;
+  border-top: 1px solid rgba(58,52,84,0.08);
+  margin-bottom: 52px;
+}
+
+/* Summary cards */
+.role-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  position: relative;
+  z-index: 2;
+}
+.role-card {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 48px;
+  align-items: start;
+}
+.role-card.is-dimmed {
+  opacity: 0.12;
+}
+.role-card.is-active {
+  opacity: 1;
+}
+.role-card-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(58,52,84,0.4);
+  padding-top: 6px;
+}
+.role-card-right {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Role floating images */
+.role-gallery {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.role-gallery-img {
+  position: absolute;
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0;
+  will-change: transform, opacity;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 4px 16px rgba(0,0,0,0.08);
+  pointer-events: auto;
+}
+.role-gallery-img img {
+  width: 100%; height: auto;
+  display: block;
+  border-radius: 6px;
+}
+.role-card-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 20px; font-weight: 300;
+  line-height: 1.55;
+  color: rgba(58,52,84,0.7);
+}
+.role-card-text strong {
+  font-weight: 500;
+  color: rgba(58,52,84,0.8);
+}
+
+/* Expandable "More" toggle under each role card */
+.role-expand {
+  margin-top: 24px;
+}
+.role-expand-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: rgba(60,66,95,0.4);
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.03);
+  border: 1.5px solid rgba(0,0,0,0.06);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 -0.5px 0.5px rgba(0,0,0,0.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.04);
+  transition: color 0.3s ease, box-shadow 0.3s ease;
+}
+.role-expand-toggle:hover {
+  color: rgba(60,66,95,0.6);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), inset 0 -1px 1px rgba(0,0,0,0.05), 0 2px 6px rgba(0,0,0,0.06);
+}
+.role-expand-arrow {
+  width: 10px; height: 9px;
+  fill: rgba(60,66,95,0.3);
+  transition: transform 0.35s ease, fill 0.3s ease;
+  transform: rotate(0deg);
+}
+.role-expand-toggle:hover .role-expand-arrow {
+  fill: rgba(60,66,95,0.5);
+}
+.role-expand.is-open .role-expand-arrow {
+  transform: rotate(180deg);
+}
+.role-expand-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease, opacity 0.35s ease;
+  opacity: 0;
+}
+.role-expand.is-open .role-expand-content {
+  opacity: 1;
+}
+.role-expand-inner {
+  padding-top: 28px;
+  background: rgba(246,244,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 8px;
+  padding: 28px 24px 24px;
+  position: relative;
+  z-index: 3;
+}
+.role-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.role-bullets li {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px; font-weight: 300;
+  line-height: 1.65;
+  color: rgba(58,52,84,0.55);
+  padding-left: 18px;
+  position: relative;
+}
+.role-bullets li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: rgba(58,52,84,0.3);
+}
+.role-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.role-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 100px;
+  background: rgba(0,0,0,0.03);
+  border: 1.5px solid rgba(0,0,0,0.06);
+  color: rgba(60,66,95,0.4);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.04);
+}
+.role-divider {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(58,52,84,0.1) 0%, transparent 70%);
+  margin: 20px 0;
+}
+
+/* ═══ ABOUT ═══ */
+.about-zone {
+  background: #F6F4FF;
+  position: relative;
+}
+
+/* Scroll wrapper — tall enough for all phases */
+.about-scroll {
+  height: 700vh;
+  position: relative;
+}
+
+/* Sticky inner — stays in view while scrolling through panels */
+.about-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.about {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
+  width: 100%;
+}
+
+.about-heading {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 96px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: rgba(92,92,112,0.45);
+  margin-bottom: 52px;
+}
+
+.about-rule {
+  border: none;
+  border-top: 1px solid rgba(58,52,84,0.08);
+  margin-bottom: 52px;
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1.8fr 1px 1fr;
+  gap: 0 60px;
+  align-items: start;
+}
+
+/* Left — scrolling text panels */
+.about-text-wrap {
+  position: relative;
+  min-height: 160px;
+  padding-right: 20px;
+}
+
+.about-text-panel {
+  position: absolute;
+  top: 0; left: 0; right: 20px;
+  opacity: 0;
+  filter: blur(2px);
+}
+
+.about-text-panel.is-active {
+  position: relative;
+}
+
+.about-text-panel p {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.8;
+  letter-spacing: 0.005em;
+  color: rgba(58,52,84,0.7);
+}
+
+.about-text-panel p strong {
+  color: rgba(58,52,84,0.8);
+  font-weight: 400;
+}
+
+/* Vertical divider */
+.about-divider {
+  width: 1px;
+  background: rgba(58,52,84,0.12);
+  align-self: stretch;
+}
+
+/* Right — structured data */
+.about-data {
+  padding-left: 20px;
+}
+
+.about-data-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(58,52,84,0.07);
+  align-items: baseline;
+}
+
+.about-data-row:first-child {
+  padding-top: 0;
+}
+
+.about-data-row:last-child {
+  border-bottom: none;
+}
+
+.about-data-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(138,136,152,0.75);
+  padding-top: 1px;
+}
+
+.about-data-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.015em;
+  color: rgba(58,52,84,0.65);
+  line-height: 1.65;
+}
+
+/* Project tags */
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.about-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 100px;
+  background: rgba(0,0,0,0.03);
+  border: 1.5px solid rgba(0,0,0,0.06);
+  color: rgba(60,66,95,0.4);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 -0.5px 0.5px rgba(0,0,0,0.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.04);
+}
+
+/* Scroll progress dots */
+.about-dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 32px;
+}
+
+.about-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(58,52,84,0.15);
+  transition: background 0.4s ease;
+}
+
+.about-dot.is-active {
+  background: rgba(58,52,84,0.45);
+}
+
+/* ═══ GALLERY OVERLAY ═══ */
+.gallery-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.gallery-img {
+  position: absolute;
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0;
+  will-change: transform, opacity;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25), 0 4px 16px rgba(0,0,0,0.15);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, scale 0.3s ease;
+}
+.gallery-img:hover {
+  z-index: 50 !important;
+  scale: 1.04;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.15);
+}
+/* Subtle rotations for organic feel */
+.g1-2  { rotate: -4deg; }
+.g1-4  { rotate: 2deg; }
+.g1-6  { rotate: -1.5deg; }
+.g1-7  { rotate: 1deg; }
+.g1-8  { rotate: 1.5deg; }
+.g2-3 { rotate: 2deg; }
+.g2-6 { rotate: -1.5deg; }
+
+.gallery-img img,
+.gallery-img video {
+  width: 100%; height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+/* Caption defaults (hidden unless styled) */
+.gallery-img figcaption {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  display: none; /* hidden by default — only shown on styled variants */
+}
+
+/* CAPTION STYLE A — frosted glass bar inside image bottom */
+.cap-glass figcaption {
+  display: block;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 10px 14px;
+  background: rgba(24,12,26,0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: rgba(208,212,224,0.65);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  border-radius: 0 0 6px 6px;
+}
+
+/* CAPTION STYLE B — floating frosted pill on image */
+.cap-pill figcaption {
+  display: inline-block;
+  position: absolute;
+  bottom: 10px; left: 10px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.6);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+/* (Style C removed — only glass + pill used) */
+
+/* Gallery 1 — numbered 1-11 per reference diagram */
+.g1-1  { width: 10.5vw; top: 22%; left: 1%; }              /* #1  threeASFOUR — lower */
+.g1-2  { width: 14.25vw; top: 4%;  left: 8%; }            /* #2  red snake — more right */
+.g1-3  { width: 24.7vw; top: 3%;  left: 28%; }            /* #3  garden — more right */
+.g1-4  { width: 15.2vw; top: 6%;  left: 62%; }            /* #4  water figure — UPPER RIGHT */
+.g1-5  { width: 14.25vw; top: 4%;  right: 2%; }           /* #5  dark garment — more left */
+.g1-6  { width: 15.35vw; top: 32%; left: 56%; }           /* #6  FA poster */
+.g1-7  { width: 10.5vw; top: 30%; right: 1%; }            /* #7  blue leaf — up */
+.g1-8  { width: 16.15vw; top: 64%; right: 2%; }           /* #8  jellyfish */
+.g1-9  { width: 20.9vw; top: 72%; left: 46%; }            /* #9  studio — lower+right */
+.g1-10 { width: 26.6vw; top: 62%; left: 12%; }            /* #10 trailer — more right */
+.g1-11 { width: 9.5vw;  top: 58%; left: 0%;  z-index: 3; } /* #11 girl dress */
+
+/* Gallery 2 — numbered 1-7 per reference diagram */
+.g2-1    { width: 26.6vw; top: 60%; left: 54%; }            /* #1 exhibition hall — more right */
+.g2-2    { width: 14.25vw; top: 8%;  left: 33%; }          /* #2 aerial gardens — more right */
+.g2-3    { width: 27.55vw; top: 6%;  left: 54%; }          /* #3 night banners */
+.g2-4    { width: 15.2vw; top: 34%; right: 2%; }           /* #4 keynote — larger+down */
+.g2-5    { width: 26.6vw; top: 5%;  left: 3%; }            /* #5 exhibition rendering — SWAPPED to top left */
+.g2-6    { width: 20.9vw; top: 64%; left: 14%; }           /* #6 aerial gardens — lower */
+.g2-gala { width: 12.35vw; top: 60%; left: 2%; }           /* #7 gala — lower */
+
+/* Mobile nav overlay — hidden on desktop */
+.mobile-nav-overlay { display: none; }
+
+
+/* ════════════════════════════════════════
+   MOBILE — Tablet (≤768px)
+   ════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Nav */
+  .nav { padding: 12px 24px; }
+  .nav-links { gap: 20px; }
+  .nav-link { font-size: 9px; }
+  .nav-next { font-size: 10px; }
+
+  /* Hero — reduce grid padding, title size */
+  .hero { padding: 0 32px 32px; }
+  .hero-title { font-size: 72px; }
+  .img-primary { scale: 1; }
+  .img-secondary { scale: 0.9; margin-top: 60px; }
+
+  /* About */
+  .about { padding: 0 32px; }
+  .about-heading { font-size: 64px; }
+  .about-content { grid-template-columns: 1fr; gap: 28px 0; }
+  .about-divider { display: none; }
+  .about-text-wrap { padding-right: 0; }
+  .about-text-panel { right: 0; }
+  .about-text-panel p { font-size: 17px; }
+  .about-data { padding-left: 0; }
+
+  /* Role */
+  .role-inner { padding: 80px 32px 40px; }
+  .role-title { font-size: 64px; }
+  .role-card { grid-template-columns: 1fr; gap: 16px; }
+  .role-card-text { font-size: 17px; }
+
+  /* Deck */
+  .deck-section { padding: 60px 32px 80px; }
+
+  /* Gallery images — scale down */
+  .gallery-img { border-radius: 4px; }
+}
+
+
+/* ════════════════════════════════════════
+   MOBILE — Phone (≤480px)
+   ════════════════════════════════════════ */
+@media (max-width: 480px) {
+  html { overflow-x: hidden; }
+  /* Nav — hide section links, keep back + next visible */
+  .nav { padding: 10px 16px; }
+  .nav-bar { padding: 10px 16px; }
+  .nav-links { display: none; }
+  .nav-back,
+  .nav-next {
+    color: rgba(208,212,224,0.4);
+    font-size: 10px;
+  }
+  .nav-arrow { fill: rgba(208,212,224,0.3); }
+
+  /* Mobile nav overlay */
+  .mobile-nav-overlay {
+    display: flex;
+    position: fixed; inset: 0; z-index: 199;
+    flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+    background: rgba(24, 12, 26, 0.92);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .mobile-nav-overlay.is-open { opacity: 1; pointer-events: auto; }
+  .mobile-nav-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(208, 212, 224, 0.6); text-decoration: none;
+    padding: 12px 24px; transition: color 0.3s ease;
+  }
+  .mobile-nav-link:active { color: rgba(208, 212, 224, 1); }
+
+  /* Hero — full viewport, editorial composition */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Image covers upper portion — shorter so more width/scene shows */
+  .img-primary {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    width: 100%;
+    height: 48%;
+    scale: 1;
+    aspect-ratio: unset;
+    max-height: none;
+    margin-top: 0;
+    border-radius: 0;
+    z-index: 1;
+  }
+  .img-primary img {
+    object-position: center 35%;
+  }
+  .img-primary::before {
+    background:
+      linear-gradient(180deg, rgba(24,12,26,0.1) 0%, transparent 8%, transparent 60%, rgba(24,12,26,0.25) 75%, rgba(24,12,26,0.7) 90%, rgba(24,12,26,1) 100%) !important;
+  }
+  .img-secondary { display: none; }
+
+  /* Title — overlaps bottom edge of image */
+  .hero-title {
+    font-size: clamp(38px, 12vw, 56px);
+    grid-column: unset;
+    grid-row: unset;
+    align-self: flex-start;
+    margin: 0;
+    padding: 0 24px;
+    transform: translateY(-24px);
+    position: relative;
+    z-index: 3;
+    text-align: left;
+    line-height: 0.86;
+    margin-top: auto;
+    margin-bottom: 0;
+  }
+
+  /* Info block — anchored to bottom with breathing room */
+  .hero-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 24px 28px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    margin-top: 16px;
+    flex-shrink: 0;
+  }
+  .hero-role-label { font-size: 8px; margin-bottom: 6px; }
+  .hero-role-value { font-size: 13px; line-height: 1.5; }
+  .hero-desc { font-size: 13px; line-height: 1.65; margin-top: 12px; margin-bottom: 16px; }
+  .hero-meta-row {
+    flex-direction: row;
+    gap: 32px;
+    padding-top: 14px;
+  }
+  .hero-meta-label { font-size: 8px; }
+  .hero-meta-value { font-size: 10px; }
+
+  /* About — fully static, no scroll-driven animation */
+  .about-scroll { height: auto; }
+  .about-sticky {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+  }
+  .about { padding: 48px 20px 40px; order: 2; }
+  .about-heading { font-size: 48px; margin-bottom: 28px; }
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .about-divider { display: none; }
+  .about-text-wrap { padding-right: 0; min-height: auto; order: 1; }
+  .about-text-panel {
+    position: relative !important;
+    top: auto !important; left: auto !important; right: auto !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+  /* About text: panel 0 stays, panel 1 moved after gallery 2 via JS */
+  .about-text-panel[data-panel="1"] { display: none; }
+  .about-text-panel p { font-size: 15px; line-height: 1.6; }
+  .about-data { padding-left: 0; order: 3; margin-top: 32px; }
+  .about-data-row { grid-template-columns: 1fr; gap: 4px 0; }
+  .about-tags { gap: 5px; }
+  .about-tag { font-size: 9px; padding: 5px 10px; }
+  .about-dots { display: none; }
+
+  /* About section order: text-wrap(panel 0) → data → gallery 2 → panel 1 clone */
+  .about { order: 2; }
+  .about-text-wrap { order: 1; }
+  .about-data { order: 3; }
+  /* Panel 1 clone placed after gallery 2 */
+  .mobile-text-panel-2 {
+    padding: 24px 20px 32px;
+    order: 6;
+  }
+  .mobile-text-panel-2 p {
+    font-family: 'Sora', sans-serif;
+    font-size: 15px; font-weight: 300;
+    line-height: 1.6; letter-spacing: 0.005em;
+    color: rgba(58,52,84,0.7);
+  }
+  .mobile-text-panel-2 p strong {
+    color: rgba(58,52,84,0.8);
+    font-weight: 400;
+  }
+
+  /* Gallery — transform-based infinite carousel (mirrors home page) */
+  .gallery-layer {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    padding: 16px 0;
+    overflow: hidden;
+    z-index: 1;
+    width: 100%;
+    max-width: 100vw;
+  }
+  .gallery-layer[data-gallery="1"] { padding-top: 24px; }
+  .gallery-layer[data-gallery="2"] { padding-top: 24px; }
+  /* Inner track created by JS */
+  .fa-carousel-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 14px;
+    will-change: transform;
+    padding: 0 20px;
+  }
+
+  /* Carousel wrapper (JS-created, holds gallery-layer + arrows) */
+  .mobile-carousel-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 100vw;
+    overflow: visible;
+  }
+  /* Order set by JS via data-carousel attribute */
+  .mobile-carousel-wrap[data-carousel="1"] { order: 1; }
+  .mobile-carousel-wrap[data-carousel="2"] { order: 5; }
+  .mobile-carousel-wrap[data-carousel="role"] { order: 10; }
+
+  .gallery-img {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    min-width: 0;
+    flex-shrink: 0;
+    opacity: 1 !important;
+    transform: none !important;
+    rotate: 0deg !important;
+    border-radius: 6px;
+  }
+  .gallery-img img,
+  .gallery-img video {
+    height: 240px;
+    width: auto;
+    min-width: 200px;
+    max-width: 80vw;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+  }
+
+  /* Captions — full-width bar, not pill */
+  .cap-pill figcaption,
+  .cap-glass figcaption {
+    display: block !important;
+    position: absolute !important;
+    bottom: 0 !important; left: 0 !important; right: 0 !important;
+    padding: 7px 10px !important;
+    border-radius: 0 0 6px 6px !important;
+    background: rgba(24,12,26,0.5) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    color: rgba(208,212,224,0.6) !important;
+    font-size: 7px !important;
+    letter-spacing: 0.08em !important;
+    border: none !important;
+  }
+
+  /* Carousel nav arrows */
+  .fa-carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(24,12,26,0.7) 30%, rgba(24,12,26,0.3) 60%, rgba(24,12,26,0) 80%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    pointer-events: auto;
+    transition: opacity 0.3s ease;
+  }
+  .fa-carousel-nav:active { opacity: 1; }
+  .fa-carousel-nav-left { left: 4px; }
+  .fa-carousel-nav-right { right: 4px; }
+  .fa-carousel-nav svg {
+    width: 14px;
+    height: 13px;
+    fill: rgba(200,196,218,0.5);
+  }
+  /* Light-bg arrows (about zone) */
+  .about-zone .fa-carousel-nav {
+    background: radial-gradient(circle, rgba(246,244,255,0.8) 30%, rgba(246,244,255,0.35) 60%, rgba(246,244,255,0) 80%);
+  }
+  .about-zone .fa-carousel-nav svg {
+    fill: rgba(60,58,72,0.45);
+  }
+
+  /* Deck embed */
+  .deck-section { padding: 40px 20px 60px; }
+  .deck-frame { aspect-ratio: 4 / 3; }
+  .deck-hint { display: none; }
+
+  /* Role — static, all cards visible */
+  .role-scroll { height: auto; }
+  .role-sticky {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+  .role-inner { padding: 60px 20px 40px; display: flex; flex-direction: column; }
+  .role-title { font-size: 48px; margin-bottom: 20px; }
+  .role-rule { margin-bottom: 20px; }
+  .role-gallery { order: 10; }
+  .role-summary { gap: 24px; }
+  .role-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    opacity: 1 !important;
+    position: relative !important;
+    pointer-events: auto;
+  }
+  .role-card-label { font-size: 11px; }
+  .role-card-text { font-size: 15px; line-height: 1.5; }
+  .role-bullets li { font-size: 13px; }
+  .role-tags { gap: 5px; }
+  .role-tag { font-size: 9px; padding: 5px 10px; }
+  .role-expand-inner { padding: 20px 16px 16px; }
+  .role-divider { margin: 12px 0; }
+
+  /* Role gallery — transform-based carousel below cards */
+  .role-gallery {
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    padding: 20px 0;
+    overflow: hidden;
+    margin-top: 16px;
+    height: auto !important;
+    width: 100% !important;
+    max-width: 100vw;
+  }
+  .role-gallery-img {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: auto !important;
+    min-width: 0;
+    flex-shrink: 0;
+    opacity: 1 !important;
+    transform: none !important;
+    rotate: 0deg !important;
+    border-radius: 6px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 3px 8px rgba(0,0,0,0.08) !important;
+  }
+  .role-gallery-img img {
+    height: 160px;
+    width: auto;
+    min-width: 160px;
+    max-width: 70vw;
+    object-fit: cover;
+    border-radius: 6px !important;
+    display: block;
+  }
+
+  /* Coming soon modal */
+  .coming-soon-card { padding: 48px 32px; }
+  .coming-soon-title { font-size: 48px; }
+}
+
+
+/* Grain */
+.grain {
+  position: fixed; inset: 0; z-index: 0;
+  opacity: 0.03; mix-blend-mode: overlay; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="nav">
+  <div class="nav-bar">
+    <a href="./index.html#projects" class="nav-back">
+      <svg class="nav-arrow nav-arrow-left" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+      Projects
+    </a>
+    <div class="nav-links">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#deck" class="nav-link">Exhibition</a>
+      <a href="#role" class="nav-link">Role</a>
+      <a href="#highlights" class="nav-link">Highlights</a>
+      <a href="#credits" class="nav-link">Credits</a>
+    </div>
+    <a href="#" class="nav-next">
+      Next Project
+      <svg class="nav-arrow nav-arrow-right" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- Mobile nav overlay (phone only) -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay">
+  <a href="./index.html#projects" class="mobile-nav-link">&#8592; Projects</a>
+  <a href="#about" class="mobile-nav-link">About</a>
+  <a href="#deck" class="mobile-nav-link">Exhibition</a>
+  <a href="#role" class="mobile-nav-link">Role</a>
+  <a href="#credits" class="mobile-nav-link">Credits</a>
+</div>
+
+<section class="hero">
+  <div class="img-primary">
+    <img src="images/fa/exhibition-hall.jpg" alt="Fashion's Alchemists exhibition hall">
+  </div>
+  <div class="img-secondary">
+    <img src="images/fa/yuhan-hero.jpg" alt="Fashion's Alchemists — Yuhan Wang">
+  </div>
+  <h1 class="hero-title"><span class="gl">F</span>ashi<span class="o-star">O</span>n<span class="gl">'s</span><br><span class="gl">A</span>l<span class="dlig">ch</span>emis<span class="gl">t</span>s</h1>
+  <div class="hero-info">
+    <div>
+      <div class="hero-role-label">Role</div>
+      <div class="hero-role-value">Project Founder, Director of Exhibition Production &amp; Curation</div>
+    </div>
+    <div>
+      <div class="hero-desc">A 150+ object exhibition and events program exploring hopeful futures for fashion — bringing together 50+ global designers at Gardens by the Bay, Singapore.</div>
+      <div class="hero-meta-row">
+        <div class="hero-meta">
+          <span class="hero-meta-label">Location</span>
+          <span class="hero-meta-value">Gardens by the Bay, Singapore</span>
+        </div>
+        <div class="hero-meta">
+          <span class="hero-meta-label">Duration</span>
+          <span class="hero-meta-value">11/2023 — 01/2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<div class="about-zone" id="about">
+  <div class="about-scroll">
+    <div class="about-sticky">
+
+      <!-- Gallery 1 — Carousel 1, numbered 1-11 per reference -->
+      <div class="gallery-layer" data-gallery="1">
+        <figure class="gallery-img g1-1 cap-pill" data-speed="0.5" data-from="bottom">
+          <video src="images/fa/c1-1.mp4" muted loop playsinline autoplay></video>
+          <figcaption>Ft Work: threeASFOUR</figcaption>
+        </figure>
+        <figure class="gallery-img g1-2 cap-glass" data-speed="0.4" data-from="right">
+          <img src="images/fa/c1-2.png" alt="">
+          <figcaption>Ft Work: Jisoo Jang</figcaption>
+        </figure>
+        <figure class="gallery-img g1-3 cap-glass" data-speed="0.7" data-from="left">
+          <img src="images/fa/c1-3.png" alt="">
+          <figcaption>Exhibition Rendering</figcaption>
+        </figure>
+        <figure class="gallery-img g1-4 cap-glass" data-speed="0.6" data-from="right">
+          <img src="images/fa/c1-4.png" alt="">
+          <figcaption>Ft Work: Iga Węglińska</figcaption>
+        </figure>
+        <figure class="gallery-img g1-5 cap-pill" data-speed="0.8" data-from="bottom">
+          <video src="images/fa/c1-5.mp4" muted loop playsinline autoplay></video>
+          <figcaption>Ft Work: Bea Brücker</figcaption>
+        </figure>
+        <figure class="gallery-img g1-6 cap-pill" data-speed="0.7" data-from="left">
+          <img src="images/fa/c1-6.png" alt="">
+          <figcaption>Exhibition Marketing Poster</figcaption>
+        </figure>
+        <figure class="gallery-img g1-7 cap-pill" data-speed="0.5" data-from="right">
+          <img src="images/fa/c1-7.png" alt="">
+          <figcaption>Ft Work: Yuima Nakazato</figcaption>
+        </figure>
+        <figure class="gallery-img g1-8 cap-glass" data-speed="0.9" data-from="left">
+          <img src="images/fa/c1-8.png" alt="">
+          <figcaption>Ft Work: Anujin Byambaa</figcaption>
+        </figure>
+        <figure class="gallery-img g1-9 cap-pill" data-speed="0.8" data-from="bottom">
+          <img src="images/fa/c1-9.png" alt="">
+          <figcaption>Ft Designer: Scarlett Yang</figcaption>
+        </figure>
+        <figure class="gallery-img g1-10 cap-glass" data-speed="0.6" data-from="bottom">
+          <video src="images/fa/c1-10.mp4" muted loop playsinline autoplay></video>
+          <figcaption>Exhibition Trailer</figcaption>
+        </figure>
+        <figure class="gallery-img g1-11 cap-pill" data-speed="0.4" data-from="right">
+          <img src="images/fa/c1-11.png" alt="">
+          <figcaption>Ft Designer: Patrick Garvey</figcaption>
+        </figure>
+      </div>
+
+      <!-- Gallery 2 — Carousel 2, numbered 1-7 per reference -->
+      <div class="gallery-layer" data-gallery="2">
+        <figure class="gallery-img g2-1 cap-glass" data-speed="0.5" data-from="bottom">
+          <img src="images/fa/c2-1.png" alt="">
+          <figcaption>Exhibition Rendering</figcaption>
+        </figure>
+        <figure class="gallery-img g2-2 cap-pill" data-speed="0.7" data-from="left">
+          <img src="images/fa/c2-2.png" alt="">
+          <figcaption>Exhibition Exterior, Floral Fantasy</figcaption>
+        </figure>
+        <figure class="gallery-img g2-3 cap-pill" data-speed="0.4" data-from="right">
+          <img src="images/fa/c2-3.png" alt="">
+          <figcaption>Banner Marketing</figcaption>
+        </figure>
+        <figure class="gallery-img g2-4 cap-glass" data-speed="0.8" data-from="right">
+          <img src="images/fa/c2-4.png" alt="">
+          <figcaption>Gala Committee Meeting</figcaption>
+        </figure>
+        <figure class="gallery-img g2-5 cap-glass" data-speed="0.6" data-from="bottom">
+          <img src="images/fa/c2-5.png" alt="">
+          <figcaption>Exhibition Room 2 Interior</figcaption>
+        </figure>
+        <figure class="gallery-img g2-6 cap-pill" data-speed="0.9" data-from="left">
+          <img src="images/fa/c2-6.png" alt="">
+          <figcaption>Gardens by the Bay</figcaption>
+        </figure>
+        <figure class="gallery-img g2-gala cap-glass" data-speed="0.5" data-from="bottom">
+          <img src="images/fa/c2-gala.png" alt="">
+          <figcaption>Gala Committee Meeting</figcaption>
+        </figure>
+      </div>
+
+      <section class="about">
+
+        <div class="about-heading"><span class="gl">A</span>b<span class="o-star">O</span>u<span class="gl">t</span></div>
+
+        <hr class="about-rule">
+
+        <div class="about-content">
+
+          <div class="about-text-wrap">
+            <div class="about-text-panel is-active" data-panel="0">
+              <p>Fashion's Alchemists was a <strong>150+ object exhibition and events program</strong> that I <strong>co-created</strong> exploring hopeful futures for fashion. The exhibition brought together <strong>50+ global designers and brands</strong> working across material innovation, emerging technologies, and sustainable practices.</p>
+            </div>
+            <div class="about-text-panel" data-panel="1">
+              <p>Developed in collaboration with <strong>Gardens by the Bay</strong>, Singapore's most visited cultural destination, and backed by the <strong>Singapore Government</strong>, the project was contracted as a <strong>3-year, annually recurring 5-month exhibition</strong> accompanied by a <strong>gala, summit, and public events series</strong>.</p>
+            </div>
+          </div>
+
+          <div class="about-divider"></div>
+
+          <div class="about-data">
+            <div class="about-data-row">
+              <div class="about-data-label">Venue</div>
+              <div class="about-data-value">Gardens by the Bay<br>Floral Fantasy, Singapore</div>
+            </div>
+            <div class="about-data-row">
+              <div class="about-data-label">Scale</div>
+              <div class="about-data-value">50+ Designers, 150+ Objects<br>20+ Site-Specific Commissions<br>5 Month Exhibition</div>
+            </div>
+            <div class="about-data-row">
+              <div class="about-data-label">Project</div>
+              <div class="about-data-value">
+                <div class="about-tags">
+                  <span class="about-tag">Exhibition</span>
+                  <span class="about-tag">Gala</span>
+                  <span class="about-tag">Events</span>
+                  <span class="about-tag">Creative Direction</span>
+                  <span class="about-tag">Curation</span>
+                  <span class="about-tag">Production</span>
+                  <span class="about-tag">Design & Branding</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRESENTATION EMBED ═══ -->
+<section class="deck-section" id="deck">
+  <div class="deck-header">
+    <span class="deck-label">Exhibition Overview</span>
+    <span class="deck-hint">Click through presentation</span>
+  </div>
+  <div class="deck-frame">
+    <iframe
+      src="https://embed.figma.com/deck/7Y0uvxyJQj6rPbPRXxJVKB/FASHION-S-ALCHEMISTS-EXHIBITION-OVERVIEW?node-id=209-33&embed-host=share"
+      allowfullscreen
+    ></iframe>
+  </div>
+</section>
+
+<!-- ═══ ROLE SECTION ═══ -->
+<div class="role-section-wrap" id="role">
+  <div class="role-scroll">
+    <div class="role-sticky">
+      <div class="role-inner">
+        <h2 class="role-title"><span class="gl">M</span>y <span class="gl">R</span><span class="o-star">o</span>l<span class="gl">e</span></h2>
+        <hr class="role-rule">
+
+        <!-- Floating images -->
+        <div class="role-gallery">
+          <!-- Group 1: Creative Direction — 5 images -->
+          <!-- 1: PULL SLIDE (lab materials presentation) — left, mid-upper -->
+          <div class="role-gallery-img rg1-a" data-role="1" style="width: 28vw; top: 39%; left: -6%; rotate: -3deg;">
+            <img src="images/fa/rg1-1.png" alt="What If Fabrics Were Redesigned In A Lab?">
+          </div>
+          <!-- 2: Artist grid (Okazaki, Qi, Nakazato, etc.) — right, upper -->
+          <div class="role-gallery-img rg1-b" data-role="1" style="width: 32vw; top: 48%; right: -6%; rotate: 2deg;">
+            <img src="images/fa/rg1-2.png" alt="Featured artists grid">
+          </div>
+          <!-- 3: Brand identity + color palette — bottom-left -->
+          <div class="role-gallery-img rg1-c" data-role="1" style="width: 26vw; top: 73%; left: 8%; rotate: -2deg;">
+            <img src="images/fa/rg1-3.png" alt="Fashion's Alchemists brand identity">
+          </div>
+          <!-- 4: Exhibition poster — center -->
+          <div class="role-gallery-img rg1-d" data-role="1" style="width: 14vw; top: 61%; left: 40%; rotate: 0deg;">
+            <img src="images/fa/rg1-4.png" alt="Exhibition poster">
+          </div>
+          <!-- 5: Five chapters circles — bottom-right -->
+          <div class="role-gallery-img rg1-e" data-role="1" style="width: 38vw; top: -5%; right: -6%; rotate: 8deg; box-shadow: none; border-radius: 0;">
+            <img src="images/fa/rg1-5.png" alt="Five exhibition chapters" style="border-radius: 0;">
+          </div>
+
+          <!-- Group 2: Production — 5 images -->
+          <!-- 1: Designer objects spreadsheet — upper-left, smaller -->
+          <div class="role-gallery-img rg2-a" data-role="2" style="width: 16vw; top: 18%; left: -5%; rotate: 0deg;">
+            <img src="images/fa/rg2-1.png" alt="Production spreadsheet — designer objects">
+          </div>
+          <!-- 2: Production overview spreadsheet — upper-left, bigger, overlapping #1 -->
+          <div class="role-gallery-img rg2-b" data-role="2" style="width: 26vw; top: 12%; left: 15%; rotate: 2deg;">
+            <img src="images/fa/rg2-2.png" alt="Production overview — auxiliary displays">
+          </div>
+          <!-- 3: Baëlf mushroom dress — right, lowered -->
+          <div class="role-gallery-img rg2-c" data-role="2" style="width: 32vw; top: 6%; right: -1%; rotate: 2deg;">
+            <img src="images/fa/rg2-3.png" alt="Singaporean Artist Baëlf — Growing Mushroom Dress">
+          </div>
+          <!-- 4: Crystal dress special project — lower-left, lowered 10% -->
+          <div class="role-gallery-img rg2-d" data-role="2" style="width: 34vw; top: 64%; left: 4%; rotate: -2deg;">
+            <img src="images/fa/rg2-4.png" alt="Special Projects — Time-Lapsed Growing Crystal Dress">
+          </div>
+          <!-- 5: Exhibition floor plan — lower-right, lowered 30%, transparent bg -->
+          <div class="role-gallery-img rg2-e" data-role="2" style="width: 38vw; top: 58%; right: -1%; rotate: 0deg; box-shadow: none; border-radius: 0;">
+            <img src="images/fa/rg2-5.png" alt="Exhibition floor plan — Section 1 Alchemical" style="border-radius: 0;">
+          </div>
+
+          <!-- Group 3: Founding & Strategy — 5 images -->
+          <!-- 1: Press release — further left, higher -->
+          <div class="role-gallery-img rg3-a" data-role="3" style="width: 17vw; top: 22%; left: -4%; rotate: -6deg;">
+            <img src="images/fa/rg3-1.png" alt="Fashion's Alchemists press release">
+          </div>
+          <!-- 2: Event details page — further left, higher -->
+          <div class="role-gallery-img rg3-b" data-role="3" style="width: 14vw; top: 12%; left: 14%; rotate: -2deg;">
+            <img src="images/fa/rg3-2.png" alt="Event details — venue, dates, media">
+          </div>
+          <!-- 3: Co-Creation magazine cover — more left -->
+          <div class="role-gallery-img rg3-c" data-role="3" style="width: 16vw; top: 29%; left: 42%; rotate: 0deg;">
+            <img src="images/fa/rg3-3.png" alt="Lab. Co—Creation Future Fashion">
+          </div>
+          <!-- 4: Year 1 strategy slide — more right, bit lower -->
+          <div class="role-gallery-img rg3-d" data-role="3" style="width: 34vw; top: 9%; right: -2%; rotate: 2deg;">
+            <img src="images/fa/rg3-4.png" alt="Baëlf — Growing Mushroom Dress">
+          </div>
+          <!-- 5: 3 Year Growth Strategy — upper-right -->
+          <div class="role-gallery-img rg3-e" data-role="3" style="width: 26vw; top: 75%; right: -2%; rotate: 3deg;">
+            <img src="images/fa/rg3-5.png" alt="3 Year Growth Strategy — Local & Regional Benefits">
+          </div>
+        </div>
+
+  <!-- Three role summaries -->
+  <div class="role-summary">
+    <div class="role-card">
+      <div class="role-card-label">01 — Creative Direction & Curation</div>
+      <div class="role-card-right">
+      <div class="role-card-text">I conceived of the <strong>project's concept & narrative.</strong> Over the 2+ years of the project's development, I <strong>led creative direction and curation</strong>.</div>
+      <div class="role-expand">
+        <button class="role-expand-toggle">
+          More
+          <svg class="role-expand-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+        </button>
+        <div class="role-expand-content">
+          <div class="role-expand-inner">
+            <ul class="role-bullets">
+              <li>Sourced, curated, and commissioned work from 50+ international artists including LVMH Prize winners and Met-featured designers</li>
+              <li>Conceived the curatorial framework across five thematic chapters and a 300+ page exhibition brief</li>
+              <li>Creative directed the branding, experience design, lighting, and visitor journey</li>
+              <li>Worked hand in hand with spatial and landscape designers to bring the vision to life</li>
+              <li>Commissioned and developed 20+ interactive installations with designers, technologists, and biologists</li>
+              <li>Authored the exhibition text, writing, decks, and creative briefs for designers and vendors</li>
+              <li>Directed all creative reviews across prototypes, content development, and spatial design</li>
+            </ul>
+            <div class="role-tags">
+              <span class="role-tag">Curation</span>
+              <span class="role-tag">Artist Management</span>
+              <span class="role-tag">Exhibition Design</span>
+              <span class="role-tag">Creative Briefs</span>
+              <span class="role-tag">Spatial Design</span>
+              <span class="role-tag">Experience Design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-label">02 — Production</div>
+      <div class="role-card-right">
+      <div class="role-card-text"><strong>I led exhibition production</strong> across <strong>creative, technical, and operations</strong> – building the teams and systems required to turn experimental fashion into a feasible, accessible experience.</div>
+      <div class="role-expand">
+        <button class="role-expand-toggle">
+          More
+          <svg class="role-expand-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+        </button>
+        <div class="role-expand-content">
+          <div class="role-expand-inner">
+            <ul class="role-bullets">
+              <li>Led full production across creative, technical, and operations over a $3M budget</li>
+              <li>Managed vendor procurement, fabrication partners, AV, lighting, and creative technology vendors</li>
+              <li>Built production frameworks: briefs, schedules, run-of-show, and quality control systems</li>
+              <li>Led logistics strategy and cross-border shipping for 150+ objects from 50+ international artists</li>
+              <li>Coordinated compliance, permits, and government stakeholder approvals</li>
+            </ul>
+            <div class="role-tags">
+              <span class="role-tag">Budget Management</span>
+              <span class="role-tag">Vendor Procurement</span>
+              <span class="role-tag">Logistics</span>
+              <span class="role-tag">Fabrication</span>
+              <span class="role-tag">Run-of-Show</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="role-card">
+      <div class="role-card-label">03 — Founding & Strategy</div>
+      <div class="role-card-right">
+      <div class="role-card-text">I <strong>secured institutional backing and strategic partners</strong> with my co-founder, creating & delivering pitches and evolving the exhibition & events to <strong>align</strong> with the Singapore Government and Gardens by the Bay's <strong>priorities & KPIS</strong>.</div>
+      <div class="role-expand">
+        <button class="role-expand-toggle">
+          More
+          <svg class="role-expand-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+        </button>
+        <div class="role-expand-content">
+          <div class="role-expand-inner">
+            <ul class="role-bullets">
+              <li>Secured $3M in government-backed sponsorship as primary liaison to Gardens by the Bay and the Singapore Government</li>
+              <li>Created and pitched sponsorship decks to government bodies, corporate sponsors, and cultural institutions</li>
+              <li>Directed visual and graphic identity — branding, marketing collateral, press materials, and campaign assets</li>
+              <li>Supported production strategy and leadership decisions across summits, sponsor activations, gala events, and public programming</li>
+              <li>Developed partnerships with LaSalle College of the Arts and Singapore Fashion Council, including a design award and competition</li>
+            </ul>
+            <div class="role-tags">
+              <span class="role-tag">Sponsorship</span>
+              <span class="role-tag">Government Relations</span>
+              <span class="role-tag">Brand Identity</span>
+              <span class="role-tag">Pitch Decks</span>
+              <span class="role-tag">Partnerships</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CREDITS & PARTNERS ═══ -->
+<style>
+.credits-section {
+  background: #A8B8F0;
+  padding: 100px 0 120px;
+  position: relative;
+}
+.credits-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+.credits-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(16,24,80,0.5);
+  margin-bottom: 20px;
+}
+.credits-rule {
+  border: none;
+  border-top: 1px solid rgba(16,24,80,0.12);
+  margin-bottom: 64px;
+}
+.credits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 48px 64px;
+}
+.credits-col {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.credit-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.credit-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(16,24,80,0.4);
+  margin-bottom: 2px;
+}
+.credit-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.7;
+  color: rgba(16,24,80,0.75);
+}
+.credit-value strong {
+  font-weight: 500;
+  font-style: normal;
+}
+.credits-status {
+  margin-top: 72px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(16,24,80,0.08);
+}
+.credits-status p {
+  font-family: 'Sora', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(16,24,80,0.55);
+  max-width: 900px;
+}
+.credits-status .credit-label {
+  margin-bottom: 12px;
+}
+@media (max-width: 768px) {
+  .credits-section { padding: 72px 0 80px; }
+  .credits-inner { padding: 0 32px; }
+  .credits-grid { grid-template-columns: 1fr 1fr; gap: 32px 40px; }
+}
+@media (max-width: 480px) {
+  .credits-section { padding: 60px 0 64px; }
+  .credits-inner { padding: 0 20px; }
+  .credits-grid { grid-template-columns: 1fr; gap: 28px; }
+  .credits-rule { margin-bottom: 36px; }
+  .credit-value { font-size: 12px; }
+  .credits-status { margin-top: 40px; padding-top: 32px; }
+  .credits-status p { font-size: 14px; }
+}
+</style>
+
+<div class="credits-section" id="credits">
+  <div class="credits-inner">
+    <div class="credits-title">Credits & Partners</div>
+    <hr class="credits-rule">
+
+    <div class="credits-grid">
+      <!-- Column 1: Production Credits -->
+      <div class="credits-col">
+        <div class="credit-block">
+          <div class="credit-label">Spatial Design</div>
+          <div class="credit-value">Studio Dennis Vanderbroeck</div>
+        </div>
+        <div class="credit-block">
+          <div class="credit-label">Graphic & Visual Design</div>
+          <div class="credit-value">Joshua Edward</div>
+        </div>
+        <div class="credit-block">
+          <div class="credit-label">Landscape Design</div>
+          <div class="credit-value">This Humid House</div>
+        </div>
+        <div class="credit-block">
+          <div class="credit-label">Curatorial Advisor</div>
+          <div class="credit-value">Karen Van Godtsenhoven</div>
+        </div>
+        <div class="credit-block">
+          <div class="credit-label">Executive Producer Gala & Partnerships</div>
+          <div class="credit-value">Jamie QQ Wu</div>
+        </div>
+      </div>
+
+      <!-- Column 2: Gala Committee -->
+      <div class="credits-col">
+        <div class="credit-block">
+          <div class="credit-label">Gala Committee</div>
+          <div class="credit-value">
+            <strong>Ravi Thakran</strong> — Turmeric Capital Holdings (Co-Chair)<br>
+            <strong>Heart Evangelista</strong> — (Co-Chair)<br>
+            <strong>Yanina Novitskaya</strong> — CEO Cartier South East Asia & Oceania<br>
+            <strong>David Wertheimer</strong> — 1686 Partners<br>
+            <strong>Andrea Rosso</strong> — OTB Family<br>
+            <strong>Alwyn Chong</strong> — Luxasia<br>
+            <strong>Chayapa "Pink" Chutrakul</strong> — The Pink Lab / Directions Group<br>
+            <strong>Seia Lee</strong> — Opera Singer & Philanthropist<br>
+            <strong>Raline Shah</strong> — Philanthropist & Actress<br>
+            <strong>Sharon Tan</strong> — DBS<br>
+            <strong>Colleen Yu</strong> — Li & Fung Family<br>
+            <strong>Marion Caunter</strong> — Entrepreneur & TV Personality
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3: Partnerships -->
+      <div class="credits-col">
+        <div class="credit-block">
+          <div class="credit-label">Partnerships</div>
+          <div class="credit-value">
+            Christie's Auction House<br>
+            Meida Partnership, Cartier Asia Pacific<br>
+            Singapore Tourism Board<br>
+            Singapore Fashion Council<br>
+            LaSalle College of the Arts<br>
+            Gift of Gardens Charity
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Status -->
+    <div class="credits-status">
+      <div class="credit-label">Project Status</div>
+      <p>Although paused due to unforeseen funding constraints, Fashion's Alchemists is currently in conversation with major Chinese institutions for relaunch in 2026.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NEXT PROJECT ═══ -->
+<style>
+.next-project {
+  background: #500858;
+  padding: 80px 0 72px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 -20px 60px rgba(80,8,88,0.5), 0 -8px 24px rgba(80,8,88,0.3);
+}
+.next-project-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(144,24,156,0.45);
+  margin-bottom: 28px;
+}
+.next-project-title {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 96px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #90189C;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 40px;
+  transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+.next-project-arrow {
+  display: inline-block;
+  width: 50px;
+  height: auto;
+  fill: rgba(144,24,156,0.4);
+  transform: rotate(-90deg);
+  transition: fill 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 12%, black 35%, black 60%, rgba(0,0,0,0.2) 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 12%, black 35%, black 60%, rgba(0,0,0,0.2) 88%, transparent 100%);
+}
+.next-project a {
+  text-decoration: none;
+  display: block;
+}
+.next-project a:hover .next-project-title {
+  color: rgba(144,24,156,0.75);
+  text-shadow: 0 0 24px rgba(144,24,156,0.15);
+}
+.next-project a:hover .next-project-arrow {
+  fill: #A8B8F0;
+  transform: rotate(-90deg) translateX(4px);
+  filter: drop-shadow(0 0 6px rgba(168,184,240,0.3));
+}
+@media (max-width: 768px) {
+  .next-project { padding: 60px 32px 56px; }
+  .next-project-title { font-size: 64px; }
+}
+@media (max-width: 480px) {
+  .next-project { padding: 48px 20px 44px; overflow: hidden; }
+  .next-project-title { font-size: clamp(28px, 8.5vw, 44px); line-height: 1.2; margin-bottom: 24px; word-wrap: break-word; }
+  .next-project-arrow { width: 36px; }
+}
+</style>
+
+<div class="next-project">
+  <a href="#">
+    <div class="next-project-label">Next Project</div>
+    <div class="next-project-title"><span class="gl">T</span><span class="dlig">he</span> <span class="gl">F</span>uture<span class="gl">s</span>, <span class="gl">S</span>miths<span class="o-star">o</span>nia<span class="gl">n</span></div>
+    <svg class="next-project-arrow" viewBox="0 0 249 428"><path d="M41.27 220.014C44.0175 221.269 46.6479 222.797 49.3668 224.121C58.3805 228.512 84.1439 240.21 93.3626 236.844C96.751 235.606 98.7693 232.387 100.121 229.233C104.277 219.53 105.957 202.275 107.107 191.622C108.39 179.735 109.504 167.827 111.776 156.075C114.846 140.192 119.163 123.934 126.009 109.224C140.48 78.1243 161.527 54.2957 192.892 39.2936C197.93 36.8846 203.101 34.9175 208.34 33L208.787 33.644C173.404 52.923 144.098 86.3543 132.691 125.181C124.797 152.046 125.901 179.251 129.939 206.635C131.14 214.789 132.31 224.244 136.39 231.549C137.826 234.12 139.78 236.279 142.72 237.099C151.048 239.417 172.641 230.545 180.57 226.86C183.748 225.382 188.482 222.494 191.494 221.432C191.93 221.412 192.541 221.312 192.88 221.478C161.997 244.09 144.129 267.623 130.901 303.63C126.03 316.653 122.482 330.13 120.31 343.857C119.548 349.098 118.955 354.363 118.531 359.639C118.415 361.182 118.126 364.289 118.157 365.771C118.055 366.771 117.987 367.584 117.777 368.574C117.33 366.026 117.193 361.091 116.97 358.304C116.499 352.665 115.752 347.053 114.733 341.487C105.198 291.431 84.1165 249.625 41 220.389L41.27 220.014Z"/><path d="M152.006 75.769C151.961 76.9307 148.372 81.835 147.612 83.1558C128.409 116.525 123.249 156.081 125.749 194.126C127.097 207.902 127.256 235.592 145.755 237.212C150.812 237.655 156.413 235.84 158.905 243.008C160.798 248.446 157.27 252.049 154.288 255.997C153.073 257.605 151.877 259.428 150.719 261.146C146.208 267.897 142.168 274.958 138.633 282.273C135.081 289.491 132.355 296.626 129.599 304.177C127.946 308.709 126.851 315.551 122.598 318.069C119.475 319.917 116.375 319.379 113.391 317.653C113.125 317.461 112.924 317.316 112.679 317.097C112.389 316.833 112.11 316.556 111.842 316.266C110.288 314.598 108.289 307.715 107.426 305.241C105.519 299.759 103.411 294.35 101.107 289.023C97.4315 280.66 93.2759 272.289 88.3188 264.606C86.5175 261.836 84.6367 259.118 82.679 256.458C80.5104 253.515 77.2785 249.947 77.1903 246.154C77.1572 243.769 78.0572 241.466 79.6958 239.742C83.5035 235.803 86.742 237.514 91.1145 237.216C104.803 236.121 108.186 219.347 109.502 208.359C111.097 195.033 111.119 181.765 112.402 168.504C113.467 157.199 115.549 146.014 118.62 135.087C124.807 112.887 136.265 92.5311 152.006 75.769Z"/></svg>
+  </a>
+</div>
+
+<!-- Coming Soon Modal -->
+<div class="coming-soon-overlay" id="comingSoonModal">
+  <div class="coming-soon-card">
+    <div class="coming-soon-label">Project Page</div>
+    <div class="coming-soon-title"><span class="gl">C</span><span class="o-star">o</span>ming <span class="gl">S</span><span class="dlig">oo</span>n</div>
+    <div class="coming-soon-desc">This project page is currently in development.</div>
+  </div>
+</div>
+
+<script>
+// Phased scroll animation
+// Phases (normalized 0–1 over 700vh scroll):
+// 0.00–0.10  Text 1 visible, settled
+// 0.10–0.30  Gallery 1 floats in
+// 0.30–0.40  Gallery 1 holds
+// 0.40–0.52  Gallery 1 floats out + text crossfades 1→2
+// 0.52–0.58  Text 2 settled
+// 0.58–0.78  Gallery 2 floats in
+// 0.78–0.85  Gallery 2 holds
+// 0.85–0.95  Gallery 2 floats out
+
+const scroller = document.querySelector('.about-scroll');
+const textPanels = document.querySelectorAll('.about-text-panel');
+const g1Images = document.querySelectorAll('[data-gallery="1"] .gallery-img');
+const g2Images = document.querySelectorAll('[data-gallery="2"] .gallery-img');
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+function ease(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; }
+function remap(val, inMin, inMax, outMin, outMax) {
+  return outMin + (outMax - outMin) * Math.max(0, Math.min(1, (val - inMin) / (inMax - inMin)));
+}
+
+function getEntrance(el) {
+  const dir = el.dataset.from || 'bottom';
+  if (dir === 'bottom') return { x: 0, y: 120 };
+  if (dir === 'left') return { x: -100, y: 30 };
+  if (dir === 'right') return { x: 100, y: 30 };
+  return { x: 0, y: 120 };
+}
+
+function animateGallery(images, enterStart, enterEnd, exitStart, exitEnd, t) {
+  images.forEach(el => {
+    const speed = parseFloat(el.dataset.speed) || 0.6;
+    const entrance = getEntrance(el);
+
+    // Enter phase
+    const enterT = ease(remap(t, enterStart, enterEnd, 0, 1));
+    // Exit phase
+    const exitT = ease(remap(t, exitStart, exitEnd, 0, 1));
+
+    let opacity, tx, ty;
+
+    if (t < enterStart) {
+      opacity = 0;
+      tx = entrance.x * speed;
+      ty = entrance.y * speed;
+    } else if (t < enterEnd) {
+      opacity = enterT;
+      tx = lerp(entrance.x * speed, 0, enterT);
+      ty = lerp(entrance.y * speed, 0, enterT);
+    } else if (t < exitStart) {
+      opacity = 1;
+      tx = 0;
+      ty = 0;
+    } else if (t < exitEnd) {
+      opacity = 1 - exitT;
+      tx = lerp(0, -entrance.x * speed * 0.5, exitT);
+      ty = lerp(0, -entrance.y * speed * 0.3, exitT);
+    } else {
+      opacity = 0;
+      tx = 0;
+      ty = 0;
+    }
+
+    el.style.opacity = opacity;
+    el.style.transform = `translate(${tx}px, ${ty}px)`;
+  });
+}
+
+function update() {
+  if (!scroller) return;
+  // On phone, about section is static — skip scroll animation
+  if (window.innerWidth <= 480) {
+    textPanels.forEach(function(p) {
+      p.style.opacity = 1;
+      p.style.filter = 'none';
+      p.style.transform = 'none';
+      p.classList.add('is-active');
+    });
+    g1Images.forEach(function(el) { el.style.opacity = 1; el.style.transform = 'none'; });
+    g2Images.forEach(function(el) { el.style.opacity = 1; el.style.transform = 'none'; });
+    return;
+  }
+  const rect = scroller.getBoundingClientRect();
+  const t = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+
+  // Text panels — text 1 fades AFTER gallery 1 exits, then text 2 fades in with a clear gap
+  const fade0 = 1 - remap(t, 0.50, 0.54, 0, 1);
+  const fade1 = remap(t, 0.56, 0.60, 0, 1);
+
+  textPanels[0].style.opacity = fade0;
+  textPanels[0].style.filter = `blur(${(1 - fade0) * 3}px)`;
+  textPanels[0].style.transform = `translateY(${(1 - fade0) * -8}px)`;
+  textPanels[0].classList.toggle('is-active', fade0 > 0.01);
+
+  textPanels[1].style.opacity = fade1;
+  textPanels[1].style.filter = `blur(${(1 - fade1) * 3}px)`;
+  textPanels[1].style.transform = `translateY(${(1 - fade1) * 8}px)`;
+  textPanels[1].classList.toggle('is-active', fade1 > fade0);
+
+  // Gallery 1: enter 0.10–0.28, exit 0.40–0.52
+  animateGallery(g1Images, 0.10, 0.28, 0.40, 0.52, t);
+
+  // Gallery 2: enter 0.58–0.76, exit 0.85–0.95
+  animateGallery(g2Images, 0.58, 0.76, 0.85, 0.95, t);
+}
+
+window.addEventListener('scroll', update, { passive: true });
+update();
+
+// Role expand toggles
+document.querySelectorAll('.role-expand-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const expand = btn.closest('.role-expand');
+    const content = expand.querySelector('.role-expand-content');
+    if (expand.classList.contains('is-open')) {
+      content.style.maxHeight = '0';
+      expand.classList.remove('is-open');
+    } else {
+      content.style.maxHeight = content.scrollHeight + 'px';
+      expand.classList.add('is-open');
+    }
+  });
+});
+
+// Role scroll animation — 900vh
+// Distinct phases with generous gaps, images drift in gently
+//
+// 0.00–0.05  All 3 cards fade in equally
+// 0.05–0.12  All cards readable — breathing room
+// 0.12–0.16  Roles 2 & 3 fade to very faint
+// 0.16–0.22  Role 1 text prominent alone — read it
+// 0.22–0.27  Group 1 images drift in
+// 0.27–0.34  Group 1 images fully visible
+// 0.34–0.39  Group 1 images drift out, role 1 fades with them
+// 0.39–0.46  EMPTY — no images, role 2 rises to full
+// 0.46–0.51  Role 2 text prominent alone — read it
+// 0.51–0.56  Group 2 images drift in
+// 0.56–0.63  Group 2 images fully visible
+// 0.63–0.68  Group 2 images drift out, role 2 fades with them
+// 0.68–0.75  EMPTY — no images, role 3 rises to full
+// 0.75–0.80  Role 3 text prominent alone — read it
+// 0.80–0.85  Group 3 images drift in
+// 0.85–0.92  Group 3 images fully visible
+// 0.92–0.96  Group 3 images drift out
+// 0.96–1.00  All cards return to equal
+
+const DIM = 0.05;
+
+const roleScroller = document.querySelector('.role-scroll');
+const roleCards = document.querySelectorAll('.role-card');
+const roleImages = document.querySelectorAll('.role-gallery-img');
+
+function updateRole() {
+  if (!roleScroller) return;
+  // On phone, role section is static — skip scroll animation
+  if (window.innerWidth <= 480) return;
+  const rect = roleScroller.getBoundingClientRect();
+  const t = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+
+  // --- CARD OPACITY ---
+  roleCards.forEach((card, i) => {
+    const cn = i + 1;
+    let o = 1;
+
+    if (t < 0.05) {
+      o = ease(remap(t, 0, 0.05, 0, 1));
+    } else if (t < 0.12) {
+      o = 1;
+    } else if (t < 0.16) {
+      // Roles 2 & 3 dim
+      const d = ease(remap(t, 0.12, 0.16, 0, 1));
+      o = cn === 1 ? 1 : 1 - (1 - DIM) * d;
+    } else if (t < 0.34) {
+      // Role 1 active (text then images)
+      o = cn === 1 ? 1 : DIM;
+    } else if (t < 0.39) {
+      // Role 1 fades out WITH images
+      const d = ease(remap(t, 0.34, 0.39, 0, 1));
+      if (cn === 1) o = 1 - (1 - DIM) * d;
+      else o = DIM;
+    } else if (t < 0.46) {
+      // Role 2 rises — all others dim
+      const d = ease(remap(t, 0.39, 0.46, 0, 1));
+      if (cn === 2) o = DIM + (1 - DIM) * d;
+      else o = DIM;
+    } else if (t < 0.63) {
+      // Role 2 active (text then images)
+      o = cn === 2 ? 1 : DIM;
+    } else if (t < 0.68) {
+      // Role 2 fades out WITH images
+      const d = ease(remap(t, 0.63, 0.68, 0, 1));
+      if (cn === 2) o = 1 - (1 - DIM) * d;
+      else o = DIM;
+    } else if (t < 0.75) {
+      // Role 3 rises
+      const d = ease(remap(t, 0.68, 0.75, 0, 1));
+      if (cn === 3) o = DIM + (1 - DIM) * d;
+      else o = DIM;
+    } else if (t < 0.92) {
+      // Role 3 active (text then images)
+      o = cn === 3 ? 1 : DIM;
+    } else if (t < 0.96) {
+      // Role 3 images fade out
+      o = cn === 3 ? 1 : DIM;
+    } else {
+      // All return to equal
+      const d = ease(remap(t, 0.96, 1.0, 0, 1));
+      if (cn === 3) o = 1;
+      else o = DIM + (1 - DIM) * d;
+    }
+
+    card.style.opacity = Math.max(0, Math.min(1, o));
+  });
+
+  // --- IMAGE OPACITY + DRIFT ---
+  // Images drift in from a gentle offset (30-40px), not from off-screen
+  roleImages.forEach(img => {
+    const role = parseInt(img.dataset.role);
+    let o = 0;
+    let drift = 40; // starting drift in px
+
+    // Determine enter/exit phases per group
+    let enterStart, enterEnd, exitStart, exitEnd;
+    if (role === 1) {
+      enterStart = 0.22; enterEnd = 0.27;
+      exitStart  = 0.34; exitEnd  = 0.39;
+    } else if (role === 2) {
+      enterStart = 0.51; enterEnd = 0.56;
+      exitStart  = 0.63; exitEnd  = 0.68;
+    } else if (role === 3) {
+      enterStart = 0.80; enterEnd = 0.85;
+      exitStart  = 0.92; exitEnd  = 0.96;
+    } else {
+      img.style.opacity = 0;
+      return;
+    }
+
+    let ty = 0;
+
+    if (t < enterStart) {
+      o = 0;
+      ty = drift;
+    } else if (t < enterEnd) {
+      const d = ease(remap(t, enterStart, enterEnd, 0, 1));
+      o = d;
+      ty = lerp(drift, 0, d);
+    } else if (t < exitStart) {
+      o = 1;
+      ty = 0;
+    } else if (t < exitEnd) {
+      const d = ease(remap(t, exitStart, exitEnd, 0, 1));
+      o = 1 - d;
+      ty = lerp(0, -drift * 0.5, d);
+    } else {
+      o = 0;
+      ty = 0;
+    }
+
+    img.style.opacity = o;
+    img.style.transform = `translateY(${ty}px)`;
+    if (o > 0) img.classList.add('is-visible');
+    else img.classList.remove('is-visible');
+  });
+}
+
+window.addEventListener('scroll', updateRole, { passive: true });
+updateRole();
+
+// Hero parallax — fade + drift as you scroll past
+const hero = document.querySelector('.hero');
+const heroTitle = document.querySelector('.hero-title');
+const heroInfo = document.querySelector('.hero-info');
+const heroImgPrimary = document.querySelector('.img-primary');
+const heroImgSecondary = document.querySelector('.img-secondary');
+
+function updateHero() {
+  if (!hero) return;
+  const scrollY = window.scrollY;
+  const vh = window.innerHeight;
+  const t = Math.min(1, scrollY / (vh * 0.7));
+
+  if (t <= 0) {
+    heroTitle.style.opacity = '';
+    heroTitle.style.filter = '';
+    heroInfo.style.opacity = '';
+    heroInfo.style.filter = '';
+    heroImgPrimary.style.filter = '';
+    heroImgSecondary.style.filter = '';
+    return;
+  }
+
+  // Title drifts up and fades
+  const titleFade = 1 - ease(Math.min(1, t * 1.5));
+  heroTitle.style.opacity = titleFade;
+  heroTitle.style.filter = `blur(${(1 - titleFade) * 4}px)`;
+
+  // Info fades slightly later
+  const infoFade = 1 - ease(Math.min(1, Math.max(0, (t - 0.15) * 1.8)));
+  heroInfo.style.opacity = infoFade;
+  heroInfo.style.filter = `blur(${(1 - infoFade) * 3}px)`;
+
+  // Images darken as you scroll
+  const imgDarken = 0.7 - t * 0.35;
+  const imgSat = 0.65 - t * 0.3;
+  heroImgPrimary.querySelector('img').style.filter = `saturate(${imgSat}) brightness(${imgDarken})`;
+  heroImgSecondary.querySelector('img').style.filter = `saturate(${imgSat}) brightness(${imgDarken - 0.05})`;
+}
+
+window.addEventListener('scroll', updateHero, { passive: true });
+
+// Mobile: transform-based infinite carousels (mirrors home page pattern exactly)
+(function() {
+  if (window.innerWidth > 480) return;
+
+  var arrowPath = 'M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z';
+
+  function setupCarousel(layer, carouselId, gap) {
+    gap = gap || 14;
+
+    // Wrap in container for arrows
+    var wrap = document.createElement('div');
+    wrap.className = 'mobile-carousel-wrap';
+    if (carouselId) wrap.setAttribute('data-carousel', carouselId);
+    layer.parentNode.insertBefore(wrap, layer);
+    wrap.appendChild(layer);
+
+    // Create inner track — move all children into it
+    var track = document.createElement('div');
+    track.className = 'fa-carousel-track';
+    track.style.gap = gap + 'px';
+    while (layer.firstChild) {
+      track.appendChild(layer.firstChild);
+    }
+    layer.appendChild(track);
+
+    // Duplicate children for seamless infinite loop
+    var origItems = Array.from(track.children);
+    origItems.forEach(function(item) {
+      var clone = item.cloneNode(true);
+      // Autoplay cloned videos
+      clone.querySelectorAll('video').forEach(function(v) {
+        v.muted = true;
+        try { v.play(); } catch(e) {}
+      });
+      track.appendChild(clone);
+    });
+
+    // Measure one set width (original items only)
+    var setWidth = 0;
+    origItems.forEach(function(item) {
+      setWidth += item.offsetWidth + gap;
+    });
+
+    // Arrow buttons
+    var leftBtn = document.createElement('button');
+    leftBtn.className = 'fa-carousel-nav fa-carousel-nav-left';
+    leftBtn.innerHTML = '<svg viewBox="0 0 107 103" style="transform:rotate(90deg)"><path d="' + arrowPath + '"/></svg>';
+    var rightBtn = document.createElement('button');
+    rightBtn.className = 'fa-carousel-nav fa-carousel-nav-right';
+    rightBtn.innerHTML = '<svg viewBox="0 0 107 103" style="transform:rotate(-90deg)"><path d="' + arrowPath + '"/></svg>';
+    wrap.appendChild(leftBtn);
+    wrap.appendChild(rightBtn);
+
+    // --- Transform-based infinite drift (same as home page) ---
+    var offset = 0;
+    var driftSpeed = 0.5;
+    var driftPaused = false;
+
+    function loop() {
+      if (!driftPaused) {
+        offset += driftSpeed;
+        if (offset >= setWidth) offset -= setWidth;
+      }
+      track.style.transform = 'translateX(' + (-offset) + 'px)';
+      requestAnimationFrame(loop);
+    }
+    setTimeout(function() { requestAnimationFrame(loop); }, 600);
+
+    // --- Arrow scroll — animated jump (same as home page arrowScroll) ---
+    var arrowAmount = window.innerWidth * 0.7;
+
+    function arrowScroll(amount) {
+      driftPaused = true;
+      var start = offset;
+      var target = offset + amount;
+      var startTime = null;
+
+      function animate(time) {
+        if (!startTime) startTime = time;
+        var progress = Math.min((time - startTime) / 500, 1);
+        var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        offset = start + (target - start) * eased;
+        while (offset >= setWidth) offset -= setWidth;
+        while (offset < 0) offset += setWidth;
+        track.style.transform = 'translateX(' + (-offset) + 'px)';
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          driftPaused = false;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    leftBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      arrowScroll(-arrowAmount);
+    });
+    rightBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      arrowScroll(arrowAmount);
+    });
+
+    // --- Touch drag support ---
+    var touchStartX = 0;
+    var touchStartOffset = 0;
+    var touchActive = false;
+
+    layer.addEventListener('touchstart', function(e) {
+      driftPaused = true;
+      touchActive = true;
+      touchStartX = e.touches[0].clientX;
+      touchStartOffset = offset;
+    }, { passive: true });
+
+    layer.addEventListener('touchmove', function(e) {
+      if (!touchActive) return;
+      var dx = touchStartX - e.touches[0].clientX;
+      offset = touchStartOffset + dx;
+      while (offset >= setWidth) offset -= setWidth;
+      while (offset < 0) offset += setWidth;
+      track.style.transform = 'translateX(' + (-offset) + 'px)';
+    }, { passive: true });
+
+    layer.addEventListener('touchend', function() {
+      touchActive = false;
+      // Resume drift after 3s
+      setTimeout(function() { driftPaused = false; }, 3000);
+    }, { passive: true });
+  }
+
+  // Setup gallery carousels
+  document.querySelectorAll('.gallery-layer').forEach(function(layer) {
+    setupCarousel(layer, layer.getAttribute('data-gallery'), 14);
+  });
+
+  // Setup role gallery carousel
+  var roleGal = document.querySelector('.role-gallery');
+  if (roleGal) setupCarousel(roleGal, 'role', 12);
+
+  // Clone text panel 1 after gallery 2
+  var panel1 = document.querySelector('.about-text-panel[data-panel="1"]');
+  var sticky = document.querySelector('.about-sticky');
+  if (panel1 && sticky) {
+    var clone = document.createElement('div');
+    clone.className = 'mobile-text-panel-2';
+    clone.innerHTML = panel1.innerHTML;
+    sticky.appendChild(clone);
+  }
+})();
+
+// Mobile nav overlay toggle
+(function() {
+  var navBar = document.querySelector('.nav-bar');
+  var overlay = document.getElementById('mobileNavOverlay');
+  if (!navBar || !overlay) return;
+  function isPhone() { return window.innerWidth <= 480; }
+
+  navBar.addEventListener('click', function(e) {
+    if (!isPhone()) return;
+    // Let the back link work normally when overlay is closed
+    if (e.target.closest('.nav-back') && !overlay.classList.contains('is-open')) return;
+    e.preventDefault();
+    e.stopPropagation();
+    var opening = !overlay.classList.contains('is-open');
+    overlay.classList.toggle('is-open');
+    document.body.style.overflow = opening ? 'hidden' : '';
+  });
+
+  overlay.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+
+// Coming soon modal
+(function() {
+  var modal = document.getElementById('comingSoonModal');
+  if (!modal) return;
+
+  var nextLink = document.querySelector('.next-project a');
+  if (nextLink) {
+    nextLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      modal.classList.add('is-active');
+    });
+  }
+
+  var navNext = document.querySelector('.nav-next');
+  if (navNext) {
+    navNext.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      modal.classList.add('is-active');
+    });
+  }
+
+  modal.addEventListener('click', function() {
+    modal.classList.remove('is-active');
+  });
+})();
+</script>
+<style>
+.coming-soon-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24,12,26,0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease, background 0.6s ease, backdrop-filter 0.6s ease, -webkit-backdrop-filter 0.6s ease;
+  cursor: pointer;
+}
+.coming-soon-overlay.is-active {
+  opacity: 1;
+  pointer-events: all;
+  background: rgba(24,12,26,0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.coming-soon-card {
+  text-align: center;
+  padding: 80px 100px;
+  border-radius: 16px;
+  background: rgba(26,14,32,0.5);
+  border: 1px solid rgba(138,136,152,0.08);
+  border-top: 1px solid rgba(138,136,152,0.14);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  transform: translateY(12px);
+  transition: transform 0.6s ease;
+}
+.coming-soon-overlay.is-active .coming-soon-card {
+  transform: translateY(0);
+}
+.coming-soon-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(138,136,152,0.4);
+  margin-bottom: 24px;
+}
+.coming-soon-title {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 72px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: rgba(200,196,218,0.45);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+}
+.coming-soon-desc {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(138,136,152,0.45);
+  letter-spacing: 0.01em;
+}
+</style>
+
+</body>
+</html>

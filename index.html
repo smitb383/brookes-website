@@ -1,0 +1,3569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brooke Smith — Creative Producer & Director</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Sora:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+@font-face {
+  font-family: 'Larva';
+  src: url('./Larva.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Bizkea';
+  src: url('./fonts-bizkea/un%20Bizkea.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Bizkea glyph feature classes */
+.gl { font-feature-settings: "ss01" 1; }
+.dlig { font-feature-settings: "dlig" 1; }
+.gl-dlig { font-feature-settings: "ss01" 1, "dlig" 1; }
+.o-star { font-feature-settings: "ss03" 1; }
+
+:root {
+  --ink: #0C1418;
+  --plum-black: #201C30;
+  --dark-plum: #3A3454;
+  --dark-steel: #5C5C70;
+  --muted-violet: #8A8898;
+  --steel-blue: #9CB0C0;
+  --dusty-lav: #B898AC;
+  --cool-mist: #D6D6E0;
+  --ghost-violet: #F6F4FF;
+  --frost-violet: #D6D6E0;
+  --panel-solid: #9A94AC;
+  --about-bg: #F6F4FF;
+  --carousel-bg: #F6F4FF;
+  --blue-violet: #636BED;
+  --hero-edge: #9392A1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #180C1A;
+  color: var(--ink);
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   GLASS NAV BAR — Matching Figma exactly
+   Fill: #8A8898 at 25%, Glass frost blur 28px, Noise overlay,
+   Drop shadow, debossed text
+   ═══════════════════════════════════════════════════════════════ */
+
+.glass-nav {
+  position: fixed;
+  top: 24px;
+  right: 48px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+
+  /* Pill state — more transparent, starts translated off-screen */
+  width: 52px;
+  height: 44px;
+  border-radius: 10px;
+  padding: 0 15px;
+
+  background: rgba(138, 136, 152, 0.14);
+  backdrop-filter: blur(36px) saturate(150%);
+  -webkit-backdrop-filter: blur(36px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.10),
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+
+  /* Visible from page load as a subtle pill */
+  transform: translateX(0);
+  opacity: 1;
+
+  transition:
+    width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    right 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    border-radius 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+  cursor: pointer;
+}
+
+
+/* Expanded bar state — becomes more solid */
+.glass-nav.expanded {
+  width: calc(100% - 96px);
+  right: 48px;
+  border-radius: 8px;
+  padding: 0 48px;
+  justify-content: space-between;
+  cursor: default;
+  background: rgba(138, 136, 152, 0.24);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.14),
+    0 2px 10px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Glass depth gradient */
+.glass-nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.08) 30%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.06) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+
+/* Noise overlay */
+.glass-nav::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.69' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+}
+
+/* Hamburger icon — organic biomorphic bars matching brand arrows */
+.nav-hamburger {
+  position: relative;
+  z-index: 2;
+  width: 24px;
+  height: 16px;
+  flex-shrink: 0;
+  color: rgba(55, 50, 75, 0.50);
+  transition: opacity 0.3s ease;
+  filter:
+    drop-shadow(0 0.5px 0 rgba(255, 255, 255, 0.35))
+    drop-shadow(0 -0.5px 0 rgba(0, 0, 0, 0.10));
+}
+.nav-hamburger svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.glass-nav.expanded .nav-hamburger {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.nav-logo {
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease 0s;
+  display: flex;
+  align-items: center;
+}
+.nav-logo-mark {
+  height: 26px;
+  aspect-ratio: 2048 / 1081;
+  background: rgba(50, 45, 68, 0.40);
+  -webkit-mask-image: url(./logo-nav.svg);
+  mask-image: url(./logo-nav.svg);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.35))
+    drop-shadow(0 -0.5px 0 rgba(0, 0, 0, 0.12));
+  transition: background 0.25s;
+}
+.nav-logo:hover .nav-logo-mark {
+  background: rgba(50, 45, 68, 0.58);
+}
+.glass-nav.expanded .nav-logo {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.2s;
+}
+
+.nav-links {
+  display: flex;
+  gap: 52px;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease 0s;
+}
+.glass-nav.expanded .nav-links {
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0.3s;
+}
+
+.nav-link {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(55, 50, 75, 0.5);
+  white-space: nowrap;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5),
+    0 -1px 0 rgba(0, 0, 0, 0.18),
+    0 0 1px rgba(255, 255, 255, 0.1);
+  transition: color 0.5s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
+}
+.nav-link:hover {
+  color: #2A1830;
+  letter-spacing: 0.28em;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 12px rgba(42, 24, 48, 0.15);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO — Sticky nav + hero image + info strip + gradient bridge
+   ═══════════════════════════════════════════════════════════════ */
+
+.hero-container {
+  position: relative;
+  background: linear-gradient(to bottom, var(--hero-edge) 0%, var(--hero-edge) 45%, var(--about-bg) 100%);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.hero-image {
+  position: relative;
+  margin-top: 0;
+  flex: 0 0 68vh;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+}
+.hero-image img,
+.hero-image video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+/* Info strip — anchored to bottom of hero viewport */
+.info-strip {
+  position: relative;
+  padding: 0 48px;
+  z-index: 2;
+  margin: auto 0 0;
+  width: 100%;
+}
+.info-strip-rule {
+  width: 100%;
+  height: 1px;
+  background: rgba(58, 52, 84, 0.12);
+  margin: 0 0 24px;
+}
+.info-strip-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.info-role {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: rgba(45, 40, 65, 0.45);
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.4),
+    0 -1px 1px rgba(0, 0, 0, 0.08);
+}
+.info-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+.info-meta-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(138, 136, 152, 0.75);
+}
+.info-meta-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.015em;
+  color: rgba(58, 52, 84, 0.65);
+}
+
+/* Gradient bridge — hidden, hero-container handles the full gradient now */
+.gradient-bridge {
+  display: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ABOUT SECTION — Two-column: bio text | structured data
+   Clean grid, generous vertical spacing, divider lines
+   ═══════════════════════════════════════════════════════════════ */
+
+.about-zone {
+  background: var(--about-bg);
+  padding: 120px 60px 60px;
+  position: relative;
+}
+
+.about {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Heading area */
+.about-heading {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 96px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: rgba(92, 92, 112, 0.45);
+  margin-bottom: 52px;
+}
+
+/* Full-width horizontal rule */
+.about-rule {
+  border: none;
+  border-top: 1px solid rgba(58, 52, 84, 0.08);
+  margin-bottom: 52px;
+}
+
+/* Two-column content area — left column much wider, data side compact */
+.about-content {
+  display: grid;
+  grid-template-columns: 1.6fr 1px 0.85fr;
+  gap: 0 48px;
+  align-items: start;
+}
+
+/* Left: body text */
+.about-text {
+  padding-right: 20px;
+}
+
+.about-text p {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.8;
+  letter-spacing: 0.005em;
+  color: rgba(58,52,84,0.7);
+}
+
+.about-text p + p {
+  margin-top: 22px;
+}
+
+.about-text strong {
+  color: rgba(58,52,84,0.8);
+  font-weight: 400;
+}
+
+/* Vertical divider */
+.about-divider {
+  width: 1px;
+  background: rgba(58, 52, 84, 0.12);
+  align-self: stretch;
+}
+
+/* Right: structured data */
+.about-data {
+  padding-left: 20px;
+}
+
+.about-data-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(58, 52, 84, 0.07);
+  align-items: baseline;
+}
+
+.about-data-row:first-child {
+  padding-top: 0;
+}
+
+.about-data-row:last-child {
+  border-bottom: none;
+}
+
+.about-data-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(138, 136, 152, 0.75);
+  padding-top: 1px;
+}
+
+.about-data-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.015em;
+  color: rgba(58, 52, 84, 0.65);
+  line-height: 1.65;
+  max-width: 240px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CAROUSEL — Organic editorial image clusters, horizontal scroll
+   Varied proportions, overlapping clusters that separate on hover
+   Center-focused visibility effect
+   ═══════════════════════════════════════════════════════════════ */
+
+.carousel-zone {
+  background: var(--about-bg);
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  height: 580px;
+  border-top: 1px solid rgba(58, 52, 84, 0.08);
+  border-bottom: 1px solid rgba(58, 52, 84, 0.08);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 60px;
+  padding: 0 80px;
+  height: 100%;
+  will-change: transform;
+}
+
+.carousel-cluster {
+  position: relative;
+  flex-shrink: 0;
+  height: 100%;
+}
+
+.carousel-img {
+  position: absolute;
+  border-radius: 0;
+  overflow: visible;
+  background: none;
+  /* drop-shadow follows image alpha contour — no rectangular artifacts */
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s ease,
+    filter 0.6s ease;
+  will-change: transform, opacity, filter;
+  opacity: var(--vis-opacity, 0.35);
+  filter:
+    drop-shadow(0 12px 28px rgba(0, 0, 0, 0.2))
+    drop-shadow(0 4px 10px rgba(0, 0, 0, 0.12))
+    saturate(var(--vis-sat, 0.25))
+    brightness(var(--vis-bright, 0.92));
+}
+
+.carousel-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Cluster hover — images spread apart, full opacity, elevated shadows */
+.carousel-cluster:hover .carousel-img {
+  transform: translate(var(--spread-x, 0), var(--spread-y, 0));
+  opacity: 1 !important;
+  filter:
+    drop-shadow(0 16px 36px rgba(0, 0, 0, 0.22))
+    drop-shadow(0 5px 12px rgba(0, 0, 0, 0.14))
+    saturate(1)
+    brightness(1) !important;
+}
+
+/* Individual image hover within cluster — slight lift */
+.carousel-img:hover {
+  z-index: 20 !important;
+  transform: translate(var(--spread-x, 0), var(--spread-y, 0)) scale(1.04) !important;
+  filter:
+    drop-shadow(0 22px 48px rgba(0, 0, 0, 0.28))
+    drop-shadow(0 8px 18px rgba(0, 0, 0, 0.16))
+    saturate(1.05)
+    brightness(1.02) !important;
+}
+
+/* Arrow navigation buttons */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(246, 244, 255, 0.85) 30%, rgba(246, 244, 255, 0.4) 60%, rgba(246, 244, 255, 0) 80%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: none;
+  cursor: pointer;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+.carousel-zone:hover .carousel-nav {
+  opacity: 1;
+  pointer-events: auto;
+}
+.carousel-nav:hover {
+  background: radial-gradient(circle, rgba(246, 244, 255, 0.95) 30%, rgba(246, 244, 255, 0.5) 60%, rgba(246, 244, 255, 0) 80%);
+  transform: translateY(-50%) scale(1.08);
+}
+.carousel-nav:active {
+  transform: translateY(-50%) scale(0.96);
+}
+.carousel-nav-left { left: 20px; }
+.carousel-nav-right { right: 20px; }
+.carousel-nav svg {
+  width: 18px;
+  height: 17px;
+  fill: rgba(60, 58, 72, 0.5);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PROJECTS SECTION — Direction A grid + folder cards
+   2-column staggered, right column offset down
+   ═══════════════════════════════════════════════════════════════ */
+
+.projects-zone {
+  background: linear-gradient(180deg,
+    var(--ghost-violet) 0%,
+    #F2F2F4 50%,
+    var(--frost-violet) 100%
+  );
+  padding: 160px 60px 160px;
+
+  border-top: 1px solid rgba(58, 52, 84, 0.08);
+}
+
+.projects-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header: heading left, meta right */
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 48px;
+}
+
+.projects-header-left {
+  position: relative;
+}
+
+.projects-heading {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 96px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: rgba(92, 92, 112, 0.40);
+}
+
+.projects-header-right {
+  text-align: right;
+  padding-top: 20px;
+}
+
+.projects-meta-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(138, 136, 152, 0.55);
+  margin-bottom: 4px;
+}
+
+.projects-meta-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.015em;
+  color: rgba(58, 52, 84, 0.48);
+}
+
+/* Rule under header */
+.projects-rule {
+  border: none;
+  border-top: 1px solid rgba(58, 52, 84, 0.08);
+  margin-bottom: 48px;
+}
+
+/* 2-column staggered grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 56px;
+}
+
+.project-cell:nth-child(even) {
+  margin-top: 72px;
+}
+
+/* Hover: dim siblings */
+.project-cell {
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+.projects-grid:has(.project-cell:hover) .project-cell:not(:hover) {
+  opacity: 0.75;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   FOLDER CARDS — Editorial glass folders
+   ═══════════════════════════════════════════════════════════════ */
+
+.folder-card {
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  height: 468px;
+  z-index: 1;
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1),
+              height 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.folder-card:hover {
+  transform: translateY(-6px);
+  height: 660px;
+  z-index: 10;
+}
+
+/* ── Tab — numbered, with brand arrow ── */
+.folder-back-tab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 48px;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(250,250,252,0.98) 0%, rgba(245,245,248,0.97) 100%);
+  border: 1.5px solid rgba(235,235,240,0.6);
+  border-bottom: none;
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.9),
+    0 2px 8px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px 0 16px;
+}
+
+.folder-tab-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(60, 58, 72, 0.22);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.7),
+    0 -1px 1px rgba(0,0,0,0.08);
+}
+
+/* Tab arrow — watermark, rotated to point right */
+.folder-tab-arrow {
+  width: 18px; height: 17px;
+  fill: rgba(60, 58, 72, 0.07);
+  filter: none;
+  flex-shrink: 0;
+  transform: rotate(-90deg);
+}
+
+/* ── Back body ── */
+.folder-back-body {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  height: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(248,248,250,0.97) 0%, rgba(243,243,246,0.96) 50%, rgba(246,246,249,0.97) 100%);
+  border: 1.5px solid rgba(235,235,240,0.6);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.9),
+    inset 0 -1px 2px rgba(0,0,0,0.01),
+    0 4px 16px rgba(0,0,0,0.08);
+  transition: height 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.folder-card:hover .folder-back-body {
+  height: 612px;
+}
+
+/* ── Front body — flexbox layout ── */
+.folder-body {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  height: 420px;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: height 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+  background: linear-gradient(145deg, rgba(252,252,253,0.98) 0%, rgba(248,248,250,0.97) 50%, rgba(250,250,252,0.98) 100%);
+  border: 1.5px solid rgba(245,245,248,0.7);
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.95),
+    inset 0 -1px 2px rgba(0,0,0,0.01),
+    0 10px 35px rgba(0,0,0,0.16),
+    0 4px 14px rgba(0,0,0,0.1),
+    0 20px 60px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 16px;
+}
+
+.folder-card:hover .folder-body {
+  height: 612px;
+  box-shadow:
+    inset 0 1px 3px rgba(255,255,255,0.95),
+    inset 0 -1px 2px rgba(0,0,0,0.01),
+    0 20px 60px rgba(0,0,0,0.2),
+    0 10px 25px rgba(0,0,0,0.12),
+    0 30px 80px rgba(0,0,0,0.1);
+}
+
+/* Top edge highlight */
+.folder-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9) 10%, rgba(255,255,255,0.9) 90%, transparent);
+  z-index: 3;
+}
+
+/* Bottom shadow gradient */
+.folder-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.06));
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Image inset — deep debossed window ── */
+.folder-image-inset {
+  position: relative;
+  width: 100%;
+  height: 230px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow:
+    inset 0 3px 8px rgba(0,0,0,0.35),
+    inset 0 1px 3px rgba(0,0,0,0.25),
+    inset 0 -2px 4px rgba(255,255,255,0.3),
+    inset 3px 3px 8px rgba(0,0,0,0.15),
+    inset -2px -2px 6px rgba(255,255,255,0.35);
+}
+
+/* Real image with material integration */
+.folder-image-inset img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  opacity: 0.82;
+  transition: opacity 0.5s ease;
+}
+.folder-card:hover .folder-image-inset img {
+  opacity: 0.9;
+}
+
+/* Grain/noise overlay on image — matches folder surface texture */
+.folder-image-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Extra vignette shadow layer inside image — deepens the "pressed in" look */
+.folder-image-inset::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 4px 12px rgba(0,0,0,0.25),
+    inset 0 -3px 8px rgba(255,255,255,0.15),
+    inset 3px 0 10px rgba(0,0,0,0.1),
+    inset -3px 0 10px rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── Title + Subtitle — embossed, inside folder body ── */
+.folder-title-block {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 4px;
+  min-height: 0;
+}
+
+.folder-project-title {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  /* Option A — Deeper Emboss */
+  color: rgba(45, 40, 60, 0.45);
+  text-shadow:
+    0 1.5px 0 rgba(255,255,255,0.65),
+    0 -1px 1px rgba(0,0,0,0.18),
+    0 0 3px rgba(255,255,255,0.12);
+  margin-bottom: 6px;
+}
+
+.folder-project-subtitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(45, 40, 60, 0.38);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.6),
+    0 -1px 1px rgba(0,0,0,0.12);
+  max-height: 30px;
+  opacity: 1;
+  transition: opacity 0.25s ease,
+              max-height 0.4s cubic-bezier(0.33, 1, 0.68, 1),
+              margin 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* All folders — larger title + soft violet stroke + fill band */
+.folder-project-title {
+  font-size: 34px;
+  -webkit-text-stroke: 0.4px rgba(55, 45, 80, 0.18);
+}
+
+.folder-title-block {
+  background: rgba(0,0,0,0.028);
+  border-top: 1px solid rgba(0,0,0,0.04);
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  margin: 0 -20px;
+  padding: 24px 24px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    inset 0 -1px 0 rgba(255,255,255,0.3);
+}
+
+/* ── Tags at bottom ── */
+.folder-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  flex-shrink: 0;
+  z-index: 3;
+  max-height: 60px;
+  opacity: 1;
+  transition: opacity 0.25s ease,
+              max-height 0.45s cubic-bezier(0.33, 1, 0.68, 1),
+              padding 0.45s cubic-bezier(0.33, 1, 0.68, 1),
+              margin 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.folder-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.folder-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.03);
+  border: 1.5px solid rgba(0,0,0,0.06);
+  color: rgba(60, 66, 95, 0.4);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 -0.5px 0.5px rgba(0,0,0,0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.4),
+    inset 0 -1px 1px rgba(0,0,0,0.03),
+    0 1px 3px rgba(0,0,0,0.04);
+}
+
+.folder-tag-year {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.04);
+  border: 1.5px solid rgba(0,0,0,0.06);
+  color: rgba(60, 66, 95, 0.4);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5), 0 -0.5px 0.5px rgba(0,0,0,0.06);
+  box-shadow:
+    inset 0 1px 2px rgba(0,0,0,0.05),
+    0 1px 0 rgba(255,255,255,0.5);
+}
+
+/* ── Hover description — inside folder body, revealed by height expansion ── */
+.folder-hover-desc {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 4px;
+  margin: 0;
+  border-top: 0px solid rgba(58, 52, 84, 0);
+  flex-shrink: 0;
+  transition: opacity 0.4s ease 0.2s,
+              max-height 0.65s cubic-bezier(0.33, 1, 0.68, 1),
+              padding 0.65s cubic-bezier(0.33, 1, 0.68, 1),
+              border-top 0.4s ease,
+              margin 0.65s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.folder-card:hover .folder-project-subtitle {
+  opacity: 0;
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.folder-card:hover .folder-info {
+  opacity: 0;
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+  border-top: 0 solid transparent;
+  overflow: hidden;
+  transition: opacity 0.15s ease,
+              max-height 0.3s cubic-bezier(0.33, 1, 0.68, 1),
+              padding 0.3s cubic-bezier(0.33, 1, 0.68, 1),
+              border-top 0s;
+}
+
+.folder-card:hover .folder-hover-desc {
+  opacity: 1;
+  max-height: 500px;
+  padding: 0 4px 8px;
+  margin-top: 0;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.folder-hover-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(58, 52, 84, 0.65);
+  padding-top: 12px;
+  margin-bottom: 16px;
+}
+
+.folder-hover-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 13.5px;
+  font-weight: 300;
+  line-height: 1.85;
+  letter-spacing: 0.005em;
+  color: var(--dark-steel);
+}
+
+/* Glass noise texture — applied via JS */
+.glass-surface {
+  background-size: auto, auto, auto, 256px 256px, 128px 128px, 512px 512px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat, repeat;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ETC SECTION — Full-width dark bg, overlapping horizontal folders
+   Folders stack on top of each other, click to expand body
+   ═══════════════════════════════════════════════════════════════ */
+
+.etc-zone {
+  background: linear-gradient(180deg, var(--frost-violet) 0%, #D2D0DC 50%, #C8C6D2 100%);
+  padding: 160px 60px 0;
+  position: relative;
+  border-top: 1px solid rgba(58, 52, 84, 0.1);
+
+  overflow: hidden; /* clips last folder excess + prevents margin collapse */
+}
+
+.etc-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header — matches About/Projects pattern */
+.etc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 48px;
+}
+
+.etc-header-left {
+  position: relative;
+}
+
+.etc-heading {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 96px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: rgba(58, 52, 84, 0.40);
+}
+
+.etc-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(58, 52, 84, 0.5);
+  padding-top: 20px;
+}
+
+.etc-rule {
+  border: none;
+  border-top: 1px solid rgba(58, 52, 84, 0.12);
+  margin-bottom: 48px;
+}
+
+/* Folder stack — full width, folders overlap each other.
+   margin-bottom trims last folder's excess (no folder below to cover it).
+   The parent etc-zone has overflow:hidden to clip visually + prevent margin collapse.
+   :has() expands smoothly when the last folder is active. */
+.etc-folders {
+  position: relative;
+  margin-bottom: -120px;
+  transition: margin-bottom 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+/* When Tools (last folder) is active, footer slides down smoothly.
+   -30px keeps the last folder's bottom edge slightly under the footer. */
+.etc-folders:has(.etc-folder:last-child.is-active) {
+  margin-bottom: -30px;
+}
+
+/* Tools (last folder) gets a shorter body in default stacked state */
+.etc-folder:last-child .etc-folder-body {
+  height: 180px;
+}
+.etc-folder:last-child .etc-folder-content {
+  padding: 24px 40px;
+}
+/* Tools (last folder) expands when active — matches other folders' expanded size */
+.etc-folder:last-child.is-active .etc-folder-body {
+  height: 460px;
+}
+.etc-folder:last-child.is-active .etc-folder-content {
+  padding: 48px 56px;
+}
+
+/* Each folder: tab on top, body below.
+   Heavy negative margin = folders always overlap, bottom never fully visible.
+   z-index stacking ensures the browser sends clicks to the correct (topmost) folder. */
+.etc-folder {
+  position: relative;
+  cursor: pointer;
+  z-index: var(--folder-z);
+}
+
+/* Stacking order: last on top (bottom folders cover upper ones) */
+.etc-folder:nth-child(1) { --folder-z: 1; }
+.etc-folder:nth-child(2) { --folder-z: 2; }
+.etc-folder:nth-child(3) { --folder-z: 3; }
+.etc-folder:nth-child(4) { --folder-z: 4; }
+
+/* Overlap: heavy negative margin so bottom of each folder is always hidden */
+.etc-folder + .etc-folder {
+  margin-top: -380px;
+  transition: margin-top 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Tab — big, opaque, solid color matching folder body.
+   z-index: 10 so tabs always poke above the covering folder below,
+   making them always hoverable/clickable even when the body is covered. */
+.etc-folder-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 280px;
+  padding: 18px 28px;
+  background: var(--folder-bg, #A8A4B8);
+  border-radius: 14px 14px 0 0;
+  margin-left: 24px;
+  position: relative;
+  z-index: 10;
+  box-shadow:
+    0 -4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.etc-folder-tab-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* Debossed text — pressed into the tab surface */
+  color: var(--deboss-color, rgba(0, 0, 0, 0.15));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.25)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.4));
+  transition: color 0.4s ease;
+}
+
+/* Folder body — tall, solid color, with texture layers */
+.etc-folder-body {
+  width: 100%;
+  height: 440px;
+  background: var(--folder-bg, #A8A4B8);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 -2px 6px rgba(0, 0, 0, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.18),
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition: height 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.etc-folder.is-active .etc-folder-body {
+  height: 660px;
+}
+
+/* Top bevel highlight for 3D depth */
+.etc-folder-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* Bottom shadow gradient for depth */
+.etc-folder-body::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.12) 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Grainy metallic noise + reflection sweep */
+.etc-folder-noise {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(165deg, rgba(255,255,255,0.12) 0%, transparent 25%, transparent 65%, rgba(255,255,255,0.06) 85%, rgba(255,255,255,0.10) 100%),
+    radial-gradient(ellipse at 15% 8%, rgba(255,255,255,0.14) 0%, transparent 35%),
+    radial-gradient(ellipse at 85% 92%, rgba(255,255,255,0.04) 0%, transparent 35%);
+}
+
+/* Canvas-generated grain — applied by JS */
+.etc-folder-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: soft-light;
+}
+
+/* SVG noise grain overlay — paper texture */
+.etc-folder-paper {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+}
+
+/* Content inside body — hidden by default */
+.etc-folder-content {
+  opacity: 0;
+  padding: 48px 56px;
+  transition: opacity 0.5s 0.2s ease;
+  pointer-events: none;
+  position: relative;
+  z-index: 5;
+}
+
+.etc-folder-content-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* Debossed into folder surface */
+  color: var(--deboss-color, rgba(0, 0, 0, 0.15));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.3)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.5)),
+    0px 0px 3px var(--deboss-shadow, rgba(0, 0, 0, 0.3)),
+    2px 2px 1px var(--deboss-highlight, rgba(255, 255, 255, 0.15));
+  margin-bottom: 28px;
+}
+
+.etc-folder-content-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+}
+
+.etc-skill-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.15));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.25)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.4));
+  line-height: 2.2;
+}
+
+/* ─── Enhanced folder content (Production, Creative Direction, Design, Tools) ─── */
+.etc-folder-overview {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.18));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.2)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.25));
+  margin-bottom: 24px;
+  max-width: 680px;
+}
+
+.etc-folder-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.etc-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--deboss-color, rgba(0, 0, 0, 0.2));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.2)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.3));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.15),
+    inset 0 -1px 1px rgba(0,0,0,0.06);
+}
+
+.etc-folder-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--deboss-shadow, rgba(0,0,0,0.12)) 0%, transparent 80%);
+  margin-bottom: 20px;
+}
+
+/* Stat blocks — side by side metric tiles */
+.etc-stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.etc-stat {
+  flex: 1 1 140px;
+  max-width: 200px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.12),
+    inset 0 -1px 2px rgba(0,0,0,0.06);
+}
+
+.etc-stat-value {
+  font-family: 'Sora', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.2));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.25)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.4));
+  margin-bottom: 4px;
+}
+
+.etc-stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.12));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.15)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.2));
+}
+
+/* Category groups — for Tools and Design sections */
+.etc-category-group {
+  margin-bottom: 18px;
+}
+
+.etc-category-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.18));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.25)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.35));
+  margin-bottom: 8px;
+}
+
+.etc-category-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.etc-category-item {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.14));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.18)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.25));
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Two-column layout for content-heavy folders */
+.etc-content-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 40px;
+}
+
+/* Highlight list — key achievements with bullet */
+.etc-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.etc-highlights li {
+  font-family: 'Sora', sans-serif;
+  font-size: 12.5px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.16));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.18)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.22));
+  padding-left: 14px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.etc-highlights li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--deboss-color, rgba(0, 0, 0, 0.12));
+  box-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.2)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.3));
+}
+
+/* Partners strip */
+.etc-partners {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--deboss-color, rgba(0, 0, 0, 0.1));
+  text-shadow:
+    1px 1px 0px var(--deboss-highlight, rgba(255, 255, 255, 0.12)),
+    -1px -1px 1px var(--deboss-shadow, rgba(0, 0, 0, 0.15));
+  line-height: 1.8;
+}
+
+.etc-partners-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-right: 8px;
+}
+
+/* ─── Per-folder colors + deboss variables ─── */
+.etc-folder:nth-child(1) {
+  --folder-bg: linear-gradient(180deg, #C8C6D0 0%, #B8B6C2 50%, #A8A6B4 100%);
+  --deboss-color: #8A8898;
+  --deboss-highlight: rgba(220, 218, 230, 0.5);
+  --deboss-shadow: rgba(100, 98, 112, 0.6);
+}
+.etc-folder:nth-child(2) {
+  --folder-bg: linear-gradient(180deg, #C2C0CC 0%, #B2B0BE 50%, #A2A0B0 100%);
+  --deboss-color: #868494;
+  --deboss-highlight: rgba(214, 212, 224, 0.5);
+  --deboss-shadow: rgba(96, 94, 108, 0.6);
+}
+.etc-folder:nth-child(3) {
+  --folder-bg: linear-gradient(180deg, #C6C4CE 0%, #B6B4C0 50%, #A6A4B2 100%);
+  --deboss-color: #888696;
+  --deboss-highlight: rgba(218, 216, 228, 0.5);
+  --deboss-shadow: rgba(98, 96, 110, 0.6);
+}
+.etc-folder:nth-child(4) {
+  --folder-bg: linear-gradient(180deg, #BFBDCA 0%, #AFADBC 50%, #9F9DAE 100%);
+  --deboss-color: #828092;
+  --deboss-highlight: rgba(210, 208, 222, 0.5);
+  --deboss-shadow: rgba(92, 90, 104, 0.6);
+}
+
+/* Apply gradient to body and tab via per-folder variable */
+.etc-folder:nth-child(1) .etc-folder-body { background: linear-gradient(180deg, #C8C6D0 0%, #B8B6C2 50%, #A8A6B4 100%); }
+.etc-folder:nth-child(1) .etc-folder-tab { background: #C8C6D0; }
+.etc-folder:nth-child(2) .etc-folder-body { background: linear-gradient(180deg, #C2C0CC 0%, #B2B0BE 50%, #A2A0B0 100%); }
+.etc-folder:nth-child(2) .etc-folder-tab { background: #C2C0CC; }
+.etc-folder:nth-child(3) .etc-folder-body { background: linear-gradient(180deg, #C6C4CE 0%, #B6B4C0 50%, #A6A4B2 100%); }
+.etc-folder:nth-child(3) .etc-folder-tab { background: #C6C4CE; }
+.etc-folder:nth-child(4) .etc-folder-body { background: linear-gradient(180deg, #BFBDCA 0%, #AFADBC 50%, #9F9DAE 100%); }
+.etc-folder:nth-child(4) .etc-folder-tab { background: #BFBDCA; }
+
+/* ─── Active state ─── */
+/* NO z-index boost — the folder below still covers this folder's bottom edge.
+   The reveal happens by the JS adding margin-top to the next sibling. */
+.etc-folder.is-active .etc-folder-content {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.etc-folder.is-active .etc-folder-tab-label {
+  color: var(--deboss-color, rgba(0, 0, 0, 0.2));
+}
+
+/* Next sibling slides down to reveal content.
+   Slight overlap (-30px) keeps the stacking material feel — no gap. */
+.etc-folder.is-active + .etc-folder {
+  margin-top: -30px;
+  transition: margin-top 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Tools (last folder) has no next sibling.
+   Keep default overlap position — reveal comes from body height + container margin-bottom. */
+.etc-folder:last-child.is-active {
+  margin-top: -380px;
+  transition: margin-top 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER — Minimal for now
+   ═══════════════════════════════════════════════════════════════ */
+
+.site-footer {
+  background: #180C1A;
+  padding: 140px 60px 60px;
+  position: relative;
+}
+
+/* Footer — single gentle reveal for all content */
+.footer-inner.reveal {
+  transform: translateY(16px);
+}
+
+/* Content wrapper */
+.site-content {
+  position: relative;
+  background: var(--about-bg);
+}
+
+/* Noise overlay on footer */
+.site-footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Top area: logo left, contact right */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 80px;
+}
+
+.footer-logo {
+  flex-shrink: 0;
+  max-width: 55%;
+}
+.footer-logo img {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+}
+
+/* Contact column */
+.footer-contact {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.footer-contact-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-contact-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.footer-contact-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.25s;
+}
+
+a.footer-contact-value:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-copy,
+.footer-credit {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLL-IN TRANSITIONS — Subtle fade + lift on first view
+   ═══════════════════════════════════════════════════════════════ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 0s;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── About waterfall: heading → rule → body → divider → each data row ── */
+.about .about-heading.reveal  { transition-delay: 0s; }
+.about .about-rule.reveal     { transition-delay: 0.12s; }
+
+/* Body text: blur + transform on container, opacity on individual paragraphs */
+.about .about-text.reveal {
+  transition-delay: 0.15s;
+  transition: transform 2.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 2.6s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: blur(3px);
+  transform: translateY(30px);
+  opacity: 1; /* override .reveal default — paragraphs handle their own opacity */
+}
+.about .about-text.reveal.is-visible {
+  filter: blur(0px);
+  transform: translateY(0);
+}
+
+/* Paragraph stagger: p1 fades in first, p2 follows */
+.about-text p {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about-text.is-visible p:first-child {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.15s;
+}
+.about-text.is-visible p:nth-child(2) {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 1s;
+}
+
+/* Divider + data rows also use deeper observer */
+.about .about-divider.reveal  {
+  transition-delay: 0.35s;
+  transform: translateY(0) scaleY(0); transform-origin: top;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about .about-divider.reveal.is-visible { opacity: 1; transform: translateY(0) scaleY(1); }
+.about .about-data-row.reveal:nth-child(1) {
+  transition-delay: 0.5s;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about .about-data-row.reveal:nth-child(2) {
+  transition-delay: 0.65s;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about .about-data-row.reveal:nth-child(3) {
+  transition-delay: 0.8s;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.about .about-data-row.reveal:nth-child(4) {
+  transition-delay: 0.95s;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 2.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Projects waterfall: header → rule → cards domino ── */
+.projects-header.reveal  { transition-delay: 0s; }
+.projects-rule.reveal     { transition-delay: 0.12s; }
+.projects-grid .project-cell.reveal:nth-child(1) { transition-delay: 0.24s; }
+.projects-grid .project-cell.reveal:nth-child(2) { transition-delay: 0.38s; }
+.projects-grid .project-cell.reveal:nth-child(3) { transition-delay: 0.52s; }
+.projects-grid .project-cell.reveal:nth-child(4) { transition-delay: 0.66s; }
+
+/* ── Etc waterfall: header → rule → folders cascade ── */
+.etc-header.reveal { transition-delay: 0s; }
+.etc-rule.reveal   { transition-delay: 0.12s; }
+
+/* Etc skill folders — stagger entry with CSS animation
+   (uses @keyframes instead of transition so it doesn't override
+    the margin-top transition needed for folder open/close) */
+.etc-folders .etc-folder {
+  opacity: 0;
+  transform: translateY(28px);
+}
+.etc-folders.is-visible .etc-folder {
+  animation: folder-reveal 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes folder-reveal {
+  to { opacity: 1; transform: translateY(0); }
+}
+.etc-folders.is-visible .etc-folder:nth-child(1) { animation-delay: 0.24s; }
+.etc-folders.is-visible .etc-folder:nth-child(2) { animation-delay: 0.34s; }
+.etc-folders.is-visible .etc-folder:nth-child(3) { animation-delay: 0.44s; }
+.etc-folders.is-visible .etc-folder:nth-child(4) { animation-delay: 0.54s; }
+.etc-folders.is-visible .etc-folder:nth-child(5) { animation-delay: 0.64s; }
+.etc-folders.is-visible .etc-folder:nth-child(6) { animation-delay: 0.74s; }
+.etc-folders.is-visible .etc-folder:nth-child(7) { animation-delay: 0.84s; }
+.etc-folders.is-visible .etc-folder:nth-child(8) { animation-delay: 0.94s; }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE NAV OVERLAY — hidden on desktop
+   ═══════════════════════════════════════════════════════════════ */
+
+.mobile-nav-overlay {
+  display: none;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Tablet ≤768px
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  body { font-size: 16px; }
+
+  /* ── Glass Nav ── */
+  .glass-nav { top: 16px; right: 24px; }
+  .glass-nav.expanded {
+    width: calc(100% - 48px);
+    right: 24px;
+    padding: 0 24px;
+  }
+  .nav-links { gap: 28px; }
+  .nav-link { font-size: 10px; letter-spacing: 0.16em; }
+
+  /* ── Hero ── */
+  .hero-image { flex: 0 0 55vh; }
+  .hero-container { padding-bottom: 40px; }
+  .info-strip { padding: 0 32px; }
+  .info-role { font-size: 32px; }
+
+  /* ── About — single column ── */
+  .about-zone { padding: 80px 32px 60px; }
+  .about-heading { font-size: 64px; margin-bottom: 36px; }
+  .about-rule { margin-bottom: 36px; }
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 32px 0;
+  }
+  .about-divider { display: none; }
+  .about-text { padding-right: 0; }
+  .about-text p { font-size: 14px; line-height: 1.75; }
+  .about-data {
+    padding-left: 0;
+    border-top: 1px solid rgba(58, 52, 84, 0.08);
+    padding-top: 24px;
+  }
+
+  /* ── Carousel ── */
+  .carousel-zone { height: 400px; }
+  .carousel-nav {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ── Projects ── */
+  .projects-zone { padding: 100px 32px; }
+  .projects-heading { font-size: 64px; }
+  .projects-grid { gap: 24px 28px; }
+  .folder-card { height: 400px; }
+  .folder-card:hover { height: 580px; }
+  .folder-image-inset { height: 180px; }
+  .folder-project-title { font-size: 26px !important; -webkit-text-stroke: 0.3px rgba(55, 45, 80, 0.18) !important; }
+  .folder-back-body { height: 352px; }
+  .folder-card:hover .folder-back-body { height: 532px; }
+  .folder-body { height: 352px; }
+  .folder-card:hover .folder-body { height: 532px; }
+
+  /* ── ETC ── */
+  .etc-zone { padding: 100px 32px 0; }
+  .etc-heading { font-size: 64px; }
+  .etc-folder + .etc-folder { margin-top: -320px; }
+  .etc-folder-tab { width: 220px; padding: 14px 20px; }
+  .etc-folder-tab-label { font-size: 13px; }
+  .etc-content-cols { grid-template-columns: 1fr; }
+  .etc-folder-content { padding: 32px 32px; }
+
+  /* ── Footer ── */
+  .site-footer { padding: 100px 32px 40px; }
+  .footer-top {
+    flex-direction: column;
+    gap: 48px;
+  }
+  .footer-logo { max-width: 100%; }
+  .footer-logo img { max-width: 400px; }
+
+  /* ── Scroll reveals ── */
+  .reveal { transform: translateY(16px); }
+  .about .about-text.reveal { filter: blur(2px); transform: translateY(20px); }
+
+  /* ── Coming soon modal ── */
+  .coming-soon-card { padding: 60px 48px; }
+  .coming-soon-title { font-size: 48px; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — Phone ≤480px
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+  .hide-mobile { display: none; }
+
+  /* ── Nav: pill stays, hamburger opens overlay ── */
+  .glass-nav { top: 12px; right: 16px; }
+  .glass-nav.expanded {
+    width: 52px;
+    right: 16px;
+    padding: 0 15px;
+    justify-content: flex-end;
+    border-radius: 10px;
+    background: rgba(138, 136, 152, 0.14);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.10),
+      0 2px 8px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  }
+  .glass-nav.expanded .nav-hamburger {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+  }
+  .glass-nav.expanded .nav-logo {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+  }
+  .glass-nav.expanded .nav-links {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+  }
+
+  /* ── Mobile nav overlay ── */
+  .mobile-nav-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    background: rgba(24, 12, 26, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .mobile-nav-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mobile-nav-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(208, 212, 224, 0.6);
+    text-decoration: none;
+    padding: 12px 24px;
+    transition: color 0.3s ease, letter-spacing 0.3s ease;
+  }
+  .mobile-nav-link:active {
+    color: rgba(208, 212, 224, 1);
+    letter-spacing: 0.28em;
+  }
+
+  /* ── Hero — shorter container = less horizontal crop with cover ── */
+  .hero-image {
+    flex: 0 0 32vh;
+    -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+  }
+  .hero-image img,
+  .hero-image video {
+    object-fit: cover;
+    object-position: center 40%;
+  }
+  .hero-container { padding-bottom: 120px; min-height: 100vh; }
+  .info-strip { padding: 0 20px; }
+  .info-strip-rule { margin-bottom: 20px; }
+  .info-strip-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .info-role { font-size: 32px; line-height: 1.2; }
+  .info-meta {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+  .info-meta-label,
+  .info-meta-value {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    font-style: normal;
+    color: rgba(138, 136, 152, 0.75);
+  }
+
+  /* ── About ── */
+  .about-zone { padding: 60px 20px 40px; }
+  .about-heading { font-size: 48px; margin-bottom: 28px; }
+  .about-rule { margin-bottom: 28px; }
+  .about-data-row {
+    grid-template-columns: 1fr;
+    gap: 4px 0;
+  }
+  .about-data-label { padding-top: 0; }
+  .about-data-value { max-width: 100%; }
+
+  /* ── Carousel — scaled-down overlapping clusters, auto-scroll ── */
+  .carousel-zone {
+    height: 420px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .carousel-track {
+    gap: 0;
+    padding: 0;
+    height: 580px;
+    align-items: flex-start;
+  }
+  .carousel-cluster {
+    height: 580px !important;
+    transform: scale(0.68);
+    transform-origin: center top;
+    margin: 0 -100px;
+  }
+  /* Arrows always visible */
+  .carousel-nav {
+    opacity: 0.7;
+    pointer-events: auto;
+    width: 40px;
+    height: 40px;
+  }
+  .carousel-nav-left { left: 6px; }
+  .carousel-nav-right { right: 6px; }
+  .carousel-nav svg { width: 14px; height: 13px; }
+  /* Disable cluster hover spread on touch */
+  .carousel-cluster:hover .carousel-img { transform: none; }
+  .carousel-img:hover { transform: none !important; }
+
+  /* ── Projects — single column ── */
+  .projects-zone { padding: 100px 20px 60px; }
+  .projects-heading { font-size: 48px; }
+  .projects-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .projects-header-right {
+    display: none;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .project-cell:nth-child(even) { margin-top: 0; }
+  /* Disable dim-siblings on phone */
+  .projects-grid:has(.project-cell:hover) .project-cell:not(:hover) {
+    opacity: 1;
+  }
+
+  /* ── Folder cards — neutralize hover, use .touch-active ── */
+  .folder-card { height: 420px; }
+  .folder-card:hover {
+    transform: none;
+    height: 420px;
+    z-index: 1;
+  }
+  .folder-back-body { height: 372px; }
+  .folder-card:hover .folder-back-body { height: 372px; }
+  .folder-body { height: 372px; }
+  .folder-card:hover .folder-body {
+    height: 372px;
+    box-shadow:
+      inset 0 1px 3px rgba(255,255,255,0.95),
+      inset 0 -1px 2px rgba(0,0,0,0.01),
+      0 10px 35px rgba(0,0,0,0.16),
+      0 4px 14px rgba(0,0,0,0.1),
+      0 20px 60px rgba(0,0,0,0.08);
+  }
+  .folder-card:hover .folder-project-subtitle {
+    opacity: 1;
+    max-height: 30px;
+    margin-bottom: 6px;
+  }
+  .folder-card:hover .folder-info {
+    opacity: 1;
+    max-height: 60px;
+    padding-top: 12px;
+    margin: 0;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    overflow: visible;
+  }
+  .folder-card:hover .folder-hover-desc {
+    opacity: 0;
+    max-height: 0;
+    padding: 0 4px;
+    margin: 0;
+    border-top: 0px solid rgba(58, 52, 84, 0);
+  }
+  .folder-card:hover .folder-image-inset img { opacity: 0.82; }
+
+  /* Touch-active = expanded state (mirrors hover) */
+  .folder-card.touch-active {
+    transform: translateY(-4px);
+    height: auto;
+    min-height: 560px;
+    z-index: 10;
+  }
+  .folder-card.touch-active .folder-back-body {
+    height: calc(100% - 48px);
+  }
+  .folder-card.touch-active .folder-body {
+    height: auto;
+    min-height: 512px;
+    box-shadow:
+      inset 0 1px 3px rgba(255,255,255,0.95),
+      inset 0 -1px 2px rgba(0,0,0,0.01),
+      0 20px 60px rgba(0,0,0,0.2),
+      0 10px 25px rgba(0,0,0,0.12),
+      0 30px 80px rgba(0,0,0,0.1);
+  }
+  .folder-card.touch-active .folder-project-subtitle {
+    opacity: 0;
+    max-height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+  .folder-card.touch-active .folder-info {
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    border-top: 0 solid transparent;
+    overflow: hidden;
+  }
+  .folder-card.touch-active .folder-hover-desc {
+    opacity: 1;
+    max-height: 500px;
+    padding: 0 4px 8px;
+    margin-top: 0;
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+  .folder-card.touch-active .folder-image-inset img { opacity: 0.9; }
+
+  /* Disable SVG motion blur filter on phone */
+  .folder-image-inset img {
+    filter: saturate(0.65) !important;
+  }
+
+  /* ── ETC — vertical accordion, no overlap ── */
+  .etc-zone { padding: 80px 20px 0; }
+  .etc-heading { font-size: 48px; }
+  .etc-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .etc-folder + .etc-folder { margin-top: 0; }
+  .etc-folder-tab {
+    width: 100%;
+    margin-left: 0;
+    border-radius: 10px 10px 0 0;
+  }
+  .etc-folder-body {
+    height: 80px;
+    border-radius: 0 0 10px 10px;
+  }
+  .etc-folder.is-active .etc-folder-body {
+    height: auto;
+    min-height: 520px;
+  }
+  .etc-folder:last-child .etc-folder-body { height: 80px; }
+  .etc-folder:last-child.is-active .etc-folder-body {
+    height: auto;
+    min-height: 520px;
+  }
+  .etc-folder.is-active + .etc-folder { margin-top: 0; }
+  .etc-folder:last-child.is-active { margin-top: 0; }
+  .etc-folders { margin-bottom: 0; }
+  .etc-folders:has(.etc-folder:last-child.is-active) { margin-bottom: 0; }
+  .etc-folder-content { padding: 24px 20px; }
+  .etc-stat-row { flex-direction: column; }
+  .etc-stat { max-width: 100%; }
+  .etc-folder-tab-label { font-size: 12px; }
+
+  /* ── Footer ── */
+  .site-footer { padding: 80px 20px 32px; }
+  .footer-logo { text-align: center; }
+  .footer-logo img { max-width: 280px; }
+  .footer-top { margin-bottom: 48px; }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  /* ── Scroll reveals ── */
+  .reveal { transform: translateY(12px); }
+  .about .about-text.reveal { filter: blur(1px); transform: translateY(14px); }
+
+  /* ── Coming soon modal ── */
+  .coming-soon-card { padding: 40px 24px; }
+  .coming-soon-title { font-size: 36px; }
+  .coming-soon-desc { font-size: 12px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- SVG directional motion blur filters — one per folder for independent hover -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="h-motion-blur-1" x="-15%" y="0%" width="130%" height="100%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6 0" class="blur-kernel"/>
+    </filter>
+    <filter id="h-motion-blur-2" x="-15%" y="0%" width="130%" height="100%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6 0" class="blur-kernel"/>
+    </filter>
+    <filter id="h-motion-blur-3" x="-15%" y="0%" width="130%" height="100%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6 0" class="blur-kernel"/>
+    </filter>
+    <filter id="h-motion-blur-4" x="-15%" y="0%" width="130%" height="100%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6 0" class="blur-kernel"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- Site content wrapper — sits above fixed footer -->
+<div class="site-content">
+
+<!-- ═══════════════════════════════════════
+     HERO — Option D: Sticky nav + frosted logo
+     ═══════════════════════════════════════ -->
+<nav class="glass-nav" id="glassNav">
+  <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"><div class="nav-logo-mark"></div></a>
+  <div class="nav-links">
+    <a href="#about" class="nav-link">About</a>
+    <a href="#projects" class="nav-link">Projects</a>
+    <!-- <a href="#etc" class="nav-link">Experience Ext.</a> -->
+    <a href="#contact" class="nav-link">Contact</a>
+  </div>
+  <div class="nav-hamburger">
+    <svg viewBox="0 0 100 70" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 2,13 C 12,7 55,7.5 97,11 C 90,15.5 45,15 2,18 Z"/>
+      <path d="M 10,33 C 22,28 65,28.5 90,32 C 82,36.5 32,36 10,38 Z"/>
+      <path d="M 2,53 C 20,56.5 60,56 97,52 C 90,58 35,57 2,59 Z"/>
+    </svg>
+  </div>
+</nav>
+
+<!-- Mobile nav overlay — full-screen dark frosted menu (phone only) -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay">
+  <a href="#about" class="mobile-nav-link">About</a>
+  <a href="#projects" class="mobile-nav-link">Projects</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+</div>
+
+<div class="hero-container">
+
+  <div class="hero-image">
+    <!-- <img src="./hero-wide.png" alt="Brooke Smith — Chrome Logo"> -->
+    <video src="./hero-loop.mp4" muted loop playsinline autoplay></video>
+  </div>
+
+  <div class="info-strip">
+    <div class="info-strip-rule"></div>
+    <div class="info-strip-inner">
+      <span class="info-role"><span class="gl">P</span>r<span class="o-star">o</span>duc<span class="dlig">er</span> & <span class="gl">C</span>r<span class="dlig">ea</span>tive <span class="gl">D</span>irect<span class="o-star">o</span>r</span>
+      <div class="info-meta">
+        <span class="info-meta-label">Portfolio</span>
+        <span class="info-meta-value">2020 — 2026</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="gradient-bridge"></div>
+
+
+<!-- ═══════════════════════════════════════
+     ABOUT — Bio text + structured data
+     ═══════════════════════════════════════ -->
+<div class="about-zone" id="about">
+  <section class="about">
+
+    <div class="about-heading reveal"><span class="gl">A</span>b<span class="o-star">o</span>u<span class="gl">t</span></div>
+
+    <hr class="about-rule reveal">
+
+    <div class="about-content">
+
+      <!-- Left: body text -->
+      <div class="about-text reveal">
+        <p>I'm a creative producer & director with over 6 years of experience delivering events, exhibitions, and experiences for cultural institutions & brands. I recently founded my own creative studio and developed a government-backed exhibition and events program in Singapore featuring 50 international designers.</p>
+        <p>I have a background in design & emerging technology, and I'm currently integrating generative AI tools into my creative direction and production practice to produce branding, websites, motion graphics, and visual identities across personal and client projects.</p>
+      </div>
+
+      <!-- Vertical divider -->
+      <div class="about-divider reveal"></div>
+
+      <!-- Right: structured data -->
+      <div class="about-data">
+        <div class="about-data-row reveal">
+          <div class="about-data-label">Services</div>
+          <!-- Archived: Production / Creative Direction / Client & Account Management / Project Management -->
+          <div class="about-data-value">Production / Creative Direction / Design &amp; Branding</div>
+        </div>
+        <div class="about-data-row reveal">
+          <div class="about-data-label">Focus</div>
+          <div class="about-data-value">Events / Brand Identity / Exhibitions / Experiences / Installations</div>
+        </div>
+        <div class="about-data-row reveal">
+          <div class="about-data-label">Clients</div>
+          <div class="about-data-value">Smithsonian / SXSW / Milken Center / Gardens by the Bay</div>
+        </div>
+        <div class="about-data-row reveal">
+          <div class="about-data-label">Location</div>
+          <div class="about-data-value">Brooklyn, NY</div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     CAROUSEL — Organic image clusters, horizontal scroll
+     Alternating top/bottom wave rhythm, proportions matched to source images
+     ═══════════════════════════════════════ -->
+<div class="carousel-zone">
+  <button class="carousel-nav carousel-nav-left" aria-label="Scroll left">
+    <svg viewBox="0 0 107 103" style="transform:rotate(90deg)"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+  </button>
+  <button class="carousel-nav carousel-nav-right" aria-label="Scroll right">
+    <svg viewBox="0 0 107 103" style="transform:rotate(-90deg)"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+  </button>
+  <div class="carousel-track">
+
+    <!-- Cluster 1: The FUTURES — top-heavy -->
+    <div class="carousel-cluster" style="width:680px;">
+      <div class="carousel-img" style="width:460px;height:298px;top:20px;left:0;z-index:3;--spread-x:-18px;--spread-y:-6px">
+        <img src="images/carousel/futures-hero.png" alt="The FUTURES Exhibition" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:310px;height:183px;top:180px;left:350px;z-index:5;--spread-x:22px;--spread-y:-6px">
+        <img src="images/carousel/futures-exterior.png" alt="Smithsonian AIB Exterior" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:340px;height:227px;top:330px;left:120px;z-index:4;--spread-x:8px;--spread-y:10px">
+        <img src="images/carousel/futures-installation.png" alt="FUTURES Installation" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Cluster 2: Fashion's Alchemists — bottom-heavy -->
+    <div class="carousel-cluster" style="width:640px;">
+      <div class="carousel-img" style="width:440px;height:248px;top:310px;left:40px;z-index:3;--spread-x:6px;--spread-y:8px">
+        <img src="images/carousel/fa-exhibition.jpg" alt="Fashion's Alchemists Exhibition" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:230px;height:288px;top:140px;left:390px;z-index:5;--spread-x:18px;--spread-y:-6px">
+        <img src="images/carousel/fa-fashion-portrait.png" alt="Fashion Portrait" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:300px;height:194px;top:20px;left:200px;z-index:4;--spread-x:10px;--spread-y:-6px">
+        <img src="images/carousel/fa-digital-lab.png" alt="Digital Lab" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Cluster 3: VR / SXSW — top-heavy -->
+    <div class="carousel-cluster" style="width:660px;">
+      <div class="carousel-img" style="width:420px;height:315px;top:130px;left:120px;z-index:3;--spread-x:4px;--spread-y:-6px">
+        <img src="images/carousel/sxsw-paramount.png" alt="SXSW Paramount Theatre" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:310px;height:195px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
+        <img src="images/carousel/vr-jellyfish.png" alt="VR Jellyfish Experience" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:300px;height:169px;top:390px;left:340px;z-index:4;--spread-x:22px;--spread-y:8px">
+        <img src="images/carousel/vr-embrace.png" alt="VR Embrace" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Cluster 4: Institutional — bottom-heavy -->
+    <div class="carousel-cluster" style="width:620px;">
+      <div class="carousel-img" style="width:390px;height:218px;top:340px;left:80px;z-index:3;--spread-x:6px;--spread-y:8px">
+        <img src="images/carousel/golden-tree.png" alt="Golden Tree Installation" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:290px;height:276px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
+        <img src="images/carousel/milken-blue-sculpture.png" alt="Milken Center Sculpture" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:330px;height:184px;top:190px;left:250px;z-index:4;--spread-x:20px;--spread-y:-6px">
+        <img src="images/carousel/night-display.png" alt="Night Display" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Cluster 5: Moda Morphosis — top-heavy -->
+    <div class="carousel-cluster" style="width:700px;">
+      <div class="carousel-img" style="width:460px;height:307px;top:250px;left:0;z-index:3;--spread-x:-16px;--spread-y:8px">
+        <img src="images/carousel/moda-sculptures.png" alt="Moda Morphosis Sculptures" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:320px;height:213px;top:140px;left:370px;z-index:4;--spread-x:22px;--spread-y:-6px">
+        <img src="images/carousel/moda-cocktail.png" alt="Moda Morphosis Event" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:290px;height:290px;top:10px;left:120px;z-index:5;--spread-x:4px;--spread-y:-6px">
+        <img src="images/carousel/moda-holographic.png" alt="Holographic Display" loading="lazy">
+      </div>
+    </div>
+
+    <!-- ═══ Duplicate set for seamless loop ═══ -->
+
+    <div class="carousel-cluster" style="width:680px;">
+      <div class="carousel-img" style="width:460px;height:298px;top:20px;left:0;z-index:3;--spread-x:-18px;--spread-y:-6px">
+        <img src="images/carousel/futures-hero.png" alt="The FUTURES Exhibition" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:310px;height:183px;top:180px;left:350px;z-index:5;--spread-x:22px;--spread-y:-6px">
+        <img src="images/carousel/futures-exterior.png" alt="Smithsonian AIB Exterior" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:340px;height:227px;top:330px;left:120px;z-index:4;--spread-x:8px;--spread-y:10px">
+        <img src="images/carousel/futures-installation.png" alt="FUTURES Installation" loading="lazy">
+      </div>
+    </div>
+
+    <div class="carousel-cluster" style="width:640px;">
+      <div class="carousel-img" style="width:440px;height:248px;top:310px;left:40px;z-index:3;--spread-x:6px;--spread-y:8px">
+        <img src="images/carousel/fa-exhibition.jpg" alt="Fashion's Alchemists Exhibition" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:230px;height:288px;top:140px;left:390px;z-index:5;--spread-x:18px;--spread-y:-6px">
+        <img src="images/carousel/fa-fashion-portrait.png" alt="Fashion Portrait" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:300px;height:194px;top:20px;left:200px;z-index:4;--spread-x:10px;--spread-y:-6px">
+        <img src="images/carousel/fa-digital-lab.png" alt="Digital Lab" loading="lazy">
+      </div>
+    </div>
+
+    <div class="carousel-cluster" style="width:660px;">
+      <div class="carousel-img" style="width:420px;height:315px;top:130px;left:120px;z-index:3;--spread-x:4px;--spread-y:-6px">
+        <img src="images/carousel/sxsw-paramount.png" alt="SXSW Paramount Theatre" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:310px;height:195px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
+        <img src="images/carousel/vr-jellyfish.png" alt="VR Jellyfish Experience" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:300px;height:169px;top:390px;left:340px;z-index:4;--spread-x:22px;--spread-y:8px">
+        <img src="images/carousel/vr-embrace.png" alt="VR Embrace" loading="lazy">
+      </div>
+    </div>
+
+    <div class="carousel-cluster" style="width:620px;">
+      <div class="carousel-img" style="width:390px;height:218px;top:340px;left:80px;z-index:3;--spread-x:6px;--spread-y:8px">
+        <img src="images/carousel/golden-tree.png" alt="Golden Tree Installation" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:290px;height:276px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
+        <img src="images/carousel/milken-blue-sculpture.png" alt="Milken Center Sculpture" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:330px;height:184px;top:190px;left:250px;z-index:4;--spread-x:20px;--spread-y:-6px">
+        <img src="images/carousel/night-display.png" alt="Night Display" loading="lazy">
+      </div>
+    </div>
+
+    <div class="carousel-cluster" style="width:700px;">
+      <div class="carousel-img" style="width:460px;height:307px;top:250px;left:0;z-index:3;--spread-x:-16px;--spread-y:8px">
+        <img src="images/carousel/moda-sculptures.png" alt="Moda Morphosis Sculptures" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:320px;height:213px;top:140px;left:370px;z-index:4;--spread-x:22px;--spread-y:-6px">
+        <img src="images/carousel/moda-cocktail.png" alt="Moda Morphosis Event" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:290px;height:290px;top:10px;left:120px;z-index:5;--spread-x:4px;--spread-y:-6px">
+        <img src="images/carousel/moda-holographic.png" alt="Holographic Display" loading="lazy">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     PROJECTS — Direction A grid + folder cards
+     ═══════════════════════════════════════ -->
+<div class="projects-zone" id="projects">
+  <div class="projects-inner">
+
+    <div class="projects-header reveal">
+      <div class="projects-header-left">
+        <div class="projects-heading"><span class="gl">P</span><span class="dlig">ro</span>jec<span class="gl">t</span>s</div>
+      </div>
+      <div class="projects-header-right">
+        <div class="projects-meta-label">Selection</div>
+        <div class="projects-meta-value">2020 — 2026</div>
+      </div>
+    </div>
+
+    <hr class="projects-rule reveal">
+
+    <div class="projects-grid">
+
+      <!-- 1. Fashion's Alchemists -->
+      <div class="project-cell reveal">
+        <a href="./fa-hero.html" class="folder-card-link" style="text-decoration:none;color:inherit;display:block;">
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title">01 _ Fashion's Alchemists</span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/fashions-alchemists.png" alt="Fashion's Alchemists at Gardens by the Bay">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">Fashion's Alchemists</div>
+              <div class="folder-project-subtitle">Gardens by the Bay</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2023–2026</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Exhibition</span>
+                <span class="folder-tag">Events</span>
+                <span class="folder-tag">Gala</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Director — Exhibition Production &amp; Curation</div>
+              <div class="folder-hover-text">International exhibition and events program I co-created for Gardens by the Bay, Singapore, convening 50+ artists and brands working across emerging technology, material innovation, and sustainability within fashion.<br><br>Led creative development, production, and curation, including:<br>$3M government-backed budget / 150 objects / 12+ interactive installations / Full calendar of summits, sponsor activations, and public programming</div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <!-- 2. MCAAD -->
+      <div class="project-cell reveal" data-coming-soon>
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title">02 _ MCAAD</span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/mcaad.webp" alt="Milken Center holodeck installation">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">The Milken Visitor Center</div>
+              <div class="folder-project-subtitle">Milken Center for Advancing the American Dream</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2022–2024</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Experience</span>
+                <span class="folder-tag">Exhibition</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Creative Producer — Interactive Experiences &amp; Installations</div>
+              <div class="folder-hover-text">New 70,000 sq ft visitor center in Washington, DC featuring immersive exhibitions, interactive installations, and brand partnerships as part of a $1B campus development.<br><br>Led production, including:<br>~$15M across 13 installations / A 3-story 1,000-OLED interactive sculpture / A 360° LED theater and ticketed experience / AI-driven holographic exhibits / Managing Rockwell Group LAB, Moment Factory, and USC ICT</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. The Futures -->
+      <div class="project-cell reveal" data-coming-soon>
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title">03 _ The Futures</span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/futures.jpg" alt="FUTURES at Smithsonian Arts + Industries Building">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">Smithsonian: The FUTURES</div>
+              <div class="folder-project-subtitle">Smithsonian Arts &amp; Industries Building</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2020–2022</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Exhibition</span>
+                <span class="folder-tag">Events</span>
+                <span class="folder-tag hide-mobile">Programming</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Producer — Interactive &amp; Digital Experiences</div>
+              <div class="folder-hover-text">32,000 sq ft exhibition and event series developed for the Smithsonian's 175th anniversary — nearly 1M visitors across a 7-month run. Brand-partnered activations with Google, Meta, and Ford.<br><br>Led production and project management for:<br>5 museum-wide interactive installations / Webby Award–winning remote experience / Brand-partnered activations with AWS, Autodesk, LG, and SoftBank Group / Leading agency teams including Rockwell Group LAB, Goodby Silverstein &amp; Partners, 2×4, and Resemble AI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. XR Experience -->
+      <div class="project-cell reveal" data-coming-soon>
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title">04 _ XR Experience</span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/sxsw.png" alt="SXSW XR Experience">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">SXSW Expo: XR Experience</div>
+              <div class="folder-project-subtitle">SXSW Film Festival</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2021–2022</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Festival</span>
+                <span class="folder-tag">Exhibition</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Producer — Expo, Events, Public Programming</div>
+              <div class="folder-hover-text">Five-day exhibition and event series at South by Southwest showcasing 30+ international artists working across film, mixed reality, and new media art. Cornerstone program of the SXSW Film Festival.<br><br>Led end-to-end production including:<br>Spatial design, AV, technical infrastructure, and installation / Run-of-show &amp; live operations / Opening night, artist dinners, press previews / Artist &amp; venue management</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     ETC — Dark panel with horizontal skill folders
+     ═══════════════════════════════════════ -->
+<!-- HIDDEN FOR NOW — Experience Ext section (uncomment when ready) -->
+<div class="etc-zone" id="etc" style="display:none;">
+  <div class="etc-inner">
+
+    <div class="etc-header reveal">
+      <div class="etc-header-left">
+        <div class="etc-heading">Experience Ext.</div>
+      </div>
+      <div class="etc-meta">8 Disciplines</div>
+    </div>
+
+    <hr class="etc-rule reveal">
+
+    <div class="etc-folders reveal">
+
+      <div class="etc-folder" data-folder="1">
+        <div class="etc-folder-tab"><span class="etc-folder-tab-label">Production</span></div>
+        <div class="etc-folder-body">
+          <div class="etc-folder-noise"></div>
+          <div class="etc-folder-grain"></div>
+          <div class="etc-folder-paper"></div>
+          <div class="etc-folder-content">
+            <div class="etc-folder-content-title">Production</div>
+            <div class="etc-folder-overview">End-to-end production leadership for large-scale exhibitions, events, and immersive installations — from scoping and budgets through fabrication, installation, and strike.</div>
+            <div class="etc-folder-tags">
+              <span class="etc-tag">Budgets & Contracts</span>
+              <span class="etc-tag">Vendor Management</span>
+              <span class="etc-tag">Scheduling</span>
+              <span class="etc-tag">Feasibility & Risk</span>
+              <span class="etc-tag">Installation & Strike</span>
+              <span class="etc-tag">Compliance & Permits</span>
+              <span class="etc-tag">Cross-Functional Teams</span>
+            </div>
+            <div class="etc-folder-rule"></div>
+            <div class="etc-stat-row">
+              <div class="etc-stat">
+                <div class="etc-stat-value">$1M–$18M</div>
+                <div class="etc-stat-label">Budget Range</div>
+              </div>
+              <div class="etc-stat">
+                <div class="etc-stat-value">30+</div>
+                <div class="etc-stat-label">Team Size Led</div>
+              </div>
+              <div class="etc-stat">
+                <div class="etc-stat-value">70,000 sq ft</div>
+                <div class="etc-stat-label">Largest Venue</div>
+              </div>
+              <div class="etc-stat">
+                <div class="etc-stat-value">~1M</div>
+                <div class="etc-stat-label">Visitors (Smithsonian)</div>
+              </div>
+            </div>
+            <ul class="etc-highlights">
+              <li>Managed multi-million-dollar budgets and contracts across artists, vendors, and institutional partners — controlling scope, schedule, and deliverables</li>
+              <li>Built production frameworks from scratch: briefs, schedules, run-of-show, quality control systems aligned from design through install</li>
+              <li>Led vendor procurement and management across fabrication, AV, lighting, creative technology, and logistics partners</li>
+              <li>Navigated compliance, permits, and government-level stakeholder management across Singapore Tourism Board and U.S. federal agencies</li>
+            </ul>
+            <div class="etc-partners">
+              <span class="etc-partners-label">Key Partners:</span>
+              Rockwell Group LAB / Goodby Silverstein & Partners / Moment Factory / ISC CT / Resemble AI / Gallup / Autodesk / Institute for the Future (IFTF)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="etc-folder" data-folder="2">
+        <div class="etc-folder-tab"><span class="etc-folder-tab-label">Creative Direction</span></div>
+        <div class="etc-folder-body">
+          <div class="etc-folder-noise"></div>
+          <div class="etc-folder-grain"></div>
+          <div class="etc-folder-paper"></div>
+          <div class="etc-folder-content">
+            <div class="etc-folder-content-title">Creative Direction</div>
+            <div class="etc-folder-overview">Shaping the creative vision, narrative, and aesthetic of exhibitions and experiential projects — from concept development and artist commissioning to spatial design and stakeholder storytelling.</div>
+            <div class="etc-folder-tags">
+              <span class="etc-tag">Exhibition Narrative</span>
+              <span class="etc-tag">Artist Commissioning</span>
+              <span class="etc-tag">Spatial Design Direction</span>
+              <span class="etc-tag">Brand Identity</span>
+              <span class="etc-tag">Curatorial Vision</span>
+              <span class="etc-tag">Content Strategy</span>
+              <span class="etc-tag">Stakeholder Presentations</span>
+            </div>
+            <div class="etc-folder-rule"></div>
+            <ul class="etc-highlights">
+              <li>Conceived and developed Fashion's Alchemists from scratch — curatorial framework, artist selection of 50+ international designers (including LVMH Prize winners and Met-featured artists), and exhibition narrative</li>
+              <li>Directed all creative reviews across projects, aligning prototypes, content development, and spatial design with institutional goals and audience experience</li>
+              <li>Authored all external collateral — branding, sponsorship decks, press materials — and served as lead representative to funders, government, and media</li>
+              <li>Delivered high-level presentations to government and institutional stakeholders that helped secure $3M+ in project funding</li>
+              <li>Co-developed user experience scripts with Director of Creative Media at the Smithsonian, ensuring curatorial alignment and visitor impact</li>
+              <li>Directed brand identity, visual systems, and digital presence for ModaMorphosis, commissioning designers and directing freelance teams</li>
+            </ul>
+            <div class="etc-stat-row">
+              <div class="etc-stat">
+                <div class="etc-stat-value">50+</div>
+                <div class="etc-stat-label">Artists Commissioned</div>
+              </div>
+              <div class="etc-stat">
+                <div class="etc-stat-value">$3M+</div>
+                <div class="etc-stat-label">Funding Secured</div>
+              </div>
+              <div class="etc-stat">
+                <div class="etc-stat-value">100+</div>
+                <div class="etc-stat-label">Press at Launch Event</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="etc-folder" data-folder="3">
+        <div class="etc-folder-tab"><span class="etc-folder-tab-label">Design</span></div>
+        <div class="etc-folder-body">
+          <div class="etc-folder-noise"></div>
+          <div class="etc-folder-grain"></div>
+          <div class="etc-folder-paper"></div>
+          <div class="etc-folder-content">
+            <div class="etc-folder-content-title">Design</div>
+            <div class="etc-folder-overview">Hands-on design work spanning deck creation, web design, brand systems, spatial concepts, and interactive prototyping — translating creative vision into tangible deliverables.</div>
+            <div class="etc-folder-tags">
+              <span class="etc-tag">Deck Design</span>
+              <span class="etc-tag">Web Design</span>
+              <span class="etc-tag">Brand Systems</span>
+              <span class="etc-tag">Spatial Concepts</span>
+              <span class="etc-tag">Photo Direction</span>
+              <span class="etc-tag">Wireframing & Prototyping</span>
+              <span class="etc-tag">Presentation Design</span>
+            </div>
+            <div class="etc-folder-rule"></div>
+            <div class="etc-content-cols">
+              <div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Decks & Presentations</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Creative Briefs</span>
+                    <span class="etc-category-item">Sponsorship Decks</span>
+                    <span class="etc-category-item">Stakeholder Presentations</span>
+                    <span class="etc-category-item">Pitch Decks</span>
+                    <span class="etc-category-item">POC Decks</span>
+                  </div>
+                </div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Brand & Identity</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Visual Identity Systems</span>
+                    <span class="etc-category-item">Exhibition Branding</span>
+                    <span class="etc-category-item">Company Brand (ModaMorphosis)</span>
+                    <span class="etc-category-item">Personal Portfolio</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Web & Digital</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Portfolio Site Design & Dev</span>
+                    <span class="etc-category-item">Company Website</span>
+                    <span class="etc-category-item">Interactive Prototyping</span>
+                    <span class="etc-category-item">UX Scripting</span>
+                  </div>
+                </div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Spatial & Exhibition</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Exhibition Layout & Flow</span>
+                    <span class="etc-category-item">Visitor Experience Design</span>
+                    <span class="etc-category-item">Spatial Narrative</span>
+                    <span class="etc-category-item">Set Design Direction</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="etc-folder" data-folder="4">
+        <div class="etc-folder-tab"><span class="etc-folder-tab-label">Tools</span></div>
+        <div class="etc-folder-body">
+          <div class="etc-folder-noise"></div>
+          <div class="etc-folder-grain"></div>
+          <div class="etc-folder-paper"></div>
+          <div class="etc-folder-content">
+            <div class="etc-folder-content-title">Tools</div>
+            <div class="etc-folder-overview">A cross-disciplinary toolkit spanning design, production management, interactive technology, fabrication, and AI — grounded in a Parsons Design & Technology education.</div>
+            <div class="etc-folder-rule"></div>
+            <div class="etc-content-cols">
+              <div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Design & Creative</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Figma</span>
+                    <span class="etc-category-item">Adobe Creative Cloud</span>
+                    <span class="etc-category-item">InDesign</span>
+                    <span class="etc-category-item">Photoshop</span>
+                    <span class="etc-category-item">Illustrator</span>
+                    <span class="etc-category-item">Premiere</span>
+                    <span class="etc-category-item">Keynote</span>
+                  </div>
+                </div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Production & Project Mgmt</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Airtable</span>
+                    <span class="etc-category-item">Notion</span>
+                    <span class="etc-category-item">Monday.com</span>
+                    <span class="etc-category-item">Google Workspace</span>
+                    <span class="etc-category-item">Excel</span>
+                    <span class="etc-category-item">Microsoft Office</span>
+                  </div>
+                </div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">AI Tools</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Claude</span>
+                    <span class="etc-category-item">ChatGPT</span>
+                    <span class="etc-category-item">Midjourney</span>
+                    <span class="etc-category-item">Flora</span>
+                    <span class="etc-category-item">Resemble AI</span>
+                    <span class="etc-category-item">Generative AI Workflows</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Interactive & Emerging Media</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">Unity</span>
+                    <span class="etc-category-item">Meta Quest</span>
+                    <span class="etc-category-item">Motion Tracking</span>
+                    <span class="etc-category-item">Haptic Technology</span>
+                    <span class="etc-category-item">Arduino / Raspberry Pi</span>
+                    <span class="etc-category-item">Data Visualization</span>
+                    <span class="etc-category-item">Creative Coding</span>
+                  </div>
+                </div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Fabrication & Installation</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">3D Printing & Scanning</span>
+                    <span class="etc-category-item">CNC</span>
+                    <span class="etc-category-item">Technical Drawing Review</span>
+                    <span class="etc-category-item">Fusion 360</span>
+                    <span class="etc-category-item">Blender</span>
+                  </div>
+                </div>
+                <div class="etc-category-group">
+                  <div class="etc-category-label">Web & Development</div>
+                  <div class="etc-category-items">
+                    <span class="etc-category-item">HTML / CSS / JavaScript</span>
+                    <span class="etc-category-item">WebGL</span>
+                    <span class="etc-category-item">Web Design</span>
+                    <span class="etc-category-item">Prototyping</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- ═══════════════════════════════════════
+     FOOTER — Static, content animates on scroll
+     ═══════════════════════════════════════ -->
+<footer id="contact" class="site-footer">
+  <div class="footer-inner reveal">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="./footer-logo.png" alt="Brooke Smith">
+      </div>
+      <div class="footer-contact">
+        <div class="footer-contact-group">
+          <div class="footer-contact-label">Email</div>
+          <a href="mailto:brooke.smith@outlook.com" class="footer-contact-value">brooke.smith@outlook.com</a>
+        </div>
+        <div class="footer-contact-group">
+          <div class="footer-contact-label">LinkedIn</div>
+          <a href="https://www.linkedin.com/in/brookesmithdesign/" class="footer-contact-value" target="_blank">linkedin.com/in/brookesmithdesign</a>
+        </div>
+        <div class="footer-contact-group">
+          <div class="footer-contact-label">Location</div>
+          <div class="footer-contact-value">Brooklyn, New York</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 Brooke Smith. All rights reserved.</div>
+      <div class="footer-credit">Design & Dev by Me</div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /.site-content -->
+
+<!-- ═══════════════════════════════════════
+     JS — Carousel pause on hover
+     ═══════════════════════════════════════ -->
+<script>
+// Carousel — transform-based infinite loop, arrow nav, center visibility
+(function() {
+  var track = document.querySelector('.carousel-track');
+  if (!track) return;
+
+  // Measure one set width from actual DOM positions (handles margins/scale)
+  var clusters = track.querySelectorAll('.carousel-cluster');
+  var setSize = Math.floor(clusters.length / 2);
+  var setWidth;
+  if (clusters.length >= setSize * 2) {
+    setWidth = clusters[setSize].offsetLeft - clusters[0].offsetLeft;
+  } else {
+    setWidth = 0;
+    for (var c = 0; c < setSize; c++) {
+      setWidth += clusters[c].offsetWidth + 60;
+    }
+  }
+
+  var offset = 0;
+  var driftSpeed = 0.5;
+  var driftPaused = false;
+  var isPhone = window.innerWidth <= 480;
+
+  function loop() {
+    if (!driftPaused) {
+      offset += driftSpeed;
+      if (offset >= setWidth) offset -= setWidth;
+    }
+    track.style.transform = 'translateX(' + (-offset) + 'px)';
+    updateVisibility();
+    requestAnimationFrame(loop);
+  }
+  setTimeout(function() { requestAnimationFrame(loop); }, 300);
+
+  // Arrow navigation — animate offset jump
+  var leftBtn = document.querySelector('.carousel-nav-left');
+  var rightBtn = document.querySelector('.carousel-nav-right');
+
+  function arrowScroll(amount) {
+    driftPaused = true;
+    var start = offset;
+    var target = offset + amount;
+    var startTime = null;
+    function animate(time) {
+      if (!startTime) startTime = time;
+      var progress = Math.min((time - startTime) / 500, 1);
+      var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      offset = start + (target - start) * eased;
+      // Wrap around
+      while (offset >= setWidth) offset -= setWidth;
+      while (offset < 0) offset += setWidth;
+      track.style.transform = 'translateX(' + (-offset) + 'px)';
+      updateVisibility();
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        driftPaused = false;
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+
+  var arrowAmount = isPhone ? 250 : 500;
+  if (leftBtn) leftBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    arrowScroll(-arrowAmount);
+  });
+  if (rightBtn) rightBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    arrowScroll(arrowAmount);
+  });
+
+  // Center visibility — getBoundingClientRect accounts for transform
+  var imgs = track.querySelectorAll('.carousel-img');
+  var zone = document.querySelector('.carousel-zone');
+  function updateVisibility() {
+    var zoneRect = zone.getBoundingClientRect();
+    var centerX = zoneRect.left + zoneRect.width / 2;
+    var maxDist = zoneRect.width * 0.35;
+
+    imgs.forEach(function(img) {
+      var rect = img.getBoundingClientRect();
+      var imgCenter = rect.left + rect.width / 2;
+      var dist = Math.abs(imgCenter - centerX);
+      var ratio = Math.max(0, 1 - (dist / maxDist));
+      var eased = ratio * ratio * (3 - 2 * ratio);
+
+      var opacity = 0.25 + eased * 0.75;
+      var sat = 0.15 + eased * 0.85;
+      var bright = 0.90 + eased * 0.10;
+
+      img.style.setProperty('--vis-opacity', opacity.toFixed(2));
+      img.style.setProperty('--vis-sat', sat.toFixed(2));
+      img.style.setProperty('--vis-bright', bright.toFixed(2));
+    });
+  }
+
+  window.addEventListener('resize', updateVisibility);
+  updateVisibility();
+  window.addEventListener('load', updateVisibility);
+})();
+
+// Glass folder noise textures — frosted grain on folder surfaces
+(function() {
+  function generateNoise(size, opacity, seed) {
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return '';
+    const imageData = ctx.createImageData(size, size);
+    const d = imageData.data;
+    for (let i = 0; i < d.length; i += 4) {
+      const noise = (Math.random() + seed) % 1;
+      const value = Math.floor(noise * 255);
+      d[i] = value;
+      d[i+1] = value;
+      d[i+2] = value;
+      d[i+3] = Math.floor(opacity * 255);
+    }
+    ctx.putImageData(imageData, 0, 0);
+    return canvas.toDataURL('image/png');
+  }
+  const n1 = generateNoise(256, 0.04, 0.1);
+  const n2 = generateNoise(128, 0.03, 0.5);
+  const n3 = generateNoise(512, 0.02, 0.9);
+  document.querySelectorAll('.glass-surface').forEach(el => {
+    el.style.backgroundImage = `
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,0.85) 0%, transparent 40%),
+      radial-gradient(circle at 70% 50%, rgba(255,255,255,0.7) 0%, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(255,255,255,0.6) 0%, transparent 40%),
+      url(${n1}),
+      url(${n2}),
+      url(${n3})
+    `;
+  });
+
+  // Also apply grain to etc-folder bodies + project image grain
+  document.querySelectorAll('.etc-folder-grain, .folder-image-grain').forEach(el => {
+    el.style.backgroundImage = `url(${n1}), url(${n2}), url(${n3})`;
+    el.style.backgroundSize = '256px 256px, 128px 128px, 512px 512px';
+  });
+})();
+
+// Directional motion blur — independent per folder (skip on mobile for performance)
+(function() {
+  if (window.innerWidth <= 768) return;
+  var cards = document.querySelectorAll('.projects-grid .folder-card');
+  cards.forEach(function(card, i) {
+    var idx = i + 1;
+    var filterId = 'h-motion-blur-' + idx;
+    var blurNode = document.querySelector('#' + filterId + ' .blur-kernel');
+    if (!blurNode) return;
+
+    var img = card.querySelector('.folder-image-inset img');
+    if (img) img.style.filter = 'url(#' + filterId + ') saturate(0.65)';
+
+    var currentX = 6, targetX = 6, animating = false;
+
+    function tick() {
+      var diff = targetX - currentX;
+      if (Math.abs(diff) < 0.1) {
+        currentX = targetX;
+        blurNode.setAttribute('stdDeviation', currentX + ' 0');
+        if (img) img.style.filter = 'url(#' + filterId + ') saturate(' + (currentX > 0.5 ? '0.65' : '0.9') + ')';
+        animating = false;
+        return;
+      }
+      currentX += diff * 0.12;
+      blurNode.setAttribute('stdDeviation', currentX + ' 0');
+      var sat = 0.65 + (1 - currentX / 6) * 0.25;
+      if (img) img.style.filter = 'url(#' + filterId + ') saturate(' + sat.toFixed(2) + ')';
+      requestAnimationFrame(tick);
+    }
+
+    function animateTo(x) {
+      targetX = x;
+      if (!animating) { animating = true; requestAnimationFrame(tick); }
+    }
+
+    card.addEventListener('mouseenter', function() { animateTo(0); });
+    card.addEventListener('mouseleave', function() { animateTo(6); });
+  });
+})();
+
+// Etc folders — click or hover to expand/collapse.
+// Position-based detection with transition lock to prevent jumping.
+// When a folder opens, tab positions shift during animation. The lock
+// prevents re-evaluation until the transition settles.
+(function() {
+  var container = document.querySelector('.etc-folders');
+  if (!container) return;
+  var folderEls = Array.prototype.slice.call(document.querySelectorAll('.etc-folder'));
+  var activeFolder = null;
+  var closeTimer = null;
+  var locked = false;
+  var lockTimer = null;
+  var LOCK_MS = 740; /* slightly longer than the 0.7s margin transition */
+
+  function lock() {
+    locked = true;
+    clearTimeout(lockTimer);
+    lockTimer = setTimeout(function() { locked = false; }, LOCK_MS);
+  }
+
+  function activate(folder) {
+    clearTimeout(closeTimer);
+    if (activeFolder === folder) return;
+    if (activeFolder) activeFolder.classList.remove('is-active');
+    folder.classList.add('is-active');
+    activeFolder = folder;
+    lock();
+  }
+
+  function deactivate() {
+    clearTimeout(closeTimer);
+    if (!activeFolder) return;
+    activeFolder.classList.remove('is-active');
+    activeFolder = null;
+    lock();
+  }
+
+  function scheduleClose() {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(deactivate, 300);
+  }
+
+  // Find which folder "owns" a given Y position.
+  // Uses tab top positions — each folder owns from its tab top to the next.
+  function folderAtY(clientY) {
+    for (var i = folderEls.length - 1; i >= 0; i--) {
+      var tab = folderEls[i].querySelector('.etc-folder-tab');
+      if (clientY >= tab.getBoundingClientRect().top) {
+        return folderEls[i];
+      }
+    }
+    return null;
+  }
+
+  // HOVER — mousemove with lock guard
+  container.addEventListener('mousemove', function(e) {
+    clearTimeout(closeTimer);
+    if (locked) return; /* ignore during transition */
+    var folder = folderAtY(e.clientY);
+    if (folder && folder !== activeFolder) {
+      activate(folder);
+    }
+  });
+
+  // CLICK — toggle: same folder closes, different folder switches
+  container.addEventListener('click', function(e) {
+    var folder = folderAtY(e.clientY);
+    if (!folder) return;
+    if (activeFolder === folder) {
+      deactivate();
+    } else {
+      activate(folder);
+    }
+  });
+
+  // Mouse leaves the entire folder stack — close
+  // But if Tools (last folder) is active, let the footer handle closing
+  var lastFolder = folderEls[folderEls.length - 1];
+  container.addEventListener('mouseleave', function(e) {
+    if (activeFolder === lastFolder) {
+      // Don't close yet — footer mousemove will handle the 40% threshold
+      return;
+    }
+    scheduleClose();
+  });
+
+  // Footer: only close Tools (last) folder after mouse passes 40% of footer height
+  var footer = document.querySelector('.site-footer');
+  if (footer) {
+    footer.addEventListener('mousemove', function(e) {
+      if (activeFolder !== lastFolder) return;
+      var rect = footer.getBoundingClientRect();
+      var pct = (e.clientY - rect.top) / rect.height;
+      if (pct > 0.4) {
+        scheduleClose();
+      }
+    });
+    footer.addEventListener('mouseleave', function(e) {
+      if (activeFolder !== lastFolder) return;
+      // If mouse left footer upward (back toward folders), don't close
+      if (e.clientY <= footer.getBoundingClientRect().top) return;
+      // Mouse left footer downward or sideways — close
+      scheduleClose();
+    });
+  }
+})();
+</script>
+
+<!-- Scroll-in reveal transitions -->
+<script>
+(function() {
+  const reveals = document.querySelectorAll('.reveal');
+  if (!reveals.length) return;
+
+  // About content elements get a deeper observer — triggers later when more in-view
+  const aboutDeepEls = document.querySelectorAll('.about .about-text.reveal, .about .about-divider.reveal, .about .about-data-row.reveal');
+  const aboutDeepSet = new Set(aboutDeepEls);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -120px 0px'
+  });
+
+  // Deeper observer for about content — triggers when user is well into the section
+  const aboutDeepObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        aboutDeepObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: window.innerWidth <= 480 ? '0px 0px -120px 0px' : '0px 0px -420px 0px'
+  });
+
+  // Double-rAF ensures layout + paint are computed before checking positions
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        // Elements already in or above viewport — reveal with no animation
+        if (rect.top < window.innerHeight + 100 && rect.bottom > 0) {
+          el.style.transition = 'none';
+          el.classList.add('is-visible');
+          // Re-enable transition after paint for future use
+          requestAnimationFrame(() => { el.style.transition = ''; });
+        } else if (aboutDeepSet.has(el)) {
+          // About content uses deeper observer
+          aboutDeepObserver.observe(el);
+        } else {
+          observer.observe(el);
+        }
+      });
+    });
+  });
+})();
+</script>
+
+<!-- Hero parallax fade — elements fade out as you scroll, about stays hidden until hero clears -->
+<script>
+(function() {
+  const heroImage = document.querySelector('.hero-image');
+  const infoStrip = document.querySelector('.info-strip');
+  const heroContainer = document.querySelector('.hero-container');
+  if (!heroImage || !heroContainer) return;
+
+  var parallaxFactor = window.innerWidth <= 480 ? 0.1 : 0.3;
+
+  function onScroll() {
+    var scrollY = window.scrollY;
+    var heroH = heroContainer.offsetHeight;
+    // Progress 0 → 1 as hero scrolls out
+    var progress = Math.min(1, scrollY / (heroH * 0.6));
+
+    // Hero image: fades out + slight scale down + moves up slower (parallax)
+    heroImage.style.opacity = Math.max(0, 1 - progress * 1.5);
+    heroImage.style.transform = 'translateY(' + (scrollY * parallaxFactor) + 'px) scale(' + (1 - progress * 0.05) + ')';
+
+    // Info strip: fades out slightly later
+    if (infoStrip) {
+      var stripProgress = Math.max(0, (progress - 0.2) / 0.6);
+      infoStrip.style.opacity = Math.max(0, 1 - stripProgress * 1.8);
+      infoStrip.style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+<!-- Nav pill → bar expansion on scroll -->
+<script>
+(function() {
+  const nav = document.getElementById('glassNav');
+  const heroContainer = document.querySelector('.hero-container');
+  if (!nav || !heroContainer) return;
+
+  let expanded = false;
+
+  function expand() {
+    if (!expanded) { nav.classList.add('expanded'); expanded = true; }
+  }
+  function collapse() {
+    if (expanded) { nav.classList.remove('expanded'); expanded = false; }
+  }
+
+  nav.addEventListener('click', function(e) {
+    if (!expanded) { expand(); e.stopPropagation(); }
+  });
+
+  function onScroll() {
+    var heroBottom = heroContainer.getBoundingClientRect().bottom;
+    if (heroBottom < window.innerHeight * 0.5) {
+      expand();
+    } else if (heroBottom > window.innerHeight * 0.6) {
+      collapse();
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+
+<!-- Coming Soon Modal -->
+<div class="coming-soon-overlay" id="comingSoonModal">
+  <div class="coming-soon-card">
+    <div class="coming-soon-label">Project Page</div>
+    <div class="coming-soon-title"><span class="gl">C</span><span class="o-star">o</span>ming <span class="gl">S</span><span class="dlig">oo</span>n</div>
+    <div class="coming-soon-desc">This project page is currently in development.</div>
+  </div>
+</div>
+<style>
+@font-face {
+  font-family: 'Bizkea';
+  src: url('./fonts-bizkea/un%20Bizkea.otf') format('opentype');
+  font-weight: 400;
+  font-display: swap;
+}
+.coming-soon-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24,12,26,0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease, background 0.6s ease, backdrop-filter 0.6s ease, -webkit-backdrop-filter 0.6s ease;
+  cursor: pointer;
+}
+.coming-soon-overlay.is-active {
+  opacity: 1;
+  pointer-events: all;
+  background: rgba(24,12,26,0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.coming-soon-card {
+  text-align: center;
+  padding: 80px 100px;
+  border-radius: 16px;
+  background: rgba(26,14,32,0.5);
+  border: 1px solid rgba(138,136,152,0.08);
+  border-top: 1px solid rgba(138,136,152,0.14);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, black 40%, rgba(0,0,0,0.6) 70%, transparent 100%);
+  transform: translateY(12px);
+  transition: transform 0.6s ease;
+}
+.coming-soon-overlay.is-active .coming-soon-card {
+  transform: translateY(0);
+}
+.coming-soon-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(138,136,152,0.4);
+  margin-bottom: 24px;
+}
+.coming-soon-title {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 72px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: rgba(200,196,218,0.45);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 20px;
+}
+.coming-soon-title .gl { font-feature-settings: "ss01" 1; }
+.coming-soon-title .o-star { font-feature-settings: "ss03" 1; }
+.coming-soon-title .dlig { font-feature-settings: "dlig" 1; }
+.coming-soon-desc {
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(138,136,152,0.45);
+  letter-spacing: 0.01em;
+}
+</style>
+<script>
+// Coming soon modal
+const comingSoonModal = document.getElementById('comingSoonModal');
+document.querySelectorAll('[data-coming-soon]').forEach(cell => {
+  cell.style.cursor = 'pointer';
+  cell.addEventListener('click', () => {
+    comingSoonModal.classList.add('is-active');
+  });
+});
+comingSoonModal.addEventListener('click', () => {
+  comingSoonModal.classList.remove('is-active');
+});
+</script>
+
+<!-- Page transition overlay -->
+<div class="page-transition-overlay"></div>
+<style>
+.page-transition-overlay {
+  position: fixed;
+  inset: 0;
+  background: #180C1A;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.page-transition-overlay.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+</style>
+<script>
+// Smooth page transition on project card click
+document.querySelectorAll('.folder-card-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const href = link.getAttribute('href');
+    document.querySelector('.page-transition-overlay').classList.add('is-active');
+    setTimeout(() => { window.location.href = href; }, 500);
+  });
+});
+
+// Fade in on page load (returning via back button)
+window.addEventListener('pageshow', () => {
+  document.querySelector('.page-transition-overlay').classList.remove('is-active');
+});
+</script>
+
+<!-- Mobile nav overlay toggle -->
+<script>
+(function() {
+  var nav = document.getElementById('glassNav');
+  var overlay = document.getElementById('mobileNavOverlay');
+  if (!nav || !overlay) return;
+
+  function isPhone() { return window.innerWidth <= 480; }
+
+  // Tap nav pill on phone → toggle overlay
+  nav.addEventListener('click', function(e) {
+    if (!isPhone()) return;
+    e.stopPropagation();
+    var opening = !overlay.classList.contains('is-open');
+    overlay.classList.toggle('is-open');
+    document.body.style.overflow = opening ? 'hidden' : '';
+  });
+
+  // Nav link clicks close overlay and scroll to section
+  overlay.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+    link.addEventListener('click', function() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Tap overlay backdrop to close
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+</script>
+
+<!-- Folder card: on phone, clicks go straight to project page or coming-soon modal (no tap-to-expand) -->
+
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+</body>
+</html>
