@@ -358,38 +358,38 @@ body {
 .role-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 120px 60px 60px;
+  padding: clamp(60px, 10vh, 120px) clamp(32px, 4vw, 60px) clamp(32px, 4vh, 60px);
   position: relative;
   height: 100%;
 }
 .role-title {
   font-family: 'Bizkea', sans-serif;
-  font-size: 96px;
+  font-size: clamp(52px, 6.5vw, 96px);
   font-weight: 400;
   text-transform: uppercase;
   color: rgba(92,92,112,0.45);
   line-height: 0.9;
   letter-spacing: 0.02em;
-  margin-bottom: 52px;
+  margin-bottom: clamp(20px, 3vh, 40px);
 }
 .role-rule {
   border: none;
   border-top: 1px solid rgba(58,52,84,0.08);
-  margin-bottom: 52px;
+  margin-bottom: clamp(20px, 3vh, 40px);
 }
 
 /* Summary cards */
 .role-summary {
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  gap: clamp(28px, 5vh, 64px);
   position: relative;
   z-index: 2;
 }
 .role-card {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
-  gap: 48px;
+  gap: clamp(20px, 3vw, 48px);
   align-items: start;
 }
 .role-card {
@@ -403,7 +403,7 @@ body {
 }
 .role-card-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px; font-weight: 600;
+  font-size: clamp(11px, 1vw, 13px); font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase;
   color: rgba(58,52,84,0.4);
   padding-top: 6px;
@@ -442,7 +442,7 @@ body {
 }
 .role-card-text {
   font-family: 'Sora', sans-serif;
-  font-size: 20px; font-weight: 300;
+  font-size: clamp(15px, 1.4vw, 20px); font-weight: 300;
   line-height: 1.55;
   color: rgba(58,52,84,0.7);
 }
@@ -857,11 +857,8 @@ body {
   .about-text-panel p { font-size: 17px; }
   .about-data { padding-left: 8px; }
 
-  /* Role */
-  .role-inner { padding: 80px 32px 40px; }
-  .role-title { font-size: 64px; }
-  .role-card { grid-template-columns: 1fr; gap: 16px; }
-  .role-card-text { font-size: 17px; }
+  /* Role — only override layout, clamp() handles sizing */
+  .role-card { grid-template-columns: 1fr; }
 
   /* Deck */
   .deck-section { padding: 60px 32px 80px; }
