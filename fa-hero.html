@@ -2022,7 +2022,19 @@ document.querySelectorAll('.role-expand-toggle').forEach(btn => {
   btn.addEventListener('click', () => {
     const expand = btn.closest('.role-expand');
     const content = expand.querySelector('.role-expand-content');
-    if (expand.classList.contains('is-open')) {
+    const isClosing = expand.classList.contains('is-open');
+
+    // Close any other open expands first
+    if (!isClosing) {
+      document.querySelectorAll('.role-expand.is-open').forEach(other => {
+        if (other !== expand) {
+          other.querySelector('.role-expand-content').style.maxHeight = '0';
+          other.classList.remove('is-open');
+        }
+      });
+    }
+
+    if (isClosing) {
       content.style.maxHeight = '0';
       expand.classList.remove('is-open');
     } else {
