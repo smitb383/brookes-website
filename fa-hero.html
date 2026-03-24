@@ -2126,6 +2126,7 @@ function updateRole() {
 
     img.style.opacity = o;
     img.style.transform = `translateY(${ty}px) scale(${imgScale})`;
+    img.style.pointerEvents = o > 0 ? 'auto' : 'none';
     if (o > 0) img.classList.add('is-visible');
     else img.classList.remove('is-visible');
   });
