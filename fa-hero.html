@@ -2066,8 +2066,8 @@ function updateRole() {
   const t = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
 
   // Smooth eased remap for card opacity
+  // All 3 cards visible immediately; dimming starts when card 1 highlights
   function cardOp(cn) {
-    if (t < 0.06) return ease(remap(t, 0, 0.06, 0, 1));
     if (t < 0.12) return 1;
     if (t < 0.18) {
       const d = ease(remap(t, 0.12, 0.18, 0, 1));
