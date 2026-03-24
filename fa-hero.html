@@ -1683,13 +1683,13 @@ body {
 }
 .credits-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
-  gap: 48px 64px;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 48px 56px;
 }
 .credits-col {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 32px;
 }
 .credit-block {
   display: flex;
@@ -1709,13 +1709,18 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 13px;
   font-weight: 400;
-  font-style: italic;
   line-height: 1.7;
   color: rgba(16,24,80,0.75);
 }
 .credit-value strong {
   font-weight: 500;
-  font-style: normal;
+}
+.credit-byline {
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  color: rgba(16,24,80,0.5);
+  white-space: nowrap;
 }
 .credits-status {
   margin-top: 72px;
@@ -1736,7 +1741,7 @@ body {
 @media (max-width: 768px) {
   .credits-section { padding: 72px 0 80px; }
   .credits-inner { padding: 0 32px; }
-  .credits-grid { grid-template-columns: 1fr 1fr; gap: 32px 40px; }
+  .credits-grid { grid-template-columns: 1fr 1.3fr; gap: 32px 40px; }
 }
 @media (max-width: 480px) {
   .credits-section { padding: 60px 0 64px; }
@@ -1757,6 +1762,14 @@ body {
     <div class="credits-grid">
       <!-- Column 1: Production Credits -->
       <div class="credits-col">
+        <div class="credit-block">
+          <div class="credit-label">Director, Exhibition Production & Curation</div>
+          <div class="credit-value">Brooke Smith</div>
+        </div>
+        <div class="credit-block">
+          <div class="credit-label">Head of PR & Communications</div>
+          <div class="credit-value">Nathalie Jones Everard</div>
+        </div>
         <div class="credit-block">
           <div class="credit-label">Spatial Design</div>
           <div class="credit-value">Studio Dennis Vanderbroeck</div>
@@ -1784,18 +1797,18 @@ body {
         <div class="credit-block">
           <div class="credit-label">Gala Committee</div>
           <div class="credit-value">
-            <strong>Ravi Thakran</strong> — Turmeric Capital Holdings (Co-Chair)<br>
-            <strong>Heart Evangelista</strong> — (Co-Chair)<br>
-            <strong>Yanina Novitskaya</strong> — CEO Cartier South East Asia & Oceania<br>
-            <strong>David Wertheimer</strong> — 1686 Partners<br>
-            <strong>Andrea Rosso</strong> — OTB Family<br>
-            <strong>Alwyn Chong</strong> — Luxasia<br>
-            <strong>Chayapa "Pink" Chutrakul</strong> — The Pink Lab / Directions Group<br>
-            <strong>Seia Lee</strong> — Opera Singer & Philanthropist<br>
-            <strong>Raline Shah</strong> — Philanthropist & Actress<br>
-            <strong>Sharon Tan</strong> — DBS<br>
-            <strong>Colleen Yu</strong> — Li & Fung Family<br>
-            <strong>Marion Caunter</strong> — Entrepreneur & TV Personality
+            <strong>Ravi Thakran</strong> <span class="credit-byline">(Co-Chair) Turmeric Capital Holdings / Former President LVMH Asia</span><br>
+            <strong>Heart Evangelista</strong> <span class="credit-byline">(Co-Chair) Fashion Icon</span><br>
+            <strong>Yanina Novitskaya</strong> <span class="credit-byline">CEO Cartier South East Asia & Oceania</span><br>
+            <strong>David Wertheimer</strong> <span class="credit-byline">1686 Partners / Chanel Family</span><br>
+            <strong>Andrea Rosso</strong> <span class="credit-byline">OTB Family / Diesel Sustainability Director</span><br>
+            <strong>Alwyn Chong</strong> <span class="credit-byline">Managing Director Luxasia</span><br>
+            <strong>Chayapa "Pink" Chutrakul</strong> <span class="credit-byline">The Pink Lab / CEO Directions Group</span><br>
+            <strong>Seia Lee</strong> <span class="credit-byline">Opera Singer & Philanthropist</span><br>
+            <strong>Raline Shah</strong> <span class="credit-byline">Actress & Philanthropist</span><br>
+            <strong>Sharon Tan</strong> <span class="credit-byline">COO DBS</span><br>
+            <strong>Colleen Yu</strong> <span class="credit-byline">Li & Fung Family / Hong Kong Tourism Board</span><br>
+            <strong>Marion Caunter</strong> <span class="credit-byline">Entrepreneur / TV Personality</span>
           </div>
         </div>
       </div>
@@ -1805,13 +1818,16 @@ body {
         <div class="credit-block">
           <div class="credit-label">Partnerships</div>
           <div class="credit-value">
-            Christie's Auction House<br>
-            Meida Partnership, Cartier Asia Pacific<br>
             Singapore Tourism Board<br>
+            Christie's Auction House<br>
             Singapore Fashion Council<br>
             LaSalle College of the Arts<br>
             Gift of Gardens Charity
           </div>
+        </div>
+        <div class="credit-block">
+          <div class="credit-label">Media Partnership</div>
+          <div class="credit-value">Cartier Asia Pacific</div>
         </div>
       </div>
     </div>
