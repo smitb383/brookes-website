@@ -353,17 +353,17 @@ body {
   position: sticky;
   top: 0;
   height: 100vh;
+  display: flex;
+  align-items: center;
   overflow: hidden;
+  /* Gallery images positioned relative to this */
 }
 .role-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 80px 60px 60px;
-  position: relative;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 0 60px;
+  width: 100%;
+  position: static;
 }
 .role-title {
   font-family: 'Bizkea', sans-serif;
@@ -388,8 +388,6 @@ body {
   gap: 48px;
   position: relative;
   z-index: 2;
-  flex: 1;
-  justify-content: center;
 }
 .role-card {
   display: grid;
@@ -863,7 +861,7 @@ body {
   .about-data { padding-left: 8px; }
 
   /* Role — match about section breakpoint pattern */
-  .role-inner { padding: 80px 32px 60px; }
+  .role-inner { padding: 0 32px; }
   .role-title { font-size: 64px; margin-bottom: 20px; }
   .role-rule { margin-bottom: 28px; }
   .role-summary { gap: 36px; }
@@ -1167,7 +1165,7 @@ body {
     height: auto;
     overflow: visible;
   }
-  .role-inner { padding: 48px 20px 40px; display: flex; flex-direction: column; justify-content: flex-start; height: auto; }
+  .role-inner { padding: 48px 20px 40px; position: relative; }
   .role-title { font-size: 48px; margin-bottom: 28px; }
   .role-rule { margin-bottom: 28px; }
   .role-gallery { order: 10; }
