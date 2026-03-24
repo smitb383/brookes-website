@@ -2138,6 +2138,17 @@ var imgScale = 1;
 function updateGalleryScale() {
   if (window.innerWidth <= 768) { imgScale = 1; return; }
   imgScale = Math.min(1, Math.max(0.5, window.innerHeight / 950));
+  // Reposition specific images on short viewports
+  var frame = document.querySelector('.rg1-e');
+  if (frame) {
+    if (window.innerHeight <= 900) {
+      frame.style.top = '16%';
+      frame.style.right = '7%';
+    } else {
+      frame.style.top = '-4%';
+      frame.style.right = '6%';
+    }
+  }
 }
 window.addEventListener('resize', function() { updateGalleryScale(); updateRole(); });
 updateGalleryScale();
