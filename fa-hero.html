@@ -1668,14 +1668,13 @@ body {
   padding: 0 60px;
 }
 .credits-heading {
-  font-family: 'Bizkea', sans-serif;
-  font-size: 96px;
-  font-weight: 400;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
-  line-height: 0.9;
-  color: rgba(16,24,80,0.18);
-  margin-bottom: 28px;
+  color: rgba(16,24,80,0.5);
+  margin-bottom: 20px;
 }
 .credits-rule {
   border: none;
@@ -1746,14 +1745,12 @@ body {
 @media (max-width: 768px) {
   .credits-section { padding: 72px 0 80px; }
   .credits-inner { padding: 0 32px; }
-  .credits-heading { font-size: 64px; margin-bottom: 20px; }
   .credits-grid { grid-template-columns: 1fr 1.3fr; gap: 32px 40px; }
   .credits-status { flex-direction: column; gap: 12px; }
 }
 @media (max-width: 480px) {
   .credits-section { padding: 60px 0 64px; }
   .credits-inner { padding: 0 20px; }
-  .credits-heading { font-size: 48px; margin-bottom: 16px; }
   .credits-grid { grid-template-columns: 1fr; gap: 28px; }
   .credits-rule { margin-bottom: 28px; }
   .credit-value { font-size: 12px; }
@@ -1764,7 +1761,7 @@ body {
 
 <div class="credits-section" id="credits">
   <div class="credits-inner">
-    <div class="credits-heading">Credits</div>
+    <div class="credits-heading">Credits & Partners</div>
     <hr class="credits-rule">
 
     <div class="credits-grid">
