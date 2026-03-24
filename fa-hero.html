@@ -423,8 +423,6 @@ body {
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  transform: scale(var(--gallery-scale, 1));
-  transform-origin: center center;
 }
 .role-gallery-img {
   position: absolute;
@@ -2126,7 +2124,7 @@ function updateRole() {
     }
 
     img.style.opacity = o;
-    img.style.transform = `translateY(${ty}px)`;
+    img.style.transform = `translateY(${ty}px) scale(${imgScale})`;
     if (o > 0) img.classList.add('is-visible');
     else img.classList.remove('is-visible');
   });
@@ -2135,16 +2133,13 @@ function updateRole() {
 window.addEventListener('scroll', updateRole, { passive: true });
 updateRole();
 
-// Gallery scaling — shrink images on shorter viewports
+// Gallery scaling — compute per-image scale for shorter viewports
+var imgScale = 1;
 function updateGalleryScale() {
-  var gallery = document.querySelector('.role-gallery');
-  if (!gallery || window.innerWidth <= 768) return;
-  var vh = window.innerHeight;
-  // Full size at 950px+ height, scale down proportionally below that
-  var scale = Math.min(1, Math.max(0.5, vh / 950));
-  gallery.style.setProperty('--gallery-scale', scale);
+  if (window.innerWidth <= 768) { imgScale = 1; return; }
+  imgScale = Math.min(1, Math.max(0.5, window.innerHeight / 950));
 }
-window.addEventListener('resize', updateGalleryScale);
+window.addEventListener('resize', function() { updateGalleryScale(); updateRole(); });
 updateGalleryScale();
 
 // Hero parallax — fade + drift as you scroll past
