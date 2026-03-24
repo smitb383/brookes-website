@@ -358,9 +358,12 @@ body {
 .role-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: clamp(60px, 10vh, 120px) clamp(32px, 4vw, 60px) clamp(32px, 4vh, 60px);
+  padding: clamp(80px, 12vh, 140px) clamp(32px, 4vw, 60px) clamp(40px, 6vh, 80px);
   position: relative;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .role-title {
   font-family: 'Bizkea', sans-serif;
@@ -370,21 +373,23 @@ body {
   color: rgba(92,92,112,0.45);
   line-height: 0.9;
   letter-spacing: 0.02em;
-  margin-bottom: clamp(20px, 3vh, 40px);
+  margin-bottom: clamp(12px, 1.5vh, 20px);
 }
 .role-rule {
   border: none;
   border-top: 1px solid rgba(58,52,84,0.08);
-  margin-bottom: clamp(20px, 3vh, 40px);
+  margin-bottom: clamp(36px, 5vh, 72px);
 }
 
 /* Summary cards */
 .role-summary {
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 5vh, 64px);
+  gap: clamp(32px, 4.5vh, 56px);
   position: relative;
   z-index: 2;
+  flex: 1;
+  justify-content: center;
 }
 .role-card {
   display: grid;
@@ -1157,11 +1162,11 @@ body {
     height: auto;
     overflow: visible;
   }
-  .role-inner { padding: 60px 20px 40px; display: flex; flex-direction: column; }
+  .role-inner { padding: 60px 20px 40px; display: flex; flex-direction: column; justify-content: flex-start; height: auto; }
   .role-title { font-size: 48px; margin-bottom: 20px; }
   .role-rule { margin-bottom: 20px; }
   .role-gallery { order: 10; }
-  .role-summary { gap: 24px; }
+  .role-summary { gap: 24px; flex: none; justify-content: flex-start; }
   .role-card {
     grid-template-columns: 1fr;
     gap: 8px;
