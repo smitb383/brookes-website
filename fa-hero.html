@@ -355,8 +355,7 @@ body {
   height: 100vh;
   display: flex;
   align-items: center;
-  overflow: hidden;
-  /* Gallery images positioned relative to this */
+  overflow: clip;
 }
 .role-inner {
   max-width: 1400px;
@@ -436,7 +435,7 @@ body {
   pointer-events: auto;
 }
 .role-gallery-img:hover {
-  scale: 1.25;
+  scale: 1.15;
   z-index: 50;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.15);
 }
@@ -755,7 +754,7 @@ body {
 }
 .gallery-img:hover {
   z-index: 50 !important;
-  scale: 1.25;
+  scale: 1.15;
   box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.15);
 }
 /* Subtle rotations for organic feel */
@@ -1467,7 +1466,7 @@ body {
             <img src="images/fa/rg1-1.png" alt="What If Fabrics Were Redesigned In A Lab?">
           </div>
           <!-- 2: Artist grid (Okazaki, Qi, Nakazato, etc.) — right, upper -->
-          <div class="role-gallery-img rg1-b" data-role="1" style="width: 32vw; top: 48%; right: -6%; rotate: 2deg;">
+          <div class="role-gallery-img rg1-b" data-role="1" style="width: 32vw; top: 48%; right: 4%; rotate: 2deg;">
             <img src="images/fa/rg1-2.png" alt="Featured artists grid">
           </div>
           <!-- 3: Brand identity + color palette — bottom-left -->
