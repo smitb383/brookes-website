@@ -839,6 +839,30 @@ body {
 .g2-6    { width: 20.9vw; top: 66%; left: 16%; }           /* #6 aerial gardens — lower */
 .g2-gala { width: 12.35vw; top: 62%; left: 4%; }           /* #7 gala — lower */
 
+/* About gallery — short viewport adjustments */
+@media (max-height: 900px) and (min-width: 769px) {
+  /* Pull bottom-heavy images up so they stay in view */
+  .g1-9  { top: 66%; }
+  .g1-10 { top: 62%; }
+  .g1-11 { top: 58%; }
+  .g1-8  { top: 58%; }
+  .g2-1  { top: 55%; }
+  .g2-6  { top: 60%; }
+  .g2-gala { top: 56%; }
+}
+@media (max-height: 750px) and (min-width: 769px) {
+  .g1-9  { top: 60%; }
+  .g1-10 { top: 56%; }
+  .g1-11 { top: 52%; }
+  .g1-8  { top: 52%; }
+  .g1-6  { top: 34%; }
+  .g1-7  { top: 26%; }
+  .g2-1  { top: 50%; }
+  .g2-6  { top: 54%; }
+  .g2-gala { top: 50%; }
+  .g2-4  { top: 30%; }
+}
+
 /* Mobile nav overlay — hidden on desktop */
 .mobile-nav-overlay { display: none; }
 
@@ -1928,6 +1952,15 @@ body {
 </div>
 
 <script>
+// About gallery scaling — scale images on shorter viewports
+var aboutImgScale = 1;
+function updateAboutGalleryScale() {
+  if (window.innerWidth <= 768) { aboutImgScale = 1; return; }
+  aboutImgScale = Math.min(1, Math.max(0.55, window.innerHeight / 950));
+}
+updateAboutGalleryScale();
+window.addEventListener('resize', function() { updateAboutGalleryScale(); if (typeof update === 'function') update(); });
+
 // Phased scroll animation
 // Phases (normalized 0–1 over 700vh scroll):
 // 0.00–0.10  Text 1 visible, settled
@@ -1993,7 +2026,7 @@ function animateGallery(images, enterStart, enterEnd, exitStart, exitEnd, t) {
     }
 
     el.style.opacity = opacity;
-    el.style.transform = `translate(${tx}px, ${ty}px)`;
+    el.style.transform = `translate(${tx}px, ${ty}px) scale(${aboutImgScale})`;
   });
 }
 
