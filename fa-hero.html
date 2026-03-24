@@ -355,6 +355,7 @@ body {
   height: 100vh;
   display: flex;
   align-items: center;
+  overflow: clip;
 }
 .role-inner {
   max-width: 1400px;
@@ -422,6 +423,8 @@ body {
   inset: 0;
   z-index: 3;
   pointer-events: none;
+  transform: scale(var(--gallery-scale, 1));
+  transform-origin: center center;
 }
 .role-gallery-img {
   position: absolute;
@@ -874,6 +877,26 @@ body {
 
   /* Gallery images — scale down */
   .gallery-img { border-radius: 4px; }
+}
+
+
+/* ════════════════════════════════════════
+   SHORT VIEWPORTS — MacBook / laptop heights
+   ════════════════════════════════════════ */
+@media (max-height: 900px) and (min-width: 769px) {
+  .role-title { font-size: 72px; margin-bottom: 20px; }
+  .role-rule { margin-bottom: 28px; }
+  .role-summary { gap: 36px; }
+  .role-card { gap: 36px; }
+  .role-card-text { font-size: 17px; }
+}
+@media (max-height: 750px) and (min-width: 769px) {
+  .role-title { font-size: 56px; margin-bottom: 16px; }
+  .role-rule { margin-bottom: 16px; }
+  .role-summary { gap: 24px; }
+  .role-card { gap: 24px; }
+  .role-card-text { font-size: 15px; }
+  .role-card-label { font-size: 11px; }
 }
 
 
@@ -2111,6 +2134,18 @@ function updateRole() {
 
 window.addEventListener('scroll', updateRole, { passive: true });
 updateRole();
+
+// Gallery scaling — shrink images on shorter viewports
+function updateGalleryScale() {
+  var gallery = document.querySelector('.role-gallery');
+  if (!gallery || window.innerWidth <= 768) return;
+  var vh = window.innerHeight;
+  // Full size at 950px+ height, scale down proportionally below that
+  var scale = Math.min(1, Math.max(0.5, vh / 950));
+  gallery.style.setProperty('--gallery-scale', scale);
+}
+window.addEventListener('resize', updateGalleryScale);
+updateGalleryScale();
 
 // Hero parallax — fade + drift as you scroll past
 const hero = document.querySelector('.hero');
