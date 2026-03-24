@@ -801,7 +801,7 @@ body {
 .g1-3  { width: 24.7vw; top: 3%;  left: 28%; }            /* #3  garden — more right */
 .g1-4  { width: 15.2vw; top: 6%;  left: 62%; }            /* #4  water figure — UPPER RIGHT */
 .g1-5  { width: 14.25vw; top: 4%;  right: 2%; }           /* #5  dark garment — more left */
-.g1-6  { width: 15.35vw; top: 32%; left: 61%; }           /* #6  FA poster */
+.g1-6  { width: 15.35vw; top: 34%; left: 66%; }           /* #6  FA poster */
 .g1-7  { width: 10.5vw; top: 30%; right: 1%; }            /* #7  blue leaf — up */
 .g1-8  { width: 16.15vw; top: 64%; right: 2%; }           /* #8  jellyfish */
 .g1-9  { width: 20.9vw; top: 72%; left: 46%; }            /* #9  studio — lower+right */
@@ -2402,12 +2402,14 @@ window.addEventListener('scroll', updateHero, { passive: true });
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.6s ease, background 0.6s ease, backdrop-filter 0.6s ease, -webkit-backdrop-filter 0.6s ease;
+  transition: opacity 0.6s ease, visibility 0.6s ease, background 0.6s ease, backdrop-filter 0.6s ease, -webkit-backdrop-filter 0.6s ease;
   cursor: pointer;
 }
 .coming-soon-overlay.is-active {
   opacity: 1;
+  visibility: visible;
   pointer-events: all;
   background: rgba(24,12,26,0.7);
   backdrop-filter: blur(20px);
