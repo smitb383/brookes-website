@@ -1659,7 +1659,7 @@ body {
 <style>
 .credits-section {
   background: #A8B8F0;
-  padding: 100px 0 120px;
+  padding: 100px 0 100px;
   position: relative;
 }
 .credits-inner {
@@ -1667,34 +1667,35 @@ body {
   margin: 0 auto;
   padding: 0 60px;
 }
-.credits-title {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+.credits-heading {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 96px;
+  font-weight: 400;
   text-transform: uppercase;
-  color: rgba(16,24,80,0.5);
-  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+  color: rgba(16,24,80,0.18);
+  margin-bottom: 28px;
 }
 .credits-rule {
   border: none;
   border-top: 1px solid rgba(16,24,80,0.12);
-  margin-bottom: 64px;
+  margin-bottom: 40px;
 }
 .credits-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
-  gap: 48px 56px;
+  gap: 40px 56px;
 }
 .credits-col {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
 }
 .credit-block {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 .credit-label {
   font-family: 'IBM Plex Mono', monospace;
@@ -1703,7 +1704,7 @@ body {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(16,24,80,0.4);
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 .credit-value {
   font-family: 'IBM Plex Mono', monospace;
@@ -1724,40 +1725,46 @@ body {
   white-space: nowrap;
 }
 .credits-status {
-  margin-top: 72px;
-  padding-top: 48px;
-  border-top: 1px solid rgba(16,24,80,0.08);
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(16,24,80,0.15);
+  display: flex;
+  gap: 24px;
+  align-items: baseline;
+}
+.credits-status .credit-label {
+  flex-shrink: 0;
 }
 .credits-status p {
   font-family: 'Sora', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
   line-height: 1.6;
-  color: rgba(16,24,80,0.55);
-  max-width: 900px;
-}
-.credits-status .credit-label {
-  margin-bottom: 12px;
+  color: rgba(16,24,80,0.5);
+  max-width: 720px;
 }
 @media (max-width: 768px) {
   .credits-section { padding: 72px 0 80px; }
   .credits-inner { padding: 0 32px; }
+  .credits-heading { font-size: 64px; margin-bottom: 20px; }
   .credits-grid { grid-template-columns: 1fr 1.3fr; gap: 32px 40px; }
+  .credits-status { flex-direction: column; gap: 12px; }
 }
 @media (max-width: 480px) {
   .credits-section { padding: 60px 0 64px; }
   .credits-inner { padding: 0 20px; }
+  .credits-heading { font-size: 48px; margin-bottom: 16px; }
   .credits-grid { grid-template-columns: 1fr; gap: 28px; }
-  .credits-rule { margin-bottom: 36px; }
+  .credits-rule { margin-bottom: 28px; }
   .credit-value { font-size: 12px; }
-  .credits-status { margin-top: 40px; padding-top: 32px; }
-  .credits-status p { font-size: 14px; }
+  .credits-status { margin-top: 36px; padding-top: 28px; flex-direction: column; gap: 10px; }
+  .credits-status p { font-size: 13px; }
 }
 </style>
 
 <div class="credits-section" id="credits">
   <div class="credits-inner">
-    <div class="credits-title">Credits & Partners</div>
+    <div class="credits-heading">Credits</div>
     <hr class="credits-rule">
 
     <div class="credits-grid">
@@ -1835,7 +1842,7 @@ body {
 
     <!-- Project Status -->
     <div class="credits-status">
-      <div class="credit-label">Project Status</div>
+      <div class="credit-label">Status</div>
       <p>Although paused due to unforeseen funding constraints, Fashion's Alchemists is currently in conversation with major Chinese institutions for relaunch in 2026.</p>
     </div>
   </div>
