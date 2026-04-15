@@ -32,50 +32,64 @@ body {
 /* ═══ NAV ═══ */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 16px 80px;
+  padding: 16px 60px;
 }
 .nav-bar {
   display: flex; justify-content: space-between; align-items: center;
   padding: 13px 28px;
   border-radius: 10px;
-  background: rgba(24,12,26,0.35);
-  backdrop-filter: blur(32px) saturate(1.4);
-  -webkit-backdrop-filter: blur(32px) saturate(1.4);
-  border: 1px solid rgba(200,196,218,0.08);
-  border-top: 1px solid rgba(200,196,218,0.14);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.2), 0 1px 0 rgba(200,196,218,0.04) inset;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-top: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 0 rgba(255,255,255,0.12) inset;
+  position: relative;
+  overflow: hidden;
+}
+.nav-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.69' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  border-radius: inherit;
 }
 .nav-back,
 .nav-next {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 11px; font-weight: 600;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: rgba(208,212,224,0.5);
+  color: var(--cool-mist, #D6D6E0);
+  opacity: 0.6;
   text-decoration: none;
   display: flex; align-items: center; gap: 10px;
   flex-shrink: 0;
-  transition: color 0.5s ease, text-shadow 0.5s ease;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: opacity 0.5s ease, text-shadow 0.5s ease;
 }
 .nav-back:hover,
 .nav-next:hover {
-  color: #C8ECDC;
-  text-shadow: 0 0 10px rgba(200,236,220,0.2), 0 0 24px rgba(200,236,220,0.08);
+  opacity: 0.85;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
 .nav-arrow {
   width: 14px; height: 13px;
-  fill: rgba(208,212,224,0.4);
+  fill: var(--cool-mist, #D6D6E0);
   flex-shrink: 0;
   transition: fill 0.5s ease, transform 0.5s ease, filter 0.5s ease;
 }
 .nav-back:hover .nav-arrow-left {
-  fill: #C8ECDC;
   transform: translate(-4px, 0) rotate(90deg);
-  filter: drop-shadow(0 0 6px rgba(200,236,220,0.25));
+  filter: drop-shadow(0 0 4px rgba(214,214,224,0.2));
 }
 .nav-next:hover .nav-arrow-right {
-  fill: #C8ECDC;
   transform: rotate(-90deg) translateY(4px);
-  filter: drop-shadow(0 0 6px rgba(200,236,220,0.25));
+  filter: drop-shadow(0 0 4px rgba(214,214,224,0.2));
 }
 .nav-arrow-left { transform: rotate(90deg); }
 .nav-arrow-right { transform: rotate(-90deg); }
@@ -88,14 +102,16 @@ body {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px; font-weight: 400;
   letter-spacing: 0.14em; text-transform: uppercase;
-  color: rgba(208,212,224,0.55);
+  color: var(--cool-mist, #D6D6E0);
+  opacity: 0.5;
   text-decoration: none;
-  transition: color 0.5s ease, text-shadow 0.5s ease, letter-spacing 0.5s ease;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  transition: opacity 0.5s ease, text-shadow 0.5s ease, letter-spacing 0.5s ease;
 }
 .nav-link:hover {
-  color: #C8ECDC;
+  opacity: 0.8;
   letter-spacing: 0.22em;
-  text-shadow: 0 0 10px rgba(200,236,220,0.2), 0 0 24px rgba(200,236,220,0.08);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
 
 /* ═══ HERO ENTRANCE ANIMATIONS ═══ */
@@ -142,7 +158,7 @@ body {
   ;
   column-gap: 0;
   row-gap: 0;
-  padding: 0 80px 40px;
+  padding: 0 60px 40px;
   min-height: 100vh;
 }
 
@@ -304,13 +320,19 @@ body {
 /* ═══ DECK EMBED ═══ */
 .deck-section {
   background: #180C1A;
-  padding: 100px 100px 120px;
+  padding: 120px 60px;
+}
+.deck-section .deck-header,
+.deck-section .deck-frame {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .deck-header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(138,136,152,0.08);
 }
@@ -373,12 +395,12 @@ body {
   color: rgba(92,92,112,0.45);
   line-height: 0.9;
   letter-spacing: 0.02em;
-  margin-bottom: 28px;
+  margin-bottom: 48px;
 }
 .role-rule {
   border: none;
   border-top: 1px solid rgba(58,52,84,0.08);
-  margin-bottom: 36px;
+  margin-bottom: 48px;
 }
 
 /* Summary cards */
@@ -510,12 +532,11 @@ body {
   opacity: 1;
 }
 .role-expand-inner {
-  padding-top: 28px;
   background: rgba(246,244,255,0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 8px;
-  padding: 28px 24px 24px;
+  padding: 24px;
   position: relative;
   z-index: 3;
 }
@@ -599,7 +620,7 @@ body {
   letter-spacing: 0.02em;
   line-height: 0.9;
   color: rgba(92,92,112,0.45);
-  margin-bottom: 28px;
+  margin-bottom: 48px;
   position: relative;
   z-index: 20;
 }
@@ -607,7 +628,7 @@ body {
 .about-rule {
   border: none;
   border-top: 1px solid rgba(58,52,84,0.08);
-  margin-bottom: 36px;
+  margin-bottom: 48px;
 }
 
 .about-content {
@@ -621,7 +642,7 @@ body {
 .about-text-wrap {
   position: relative;
   min-height: 120px;
-  padding-right: 12px;
+  padding-right: 0;
 }
 
 .about-text-panel {
@@ -658,7 +679,7 @@ body {
 
 /* Right — structured data */
 .about-data {
-  padding-left: 12px;
+  padding-left: 0;
 }
 
 .about-data-row {
@@ -703,7 +724,7 @@ body {
 .about-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 8px;
 }
 
 .about-tag {
@@ -799,6 +820,13 @@ body {
   font-size: 8px;
   letter-spacing: 0.1em;
   border-radius: 0 0 6px 6px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.cap-glass:hover figcaption {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* CAPTION STYLE B — floating frosted pill on image */
@@ -813,6 +841,13 @@ body {
   color: rgba(255,255,255,0.6);
   font-size: 8px;
   letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.cap-pill:hover figcaption {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* (Style C removed — only glass + pill used) */
@@ -885,18 +920,18 @@ body {
 
   /* About */
   .about { padding: 0 32px; }
-  .about-heading { font-size: 64px; margin-bottom: 20px; }
-  .about-rule { margin-bottom: 28px; }
+  .about-heading { font-size: 64px; margin-bottom: 36px; }
+  .about-rule { margin-bottom: 36px; }
   .about-content { grid-template-columns: 1.1fr 1px 1fr; gap: 0 32px; }
   .about-text-wrap { padding-right: 0; }
   .about-text-panel { right: 0; }
   .about-text-panel p { font-size: 17px; }
-  .about-data { padding-left: 8px; }
+  .about-data { padding-left: 0; }
 
   /* Role — match about section breakpoint pattern */
   .role-inner { padding: 0 32px; }
-  .role-title { font-size: 64px; margin-bottom: 20px; }
-  .role-rule { margin-bottom: 28px; }
+  .role-title { font-size: 64px; margin-bottom: 36px; }
+  .role-rule { margin-bottom: 36px; }
   .role-summary { gap: 36px; }
   .role-card { grid-template-columns: 1fr; gap: 32px; }
   .role-card-text { font-size: 17px; }
@@ -940,10 +975,8 @@ body {
   .nav-links { display: none; }
   .nav-back,
   .nav-next {
-    color: rgba(208,212,224,0.4);
     font-size: 10px;
   }
-  .nav-arrow { fill: rgba(208,212,224,0.3); }
 
   /* Mobile nav overlay */
   .mobile-nav-overlay {
@@ -1684,8 +1717,8 @@ body {
 <!-- ═══ CREDITS & PARTNERS ═══ -->
 <style>
 .credits-section {
-  background: #A8B8F0;
-  padding: 100px 0 100px;
+  background: var(--plum-black, #201C30);
+  padding: 120px 0;
   position: relative;
 }
 .credits-inner {
@@ -1695,32 +1728,32 @@ body {
 }
 .credits-heading {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(16,24,80,0.5);
-  margin-bottom: 20px;
+  color: var(--muted-violet, #8A8898);
+  margin-bottom: 24px;
 }
 .credits-rule {
   border: none;
-  border-top: 1px solid rgba(16,24,80,0.12);
-  margin-bottom: 40px;
+  border-top: 1px solid var(--dark-plum, #3A3454);
+  margin-bottom: 48px;
 }
 .credits-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
-  gap: 40px 56px;
+  gap: 40px 48px;
 }
 .credits-col {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
 }
 .credit-block {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 .credit-label {
   font-family: 'IBM Plex Mono', monospace;
@@ -1728,50 +1761,56 @@ body {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(16,24,80,0.4);
-  margin-bottom: 1px;
+  color: var(--dark-steel, #5C5C70);
 }
 .credit-value {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 13px;
   font-weight: 400;
-  line-height: 1.7;
-  color: rgba(16,24,80,0.75);
+  line-height: 1.5;
+  color: var(--cool-mist, #D6D6E0);
 }
 .credit-value strong {
   font-weight: 500;
 }
-.credit-byline {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
-  font-weight: 300;
-  color: rgba(16,24,80,0.4);
-  white-space: nowrap;
-}
-.credits-status {
-  margin-top: 56px;
-  padding-top: 40px;
-  border-top: 1px solid rgba(16,24,80,0.15);
+.credit-entry {
   display: flex;
-  gap: 24px;
-  align-items: baseline;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(58,52,84,0.5);
 }
-.credits-status .credit-label {
-  flex-shrink: 0;
+.credit-entry:last-child {
+  border-bottom: none;
 }
-.credits-status p {
-  font-family: 'Sora', sans-serif;
-  font-size: 14px;
+.credit-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cool-mist, #D6D6E0);
+}
+.credit-role {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
   font-weight: 300;
-  line-height: 1.6;
-  color: rgba(16,24,80,0.5);
-  max-width: 720px;
+  letter-spacing: 0.02em;
+  color: var(--dark-steel, #5C5C70);
+  font-style: italic;
+}
+.credits-status-block {
+  margin-top: 4px;
+  padding-top: 24px;
+  border-top: 1px solid var(--dark-plum, #3A3454);
+}
+.credit-status-text {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--dark-steel, #5C5C70);
 }
 @media (max-width: 768px) {
   .credits-section { padding: 72px 0 80px; }
   .credits-inner { padding: 0 32px; }
   .credits-grid { grid-template-columns: 1fr 1.3fr; gap: 32px 40px; }
-  .credits-status { flex-direction: column; gap: 12px; }
 }
 @media (max-width: 480px) {
   .credits-section { padding: 60px 0 64px; }
@@ -1779,171 +1818,266 @@ body {
   .credits-grid { grid-template-columns: 1fr; gap: 28px; }
   .credits-rule { margin-bottom: 28px; }
   .credit-value { font-size: 12px; }
-  .credits-status { margin-top: 36px; padding-top: 28px; flex-direction: column; gap: 10px; }
-  .credits-status p { font-size: 13px; }
+  .credit-name { font-size: 12px; }
 }
 </style>
 
 <div class="credits-section" id="credits">
   <div class="credits-inner">
-    <div class="credits-heading">Credits & Partners</div>
-    <hr class="credits-rule">
+      <div class="credits-heading">Credits & Partners</div>
+      <hr class="credits-rule">
 
-    <div class="credits-grid">
-      <!-- Column 1: Production Credits -->
-      <div class="credits-col">
-        <div class="credit-block">
-          <div class="credit-label">Spatial Design</div>
-          <div class="credit-value">Studio Dennis Vanderbroeck</div>
+      <div class="credits-grid">
+        <!-- Column 1: Production Credits -->
+        <div class="credits-col">
+          <div class="credit-block">
+            <div class="credit-label">Spatial Design</div>
+            <div class="credit-value">Studio Dennis Vanderbroeck</div>
+          </div>
+          <div class="credit-block">
+            <div class="credit-label">Landscape Design</div>
+            <div class="credit-value">This Humid House</div>
+          </div>
+          <div class="credit-block">
+            <div class="credit-label">Director, Exhibition Production & Curation</div>
+            <div class="credit-value">Brooke Smith</div>
+          </div>
+          <div class="credit-block">
+            <div class="credit-label">Executive Producer Gala & Partnerships</div>
+            <div class="credit-value">Jamie QQ Wu</div>
+          </div>
+          <div class="credit-block">
+            <div class="credit-label">Head of PR & Communications</div>
+            <div class="credit-value">Nathalie Jones Everard</div>
+          </div>
+          <div class="credit-block">
+            <div class="credit-label">Graphic & Visual Design</div>
+            <div class="credit-value">Joshua Edward</div>
+          </div>
+          <div class="credit-block">
+            <div class="credit-label">Curatorial Advisor</div>
+            <div class="credit-value">Karen Van Godtsenhoven</div>
+          </div>
         </div>
-        <div class="credit-block">
-          <div class="credit-label">Landscape Design</div>
-          <div class="credit-value">This Humid House</div>
-        </div>
-        <div class="credit-block">
-          <div class="credit-label">Director, Exhibition Production & Curation</div>
-          <div class="credit-value">Brooke Smith</div>
-        </div>
-        <div class="credit-block">
-          <div class="credit-label">Executive Producer Gala & Partnerships</div>
-          <div class="credit-value">Jamie QQ Wu</div>
-        </div>
-        <div class="credit-block">
-          <div class="credit-label">Head of PR & Communications</div>
-          <div class="credit-value">Nathalie Jones Everard</div>
-        </div>
-        <div class="credit-block">
-          <div class="credit-label">Graphic & Visual Design</div>
-          <div class="credit-value">Joshua Edward</div>
-        </div>
-        <div class="credit-block">
-          <div class="credit-label">Curatorial Advisor</div>
-          <div class="credit-value">Karen Van Godtsenhoven</div>
-        </div>
-      </div>
 
-      <!-- Column 2: Gala Committee -->
-      <div class="credits-col">
-        <div class="credit-block">
-          <div class="credit-label">Gala Committee</div>
-          <div class="credit-value">
-            Ravi Thakran <span class="credit-byline">(Co-Chair) Turmeric Capital Holdings / Former President LVMH Asia</span><br>
-            Heart Evangelista <span class="credit-byline">(Co-Chair) Fashion Icon</span><br>
-            Yanina Novitskaya <span class="credit-byline">CEO Cartier South East Asia & Oceania</span><br>
-            David Wertheimer <span class="credit-byline">1686 Partners / Chanel Family</span><br>
-            Andrea Rosso <span class="credit-byline">OTB Family / Diesel Sustainability Director</span><br>
-            Alwyn Chong <span class="credit-byline">Managing Director Luxasia</span><br>
-            Chayapa "Pink" Chutrakul <span class="credit-byline">The Pink Lab / CEO Directions Group</span><br>
-            Seia Lee <span class="credit-byline">Opera Singer & Philanthropist</span><br>
-            Raline Shah <span class="credit-byline">Actress & Philanthropist</span><br>
-            Sharon Tan <span class="credit-byline">COO DBS</span><br>
-            Colleen Yu <span class="credit-byline">Li & Fung Family / Hong Kong Tourism Board</span><br>
-            Marion Caunter <span class="credit-byline">Entrepreneur / TV Personality</span>
+        <!-- Column 2: Gala Committee -->
+        <div class="credits-col">
+          <div class="credit-block">
+            <div class="credit-label">Gala Committee</div>
+            <div class="credit-entry">
+              <span class="credit-name">Ravi Thakran</span>
+              <span class="credit-role">Co-Chair — Turmeric Capital Holdings / Former President LVMH Asia</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Heart Evangelista</span>
+              <span class="credit-role">Co-Chair — Fashion Icon</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Yanina Novitskaya</span>
+              <span class="credit-role">CEO Cartier South East Asia & Oceania</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">David Wertheimer</span>
+              <span class="credit-role">1686 Partners / Chanel Family</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Andrea Rosso</span>
+              <span class="credit-role">OTB Family / Diesel Sustainability Director</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Alwyn Chong</span>
+              <span class="credit-role">Managing Director Luxasia</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Chayapa "Pink" Chutrakul</span>
+              <span class="credit-role">The Pink Lab / CEO Directions Group</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Seia Lee</span>
+              <span class="credit-role">Opera Singer & Philanthropist</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Raline Shah</span>
+              <span class="credit-role">Actress & Philanthropist</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Sharon Tan</span>
+              <span class="credit-role">COO DBS</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Colleen Yu</span>
+              <span class="credit-role">Li & Fung Family / Hong Kong Tourism Board</span>
+            </div>
+            <div class="credit-entry">
+              <span class="credit-name">Marion Caunter</span>
+              <span class="credit-role">Entrepreneur / TV Personality</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3: Partnerships & Status -->
+        <div class="credits-col">
+          <div class="credit-block">
+            <div class="credit-label">Partnerships</div>
+            <div class="credit-value">
+              Singapore Tourism Board<br>
+              Christie's Auction House<br>
+              Singapore Fashion Council<br>
+              LaSalle College of the Arts<br>
+              Gift of Gardens Charity
+            </div>
+          </div>
+          <div class="credit-block">
+            <div class="credit-label">Media Partnership</div>
+            <div class="credit-value">Cartier, Singapore</div>
+          </div>
+          <div class="credit-block credits-status-block">
+            <div class="credit-label">Status</div>
+            <div class="credit-value credit-status-text">Paused pre-launch due to funder default. Full production, curation, and partnership infrastructure was completed.</div>
           </div>
         </div>
       </div>
 
-      <!-- Column 3: Partnerships -->
-      <div class="credits-col">
-        <div class="credit-block">
-          <div class="credit-label">Partnerships</div>
-          <div class="credit-value">
-            Singapore Tourism Board<br>
-            Christie's Auction House<br>
-            Singapore Fashion Council<br>
-            LaSalle College of the Arts<br>
-            Gift of Gardens Charity
-          </div>
-        </div>
-        <div class="credit-block">
-          <div class="credit-label">Media Partnership</div>
-          <div class="credit-value">Cartier, Singapore</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Project Status -->
-    <div class="credits-status">
-      <div class="credit-label">Status</div>
-      <p>Project paused 2 months before launch due to funder default. Full production, curation, and partnership infrastructure was completed.</p>
-    </div>
   </div>
 </div>
 
 <!-- ═══ NEXT PROJECT ═══ -->
 <style>
 .next-project {
-  background: #500858;
-  padding: 48px 0 20px;
+  background: rgba(80,8,88,0.65);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+  padding: 36px 0 24px;
   text-align: center;
   position: relative;
   z-index: 2;
-  box-shadow: 0 -20px 60px rgba(80,8,88,0.5), 0 -8px 24px rgba(80,8,88,0.3);
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 -6px 24px rgba(0,0,0,0.15);
 }
+.next-project::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.69' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+}
+/* "Next Project" — debossed (pressed into surface) */
+/* Darker fill = reads as cavity/depression, not raised */
 .next-project-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(144,24,156,0.45);
-  margin-bottom: 28px;
-}
-.next-project-title {
-  font-family: 'Bizkea', sans-serif;
-  font-size: 96px;
-  font-weight: 400;
-  text-transform: uppercase;
-  color: #90189C;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  margin-bottom: 12px;
+  color: rgba(30,2,35,0.35);
+  text-shadow:
+    0 -1px 0 rgba(0,0,0,0.3),
+    0 1px 0 rgba(255,255,255,0.1);
+  margin-bottom: 16px;
   transition: color 0.5s ease, text-shadow 0.5s ease;
 }
-.next-project-arrow {
+/* "The Milken Center" — deboss default, emboss on hover */
+.next-project-title {
+  font-family: 'Bizkea', sans-serif;
+  font-size: 120px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: rgba(30,2,35,0.35);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  margin-bottom: 8px;
+  /* Deboss: dark on top, light below */
+  text-shadow:
+    0 -1px 0 rgba(0,0,0,0.35),
+    0 1px 0 rgba(255,255,255,0.12);
+  transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+/* Arrow — debossed via stacked SVG technique */
+.next-project-arrow-wrap {
+  position: relative;
   display: inline-block;
-  width: 50px;
-  height: auto;
-  fill: rgba(144,24,156,0.4);
+  width: 52px;
+  height: 52px;
+}
+.next-project-arrow-wrap svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   transform: rotate(-90deg);
-  transition: fill 0.5s ease, transform 0.5s ease, filter 0.5s ease;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 12%, black 35%, black 60%, rgba(0,0,0,0.2) 88%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 12%, black 35%, black 60%, rgba(0,0,0,0.2) 88%, transparent 100%);
+  transition: transform 0.5s ease, fill 0.5s ease;
+}
+/* Bottom layer: light edge below (deboss) */
+.next-project-arrow-wrap .arrow-highlight {
+  fill: rgba(255,255,255,0.1);
+  transform: rotate(-90deg) translateX(1px);
+}
+/* Middle layer: dark edge above (deboss) */
+.next-project-arrow-wrap .arrow-shadow {
+  fill: rgba(0,0,0,0.35);
+  transform: rotate(-90deg) translateX(-1px);
+}
+/* Top layer: base fill — darker = reads as cavity */
+.next-project-arrow-wrap .arrow-base {
+  fill: rgba(30,2,35,0.35);
 }
 .next-project a {
   text-decoration: none;
   display: block;
 }
-.next-project a:hover .next-project-title {
-  color: rgba(144,24,156,0.75);
-  text-shadow: 0 0 24px rgba(144,24,156,0.15);
+/* Hover: ALL elements deboss → emboss (flip shadows, lighten fill) */
+.next-project:hover .next-project-label {
+  color: rgba(100,16,108,0.15);
+  text-shadow:
+    0 -1px 0 rgba(255,255,255,0.1),
+    0 1px 0 rgba(0,0,0,0.3);
 }
-.next-project a:hover .next-project-arrow {
-  fill: #A8B8F0;
-  transform: rotate(-90deg) translateX(4px);
-  filter: drop-shadow(0 0 6px rgba(168,184,240,0.3));
+.next-project:hover .next-project-title {
+  color: rgba(100,16,108,0.15);
+  text-shadow:
+    0 -1px 0 rgba(255,255,255,0.12),
+    0 1px 0 rgba(0,0,0,0.35);
+}
+/* Hover: arrow emboss — flip highlight/shadow + lighten base */
+.next-project:hover .next-project-arrow-wrap .arrow-highlight {
+  transform: rotate(-90deg) translateX(-1px);
+}
+.next-project:hover .next-project-arrow-wrap .arrow-shadow {
+  transform: rotate(-90deg) translateX(1px);
+}
+.next-project:hover .next-project-arrow-wrap .arrow-base {
+  fill: rgba(100,16,108,0.15);
 }
 @media (max-width: 768px) {
-  .next-project { padding: 60px 32px 56px; }
-  .next-project-title { font-size: 64px; }
+  .next-project { padding: 36px 32px 28px; }
+  .next-project-title { font-size: 80px; }
+  .next-project-arrow-wrap { width: 44px; height: 44px; }
 }
 @media (max-width: 480px) {
-  .next-project { padding: 48px 20px 44px; overflow: hidden; }
-  .next-project-title { font-size: clamp(28px, 8.5vw, 44px); line-height: 1.2; margin-bottom: 24px; word-wrap: break-word; }
-  .next-project-arrow { width: 36px; }
+  .next-project { padding: 28px 20px 24px; overflow: hidden; }
+  .next-project-title { font-size: clamp(32px, 9vw, 52px); line-height: 1.2; margin-bottom: 12px; word-wrap: break-word; }
+  .next-project-arrow-wrap { width: 32px; height: 32px; }
 }
 </style>
 
 <div class="next-project">
   <a href="#">
     <div class="next-project-label">Next Project</div>
-    <div class="next-project-title"><span class="gl">T</span><span class="dlig">he</span> <span class="gl">F</span>uture<span class="gl">s</span>, <span class="gl">S</span>miths<span class="o-star">o</span>nia<span class="gl">n</span></div>
-    <svg class="next-project-arrow" viewBox="0 0 249 428"><path d="M41.27 220.014C44.0175 221.269 46.6479 222.797 49.3668 224.121C58.3805 228.512 84.1439 240.21 93.3626 236.844C96.751 235.606 98.7693 232.387 100.121 229.233C104.277 219.53 105.957 202.275 107.107 191.622C108.39 179.735 109.504 167.827 111.776 156.075C114.846 140.192 119.163 123.934 126.009 109.224C140.48 78.1243 161.527 54.2957 192.892 39.2936C197.93 36.8846 203.101 34.9175 208.34 33L208.787 33.644C173.404 52.923 144.098 86.3543 132.691 125.181C124.797 152.046 125.901 179.251 129.939 206.635C131.14 214.789 132.31 224.244 136.39 231.549C137.826 234.12 139.78 236.279 142.72 237.099C151.048 239.417 172.641 230.545 180.57 226.86C183.748 225.382 188.482 222.494 191.494 221.432C191.93 221.412 192.541 221.312 192.88 221.478C161.997 244.09 144.129 267.623 130.901 303.63C126.03 316.653 122.482 330.13 120.31 343.857C119.548 349.098 118.955 354.363 118.531 359.639C118.415 361.182 118.126 364.289 118.157 365.771C118.055 366.771 117.987 367.584 117.777 368.574C117.33 366.026 117.193 361.091 116.97 358.304C116.499 352.665 115.752 347.053 114.733 341.487C105.198 291.431 84.1165 249.625 41 220.389L41.27 220.014Z"/><path d="M152.006 75.769C151.961 76.9307 148.372 81.835 147.612 83.1558C128.409 116.525 123.249 156.081 125.749 194.126C127.097 207.902 127.256 235.592 145.755 237.212C150.812 237.655 156.413 235.84 158.905 243.008C160.798 248.446 157.27 252.049 154.288 255.997C153.073 257.605 151.877 259.428 150.719 261.146C146.208 267.897 142.168 274.958 138.633 282.273C135.081 289.491 132.355 296.626 129.599 304.177C127.946 308.709 126.851 315.551 122.598 318.069C119.475 319.917 116.375 319.379 113.391 317.653C113.125 317.461 112.924 317.316 112.679 317.097C112.389 316.833 112.11 316.556 111.842 316.266C110.288 314.598 108.289 307.715 107.426 305.241C105.519 299.759 103.411 294.35 101.107 289.023C97.4315 280.66 93.2759 272.289 88.3188 264.606C86.5175 261.836 84.6367 259.118 82.679 256.458C80.5104 253.515 77.2785 249.947 77.1903 246.154C77.1572 243.769 78.0572 241.466 79.6958 239.742C83.5035 235.803 86.742 237.514 91.1145 237.216C104.803 236.121 108.186 219.347 109.502 208.359C111.097 195.033 111.119 181.765 112.402 168.504C113.467 157.199 115.549 146.014 118.62 135.087C124.807 112.887 136.265 92.5311 152.006 75.769Z"/></svg>
+    <div class="next-project-title"><span class="gl">T</span><span class="dlig">he</span> <span class="gl">M</span>ilken <span class="gl">C</span>ent<span class="dlig">er</span></div>
+    <div class="next-project-arrow-wrap">
+      <svg class="arrow-highlight" viewBox="0 0 249 428"><path d="M41.27 220.014C44.0175 221.269 46.6479 222.797 49.3668 224.121C58.3805 228.512 84.1439 240.21 93.3626 236.844C96.751 235.606 98.7693 232.387 100.121 229.233C104.277 219.53 105.957 202.275 107.107 191.622C108.39 179.735 109.504 167.827 111.776 156.075C114.846 140.192 119.163 123.934 126.009 109.224C140.48 78.1243 161.527 54.2957 192.892 39.2936C197.93 36.8846 203.101 34.9175 208.34 33L208.787 33.644C173.404 52.923 144.098 86.3543 132.691 125.181C124.797 152.046 125.901 179.251 129.939 206.635C131.14 214.789 132.31 224.244 136.39 231.549C137.826 234.12 139.78 236.279 142.72 237.099C151.048 239.417 172.641 230.545 180.57 226.86C183.748 225.382 188.482 222.494 191.494 221.432C191.93 221.412 192.541 221.312 192.88 221.478C161.997 244.09 144.129 267.623 130.901 303.63C126.03 316.653 122.482 330.13 120.31 343.857C119.548 349.098 118.955 354.363 118.531 359.639C118.415 361.182 118.126 364.289 118.157 365.771C118.055 366.771 117.987 367.584 117.777 368.574C117.33 366.026 117.193 361.091 116.97 358.304C116.499 352.665 115.752 347.053 114.733 341.487C105.198 291.431 84.1165 249.625 41 220.389L41.27 220.014Z"/><path d="M152.006 75.769C151.961 76.9307 148.372 81.835 147.612 83.1558C128.409 116.525 123.249 156.081 125.749 194.126C127.097 207.902 127.256 235.592 145.755 237.212C150.812 237.655 156.413 235.84 158.905 243.008C160.798 248.446 157.27 252.049 154.288 255.997C153.073 257.605 151.877 259.428 150.719 261.146C146.208 267.897 142.168 274.958 138.633 282.273C135.081 289.491 132.355 296.626 129.599 304.177C127.946 308.709 126.851 315.551 122.598 318.069C119.475 319.917 116.375 319.379 113.391 317.653C113.125 317.461 112.924 317.316 112.679 317.097C112.389 316.833 112.11 316.556 111.842 316.266C110.288 314.598 108.289 307.715 107.426 305.241C105.519 299.759 103.411 294.35 101.107 289.023C97.4315 280.66 93.2759 272.289 88.3188 264.606C86.5175 261.836 84.6367 259.118 82.679 256.458C80.5104 253.515 77.2785 249.947 77.1903 246.154C77.1572 243.769 78.0572 241.466 79.6958 239.742C83.5035 235.803 86.742 237.514 91.1145 237.216C104.803 236.121 108.186 219.347 109.502 208.359C111.097 195.033 111.119 181.765 112.402 168.504C113.467 157.199 115.549 146.014 118.62 135.087C124.807 112.887 136.265 92.5311 152.006 75.769Z"/></svg>
+      <svg class="arrow-shadow" viewBox="0 0 249 428"><path d="M41.27 220.014C44.0175 221.269 46.6479 222.797 49.3668 224.121C58.3805 228.512 84.1439 240.21 93.3626 236.844C96.751 235.606 98.7693 232.387 100.121 229.233C104.277 219.53 105.957 202.275 107.107 191.622C108.39 179.735 109.504 167.827 111.776 156.075C114.846 140.192 119.163 123.934 126.009 109.224C140.48 78.1243 161.527 54.2957 192.892 39.2936C197.93 36.8846 203.101 34.9175 208.34 33L208.787 33.644C173.404 52.923 144.098 86.3543 132.691 125.181C124.797 152.046 125.901 179.251 129.939 206.635C131.14 214.789 132.31 224.244 136.39 231.549C137.826 234.12 139.78 236.279 142.72 237.099C151.048 239.417 172.641 230.545 180.57 226.86C183.748 225.382 188.482 222.494 191.494 221.432C191.93 221.412 192.541 221.312 192.88 221.478C161.997 244.09 144.129 267.623 130.901 303.63C126.03 316.653 122.482 330.13 120.31 343.857C119.548 349.098 118.955 354.363 118.531 359.639C118.415 361.182 118.126 364.289 118.157 365.771C118.055 366.771 117.987 367.584 117.777 368.574C117.33 366.026 117.193 361.091 116.97 358.304C116.499 352.665 115.752 347.053 114.733 341.487C105.198 291.431 84.1165 249.625 41 220.389L41.27 220.014Z"/><path d="M152.006 75.769C151.961 76.9307 148.372 81.835 147.612 83.1558C128.409 116.525 123.249 156.081 125.749 194.126C127.097 207.902 127.256 235.592 145.755 237.212C150.812 237.655 156.413 235.84 158.905 243.008C160.798 248.446 157.27 252.049 154.288 255.997C153.073 257.605 151.877 259.428 150.719 261.146C146.208 267.897 142.168 274.958 138.633 282.273C135.081 289.491 132.355 296.626 129.599 304.177C127.946 308.709 126.851 315.551 122.598 318.069C119.475 319.917 116.375 319.379 113.391 317.653C113.125 317.461 112.924 317.316 112.679 317.097C112.389 316.833 112.11 316.556 111.842 316.266C110.288 314.598 108.289 307.715 107.426 305.241C105.519 299.759 103.411 294.35 101.107 289.023C97.4315 280.66 93.2759 272.289 88.3188 264.606C86.5175 261.836 84.6367 259.118 82.679 256.458C80.5104 253.515 77.2785 249.947 77.1903 246.154C77.1572 243.769 78.0572 241.466 79.6958 239.742C83.5035 235.803 86.742 237.514 91.1145 237.216C104.803 236.121 108.186 219.347 109.502 208.359C111.097 195.033 111.119 181.765 112.402 168.504C113.467 157.199 115.549 146.014 118.62 135.087C124.807 112.887 136.265 92.5311 152.006 75.769Z"/></svg>
+      <svg class="arrow-base" viewBox="0 0 249 428"><path d="M41.27 220.014C44.0175 221.269 46.6479 222.797 49.3668 224.121C58.3805 228.512 84.1439 240.21 93.3626 236.844C96.751 235.606 98.7693 232.387 100.121 229.233C104.277 219.53 105.957 202.275 107.107 191.622C108.39 179.735 109.504 167.827 111.776 156.075C114.846 140.192 119.163 123.934 126.009 109.224C140.48 78.1243 161.527 54.2957 192.892 39.2936C197.93 36.8846 203.101 34.9175 208.34 33L208.787 33.644C173.404 52.923 144.098 86.3543 132.691 125.181C124.797 152.046 125.901 179.251 129.939 206.635C131.14 214.789 132.31 224.244 136.39 231.549C137.826 234.12 139.78 236.279 142.72 237.099C151.048 239.417 172.641 230.545 180.57 226.86C183.748 225.382 188.482 222.494 191.494 221.432C191.93 221.412 192.541 221.312 192.88 221.478C161.997 244.09 144.129 267.623 130.901 303.63C126.03 316.653 122.482 330.13 120.31 343.857C119.548 349.098 118.955 354.363 118.531 359.639C118.415 361.182 118.126 364.289 118.157 365.771C118.055 366.771 117.987 367.584 117.777 368.574C117.33 366.026 117.193 361.091 116.97 358.304C116.499 352.665 115.752 347.053 114.733 341.487C105.198 291.431 84.1165 249.625 41 220.389L41.27 220.014Z"/><path d="M152.006 75.769C151.961 76.9307 148.372 81.835 147.612 83.1558C128.409 116.525 123.249 156.081 125.749 194.126C127.097 207.902 127.256 235.592 145.755 237.212C150.812 237.655 156.413 235.84 158.905 243.008C160.798 248.446 157.27 252.049 154.288 255.997C153.073 257.605 151.877 259.428 150.719 261.146C146.208 267.897 142.168 274.958 138.633 282.273C135.081 289.491 132.355 296.626 129.599 304.177C127.946 308.709 126.851 315.551 122.598 318.069C119.475 319.917 116.375 319.379 113.391 317.653C113.125 317.461 112.924 317.316 112.679 317.097C112.389 316.833 112.11 316.556 111.842 316.266C110.288 314.598 108.289 307.715 107.426 305.241C105.519 299.759 103.411 294.35 101.107 289.023C97.4315 280.66 93.2759 272.289 88.3188 264.606C86.5175 261.836 84.6367 259.118 82.679 256.458C80.5104 253.515 77.2785 249.947 77.1903 246.154C77.1572 243.769 78.0572 241.466 79.6958 239.742C83.5035 235.803 86.742 237.514 91.1145 237.216C104.803 236.121 108.186 219.347 109.502 208.359C111.097 195.033 111.119 181.765 112.402 168.504C113.467 157.199 115.549 146.014 118.62 135.087C124.807 112.887 136.265 92.5311 152.006 75.769Z"/></svg>
+    </div>
   </a>
 </div>
 
 <!-- Coming Soon Modal -->
-<div class="coming-soon-overlay" id="comingSoonModal">
+<div class="coming-soon-overlay" id="comingSoonModal" style="display:none">
   <div class="coming-soon-card">
     <div class="coming-soon-label">Project Page</div>
     <div class="coming-soon-title"><span class="gl">C</span><span class="o-star">o</span>ming <span class="gl">S</span><span class="dlig">oo</span>n</div>
@@ -2467,6 +2601,7 @@ window.addEventListener('scroll', updateHero, { passive: true });
     nextLink.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
+      modal.style.display = '';
       modal.classList.add('is-active');
     });
   }
@@ -2476,6 +2611,7 @@ window.addEventListener('scroll', updateHero, { passive: true });
     navNext.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
+      modal.style.display = '';
       modal.classList.add('is-active');
     });
   }
