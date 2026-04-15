@@ -77,58 +77,43 @@ a { color: inherit; text-decoration: none; }
   z-index: 200;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   overflow: hidden;
 
-  /* Pill state — more transparent, starts translated off-screen */
-  width: 52px;
-  height: 44px;
-  border-radius: 10px;
-  padding: 0 15px;
-
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow:
-    0 6px 24px rgba(0, 0, 0, 0.08),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.03);
-
-  /* Visible from page load as a subtle pill */
-  transform: translateX(0);
-  opacity: 1;
-
-  transition:
-    width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    right 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    border-radius 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    background 0.4s ease,
-    border-color 0.4s ease,
-    box-shadow 0.4s ease;
-  cursor: pointer;
-}
-
-
-/* Expanded bar state — becomes more solid */
-.glass-nav.expanded {
+  /* Hidden by default — slides in when scrolled past hero */
   width: calc(100% - 96px);
-  right: 48px;
+  height: 44px;
   border-radius: 8px;
   padding: 0 48px;
-  justify-content: space-between;
-  cursor: default;
+
   background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.10),
     0 2px 10px rgba(0, 0, 0, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.30),
     inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+
+  transform: translateY(-20px);
+  opacity: 0;
+  pointer-events: none;
+
+  transition:
+    transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+
+/* Visible state — slides down into view */
+.glass-nav.expanded {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Glass depth gradient */
@@ -222,24 +207,18 @@ a { color: inherit; text-decoration: none; }
 
 .nav-links {
   display: flex;
+  justify-content: center;
   gap: 52px;
   position: relative;
   z-index: 2;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease 0s;
-}
-.glass-nav.expanded .nav-links {
-  opacity: 1;
-  pointer-events: auto;
-  transition-delay: 0.3s;
+  width: 100%;
 }
 
 .nav-link {
   font-family: 'IBM Plex Mono', monospace;
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-weight: 400;
+  font-size: 10px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
   color: rgba(55, 50, 75, 0.5);
@@ -268,8 +247,9 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(to bottom, var(--hero-edge) 0%, var(--hero-edge) 45%, var(--about-bg) 100%);
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: 100vh;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
 }
 
 .hero-image {
@@ -311,28 +291,16 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 
-/* Info strip — anchored to bottom of hero viewport */
+/* Info strip — centered */
 .info-strip {
   position: relative;
-  padding: 0 60px;
   z-index: 2;
-  margin: auto 0 0;
-  width: 100%;
-}
-.info-strip-rule {
-  width: 100%;
-  height: 1px;
-  background: rgba(58, 52, 84, 0.12);
-  margin: 0 0 24px;
-}
-.info-strip-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  text-align: center;
+  margin-top: 24px;
 }
 .info-role {
   font-family: 'Bizkea', sans-serif;
-  font-size: 42px;
+  font-size: clamp(28px, 2.2vw, 38px);
   font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -342,28 +310,43 @@ a { color: inherit; text-decoration: none; }
     0 1px 0 rgba(255, 255, 255, 0.4),
     0 -1px 1px rgba(0, 0, 0, 0.08);
 }
-.info-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-.info-meta-label {
+/* Cue label above arrow */
+.hero-cue-label {
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(138, 136, 152, 0.75);
+  color: rgba(58, 52, 84, 0.35);
 }
-.info-meta-value {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 13px;
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: 0.015em;
-  color: rgba(58, 52, 84, 0.65);
+
+/* Scroll-down arrow */
+.hero-scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin: auto auto 0;
+  z-index: 2;
+  cursor: pointer;
+  padding: 16px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
+.hero-scroll-cue:hover {
+  opacity: 0.7;
+  transform: translateY(4px);
+}
+.hero-scroll-cue svg {
+  width: 14px;
+  height: 13px;
+  fill: rgba(58, 52, 84, 0.25);
+  animation: cue-bob 2.4s ease-in-out infinite;
+}
+@keyframes cue-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
 
 /* Gradient bridge — hidden, hero-container handles the full gradient now */
 .gradient-bridge {
@@ -390,7 +373,7 @@ a { color: inherit; text-decoration: none; }
 /* Heading area */
 .about-heading {
   font-family: 'Bizkea', sans-serif;
-  font-size: 96px;
+  font-size: 90px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 0.9;
@@ -422,7 +405,7 @@ a { color: inherit; text-decoration: none; }
   font-family: 'Sora', sans-serif;
   font-size: 18px;
   font-weight: 300;
-  line-height: 1.8;
+  line-height: 1.7;
   letter-spacing: 0.005em;
   color: rgba(58,52,84,0.7);
 }
@@ -443,15 +426,16 @@ a { color: inherit; text-decoration: none; }
   align-self: stretch;
 }
 
-/* Right: structured data */
+/* Right: structured data — right-aligned */
 .about-data {
   padding-left: 0;
+  margin-left: auto;
 }
 
 .about-data-row {
   display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 0 20px;
+  grid-template-columns: 76px 1fr;
+  gap: 0 16px;
   padding: 16px 0;
   border-bottom: 1px solid rgba(58, 52, 84, 0.07);
   align-items: baseline;
@@ -483,7 +467,6 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.015em;
   color: rgba(58, 52, 84, 0.65);
   line-height: 1.65;
-  max-width: 240px;
 }
 
 
@@ -615,12 +598,10 @@ a { color: inherit; text-decoration: none; }
 .projects-zone {
   background: linear-gradient(180deg,
     var(--ghost-violet) 0%,
-    #F2F2F4 50%,
-    var(--frost-violet) 100%
+    #F2F2F4 40%,
+    var(--about-bg) 100%
   );
   padding: 160px 60px 160px;
-
-  border-top: 1px solid rgba(58, 52, 84, 0.08);
 }
 
 .projects-inner {
@@ -642,7 +623,7 @@ a { color: inherit; text-decoration: none; }
 
 .projects-heading {
   font-family: 'Bizkea', sans-serif;
-  font-size: 96px;
+  font-size: 90px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   line-height: 0.9;
@@ -1811,6 +1792,7 @@ a.footer-contact-value:hover {
 .projects-grid .project-cell.reveal:nth-child(2) { transition-delay: 0.38s; }
 .projects-grid .project-cell.reveal:nth-child(3) { transition-delay: 0.52s; }
 .projects-grid .project-cell.reveal:nth-child(4) { transition-delay: 0.66s; }
+.projects-grid .project-cell.reveal:nth-child(5) { transition-delay: 0.80s; }
 
 /* ── Etc waterfall: header → rule → folders cascade ── */
 .etc-header.reveal { transition-delay: 0s; }
@@ -1870,7 +1852,6 @@ a.footer-contact-value:hover {
   .about-content { gap: 0 36px; }
 
   /* ── Hero ── */
-  .info-role { font-size: 36px; }
   .info-strip { padding: 0 48px; }
 
   /* ── Projects ── */
@@ -1913,7 +1894,6 @@ a.footer-contact-value:hover {
   .about-text p { font-size: 16px; }
 
   /* ── Hero ── */
-  .info-role { font-size: 32px; }
   .info-strip { padding: 0 40px; }
 
   /* ── Projects ── */
@@ -1959,7 +1939,6 @@ a.footer-contact-value:hover {
   .hero-image { flex: 0 0 55vh; }
   .hero-container { padding-bottom: 40px; }
   .info-strip { padding: 0 32px; }
-  .info-role { font-size: 32px; }
 
   /* ── About — single column ── */
   .about-zone { padding: 80px 32px 60px; }
@@ -2114,7 +2093,8 @@ a.footer-contact-value:hover {
     object-fit: cover;
     object-position: center 40%;
   }
-  .hero-container { padding-bottom: 120px; min-height: 100vh; }
+  .hero-container { padding-bottom: 40px; min-height: 60vh; }
+  .hero-scroll-cue { display: none; }
   .info-strip { padding: 0 20px; }
   .info-strip-rule { margin-bottom: 20px; }
   .info-strip-inner {
@@ -2122,7 +2102,7 @@ a.footer-contact-value:hover {
     align-items: flex-start;
     gap: 28px;
   }
-  .info-role { font-size: 32px; line-height: 1.2; }
+  .info-role { line-height: 1.2; }
   .info-meta {
     flex-direction: row;
     align-items: center;
@@ -2375,24 +2355,17 @@ a.footer-contact-value:hover {
      ═══════════════════════════════════════ -->
 <nav class="glass-nav" id="glassNav">
   <div class="nav-links">
-    <a href="#about" class="nav-link">About</a>
     <a href="#projects" class="nav-link">Projects</a>
+    <a href="#about" class="nav-link">About</a>
     <!-- <a href="#etc" class="nav-link">Experience Ext.</a> -->
     <a href="#contact" class="nav-link">Contact</a>
-  </div>
-  <div class="nav-hamburger">
-    <svg viewBox="0 0 100 70" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M 2,13 C 12,7 55,7.5 97,11 C 90,15.5 45,15 2,18 Z"/>
-      <path d="M 10,33 C 22,28 65,28.5 90,32 C 82,36.5 32,36 10,38 Z"/>
-      <path d="M 2,53 C 20,56.5 60,56 97,52 C 90,58 35,57 2,59 Z"/>
-    </svg>
   </div>
 </nav>
 
 <!-- Mobile nav overlay — full-screen dark frosted menu (phone only) -->
 <div class="mobile-nav-overlay" id="mobileNavOverlay">
-  <a href="#about" class="mobile-nav-link">About</a>
   <a href="#projects" class="mobile-nav-link">Projects</a>
+  <a href="#about" class="mobile-nav-link">About</a>
   <a href="#contact" class="mobile-nav-link">Contact</a>
 </div>
 
@@ -2404,19 +2377,221 @@ a.footer-contact-value:hover {
   </div>
 
   <div class="info-strip">
-    <div class="info-strip-rule"></div>
-    <div class="info-strip-inner">
-      <span class="info-role"><span class="gl">P</span>r<span class="o-star">o</span>duc<span class="dlig">er</span> & <span class="gl">C</span>r<span class="dlig">ea</span>tive <span class="gl">D</span>irect<span class="o-star">o</span>r</span>
-      <div class="info-meta">
-        <span class="info-meta-label">Portfolio</span>
-        <span class="info-meta-value">2020 — 2026</span>
-      </div>
-    </div>
+    <span class="info-role"><span class="gl">C</span>r<span class="dlig">ea</span>tive <span class="gl">P</span>r<span class="o-star">o</span>duc<span class="dlig">er</span>, <span class="gl">D</span>irect<span class="o-star">o</span>r & <span class="gl">S</span>tr<span class="dlig">at</span>egist</span>
+  </div>
+
+  <div class="hero-scroll-cue" id="heroScrollCue">
+    <span class="hero-cue-label">Portfolio</span>
+    <svg viewBox="0 0 107 103" xmlns="http://www.w3.org/2000/svg"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.31C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
   </div>
 
 </div>
 
 <div class="gradient-bridge"></div>
+
+
+
+
+<!-- ═══════════════════════════════════════
+     PROJECTS — Direction A grid + folder cards
+     ═══════════════════════════════════════ -->
+<div class="projects-zone" id="projects">
+  <div class="projects-inner">
+
+    <div class="projects-header reveal">
+      <div class="projects-header-left">
+        <div class="projects-heading"><span class="gl">P</span><span class="dlig">ro</span>jec<span class="gl">t</span>s</div>
+      </div>
+      <div class="projects-header-right">
+        <div class="projects-meta-label">Selection</div>
+        <div class="projects-meta-value">2020 — 2026</div>
+      </div>
+    </div>
+
+    <hr class="projects-rule reveal">
+
+    <div class="projects-grid">
+
+      <!-- 1. Fashion's Alchemists -->
+      <div class="project-cell reveal">
+        <a href="./fa-hero.html" class="folder-card-link" style="text-decoration:none;color:inherit;display:block;">
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title"></span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/fa-cover.jpg" alt="Fashion's Alchemists at Gardens by the Bay" style="object-position: center 70% !important;">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">Fashion's Alchemists</div>
+              <div class="folder-project-subtitle">Gardens by the Bay</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2023–2026</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Exhibition</span>
+                <span class="folder-tag">Events</span>
+                <span class="folder-tag">Gala</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Director — Exhibition Production &amp; Curation</div>
+              <div class="folder-hover-text">International exhibition and events program I co-created for Gardens by the Bay, Singapore, convening 50+ artists working across emerging technology, material innovation, and sustainability within fashion. Led creative direction, production, and curation across a $3M government-backed budget and 12+ interactive installations.</div>
+            </div>
+          </div>
+        </div>
+        </a>
+      </div>
+
+      <!-- 2. The Futures -->
+      <div class="project-cell reveal" data-coming-soon>
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title"></span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/futures.jpg" alt="FUTURES at Smithsonian Arts + Industries Building" style="object-position: center 60% !important;">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">Smithsonian: The FUTURES</div>
+              <div class="folder-project-subtitle">Smithsonian Arts &amp; Industries Building</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2020–2022</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Exhibition</span>
+                <span class="folder-tag">Events</span>
+                <span class="folder-tag hide-mobile">Programming</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Producer — Interactive &amp; Digital Experiences</div>
+              <div class="folder-hover-text">32,000 sq ft exhibition for the Smithsonian's 175th anniversary, nearly 1M visitors across a 7-month run. Brand-partnered activations with Google, Meta, and Ford. Produced 5 interactive installations and a Webby Award-winning remote experience, leading agency teams including Rockwell Group LAB, Goodby Silverstein &amp; Partners, and Resemble AI.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. The Front Gallery -->
+      <div class="project-cell reveal" data-coming-soon>
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title"></span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/the-front.jpg" alt="The Front Gallery">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">The Front Gallery</div>
+              <div class="folder-project-subtitle">The Front Gallery &amp; Store NYC</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2026</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Gallery</span>
+                <span class="folder-tag">Retail</span>
+                <span class="folder-tag">Programming</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Director — Creative &amp; Production</div>
+              <div class="folder-hover-text">Nomadic gallery and retail concept in downtown Manhattan, evolving a 3-year project previously based at 131 Chrystie St into a recurring series of monthlong storefront experiences and programming. Leading creative strategy, spatial design, brand identity, and production for the next chapter, launching June 2025 at 334 Broome St with 15 artists and designers and curated events across the Lower East Side.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. XR Experience -->
+      <div class="project-cell reveal" data-coming-soon>
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title"></span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/sxsw-xr.jpg" alt="SXSW XR Exhibition">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">SXSW: XR Exhibition</div>
+              <div class="folder-project-subtitle">SXSW Film Festival</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2021–2022</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Festival</span>
+                <span class="folder-tag">Exhibition</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Producer — Expo, Events, Public Programming</div>
+              <div class="folder-hover-text">Five-day exhibition and event series at South by Southwest showcasing 30+ international artists working across film, mixed reality, and new media art. Led end-to-end production including spatial design, AV, technical infrastructure, opening night, press previews, and artist programming.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. MCAAD -->
+      <div class="project-cell reveal" data-coming-soon>
+        <div class="folder-card">
+          <div class="folder-back-tab glass-surface">
+            <span class="folder-tab-title"></span>
+            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+          </div>
+          <div class="folder-back-body glass-surface"></div>
+          <div class="folder-body glass-surface">
+            <div class="folder-image-inset">
+              <img src="images/mcaad.webp" alt="Milken Center holodeck installation">
+              <div class="folder-image-grain"></div>
+            </div>
+            <div class="folder-title-block">
+              <div class="folder-project-title">The Milken Visitor Center</div>
+              <div class="folder-project-subtitle">Milken Center for Advancing the American Dream</div>
+            </div>
+            <div class="folder-info">
+              <div class="folder-tags">
+                <span class="folder-tag-year">2022–2024</span>
+              </div>
+              <div class="folder-tags">
+                <span class="folder-tag">Experience</span>
+                <span class="folder-tag">Exhibition</span>
+              </div>
+            </div>
+            <div class="folder-hover-desc">
+              <div class="folder-hover-role">Creative Producer — Interactive Experiences &amp; Installations</div>
+              <div class="folder-hover-text">New 70,000 sq ft visitor center in Washington, DC featuring immersive exhibitions, interactive installations, and brand partnerships as part of a $1B campus development. Led production across ~$15M and 13 installations, managing agency partners including Rockwell Group LAB, Moment Factory, and USC ICT.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
 
 
 <!-- ═══════════════════════════════════════
@@ -2605,172 +2780,6 @@ a.footer-contact-value:hover {
       <div class="carousel-img" style="width:290px;height:290px;top:10px;left:120px;z-index:5;--spread-x:4px;--spread-y:-6px">
         <img src="images/carousel/moda-holographic.png" alt="Holographic Display" loading="lazy">
       </div>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- ═══════════════════════════════════════
-     PROJECTS — Direction A grid + folder cards
-     ═══════════════════════════════════════ -->
-<div class="projects-zone" id="projects">
-  <div class="projects-inner">
-
-    <div class="projects-header reveal">
-      <div class="projects-header-left">
-        <div class="projects-heading"><span class="gl">P</span><span class="dlig">ro</span>jec<span class="gl">t</span>s</div>
-      </div>
-      <div class="projects-header-right">
-        <div class="projects-meta-label">Selection</div>
-        <div class="projects-meta-value">2020 — 2026</div>
-      </div>
-    </div>
-
-    <hr class="projects-rule reveal">
-
-    <div class="projects-grid">
-
-      <!-- 1. Fashion's Alchemists -->
-      <div class="project-cell reveal">
-        <a href="./fa-hero.html" class="folder-card-link" style="text-decoration:none;color:inherit;display:block;">
-        <div class="folder-card">
-          <div class="folder-back-tab glass-surface">
-            <span class="folder-tab-title"></span>
-            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
-          </div>
-          <div class="folder-back-body glass-surface"></div>
-          <div class="folder-body glass-surface">
-            <div class="folder-image-inset">
-              <img src="images/fashions-alchemists.png" alt="Fashion's Alchemists at Gardens by the Bay">
-              <div class="folder-image-grain"></div>
-            </div>
-            <div class="folder-title-block">
-              <div class="folder-project-title">Fashion's Alchemists</div>
-              <div class="folder-project-subtitle">Gardens by the Bay</div>
-            </div>
-            <div class="folder-info">
-              <div class="folder-tags">
-                <span class="folder-tag-year">2023–2026</span>
-              </div>
-              <div class="folder-tags">
-                <span class="folder-tag">Exhibition</span>
-                <span class="folder-tag">Events</span>
-                <span class="folder-tag">Gala</span>
-              </div>
-            </div>
-            <div class="folder-hover-desc">
-              <div class="folder-hover-role">Director — Exhibition Production &amp; Curation</div>
-              <div class="folder-hover-text">International exhibition and events program I co-created for Gardens by the Bay, Singapore, convening 50+ artists working across emerging technology, material innovation, and sustainability within fashion. Led creative direction, production, and curation across a $3M government-backed budget and 12+ interactive installations.</div>
-            </div>
-          </div>
-        </div>
-        </a>
-      </div>
-
-      <!-- 2. The Futures -->
-      <div class="project-cell reveal" data-coming-soon>
-        <div class="folder-card">
-          <div class="folder-back-tab glass-surface">
-            <span class="folder-tab-title"></span>
-            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
-          </div>
-          <div class="folder-back-body glass-surface"></div>
-          <div class="folder-body glass-surface">
-            <div class="folder-image-inset">
-              <img src="images/futures.jpg" alt="FUTURES at Smithsonian Arts + Industries Building">
-              <div class="folder-image-grain"></div>
-            </div>
-            <div class="folder-title-block">
-              <div class="folder-project-title">Smithsonian: The FUTURES</div>
-              <div class="folder-project-subtitle">Smithsonian Arts &amp; Industries Building</div>
-            </div>
-            <div class="folder-info">
-              <div class="folder-tags">
-                <span class="folder-tag-year">2020–2022</span>
-              </div>
-              <div class="folder-tags">
-                <span class="folder-tag">Exhibition</span>
-                <span class="folder-tag">Events</span>
-                <span class="folder-tag hide-mobile">Programming</span>
-              </div>
-            </div>
-            <div class="folder-hover-desc">
-              <div class="folder-hover-role">Producer — Interactive &amp; Digital Experiences</div>
-              <div class="folder-hover-text">32,000 sq ft exhibition for the Smithsonian's 175th anniversary, nearly 1M visitors across a 7-month run. Brand-partnered activations with Google, Meta, and Ford. Produced 5 interactive installations and a Webby Award-winning remote experience, leading agency teams including Rockwell Group LAB, Goodby Silverstein &amp; Partners, and Resemble AI.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. MCAAD -->
-      <div class="project-cell reveal" data-coming-soon>
-        <div class="folder-card">
-          <div class="folder-back-tab glass-surface">
-            <span class="folder-tab-title"></span>
-            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
-          </div>
-          <div class="folder-back-body glass-surface"></div>
-          <div class="folder-body glass-surface">
-            <div class="folder-image-inset">
-              <img src="images/mcaad.webp" alt="Milken Center holodeck installation">
-              <div class="folder-image-grain"></div>
-            </div>
-            <div class="folder-title-block">
-              <div class="folder-project-title">The Milken Visitor Center</div>
-              <div class="folder-project-subtitle">Milken Center for Advancing the American Dream</div>
-            </div>
-            <div class="folder-info">
-              <div class="folder-tags">
-                <span class="folder-tag-year">2022–2024</span>
-              </div>
-              <div class="folder-tags">
-                <span class="folder-tag">Experience</span>
-                <span class="folder-tag">Exhibition</span>
-              </div>
-            </div>
-            <div class="folder-hover-desc">
-              <div class="folder-hover-role">Creative Producer — Interactive Experiences &amp; Installations</div>
-              <div class="folder-hover-text">New 70,000 sq ft visitor center in Washington, DC featuring immersive exhibitions, interactive installations, and brand partnerships as part of a $1B campus development. Led production across ~$15M and 13 installations, managing agency partners including Rockwell Group LAB, Moment Factory, and USC ICT.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. XR Experience -->
-      <div class="project-cell reveal" data-coming-soon>
-        <div class="folder-card">
-          <div class="folder-back-tab glass-surface">
-            <span class="folder-tab-title"></span>
-            <svg class="folder-tab-arrow" viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
-          </div>
-          <div class="folder-back-body glass-surface"></div>
-          <div class="folder-body glass-surface">
-            <div class="folder-image-inset">
-              <img src="images/sxsw.png" alt="SXSW XR Experience">
-              <div class="folder-image-grain"></div>
-            </div>
-            <div class="folder-title-block">
-              <div class="folder-project-title">SXSW Expo: XR Experience</div>
-              <div class="folder-project-subtitle">SXSW Film Festival</div>
-            </div>
-            <div class="folder-info">
-              <div class="folder-tags">
-                <span class="folder-tag-year">2021–2022</span>
-              </div>
-              <div class="folder-tags">
-                <span class="folder-tag">Festival</span>
-                <span class="folder-tag">Exhibition</span>
-              </div>
-            </div>
-            <div class="folder-hover-desc">
-              <div class="folder-hover-role">Producer — Expo, Events, Public Programming</div>
-              <div class="folder-hover-text">Five-day exhibition and event series at South by Southwest showcasing 30+ international artists working across film, mixed reality, and new media art. Led end-to-end production including spatial design, AV, technical infrastructure, opening night, press previews, and artist programming.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
   </div>
@@ -3469,7 +3478,7 @@ a.footer-contact-value:hover {
     });
   }, {
     threshold: 0.1,
-    rootMargin: window.innerWidth <= 480 ? '0px 0px -120px 0px' : '0px 0px -420px 0px'
+    rootMargin: window.innerWidth <= 480 ? '0px 0px -80px 0px' : '0px 0px -180px 0px'
   });
 
   // Double-rAF ensures layout + paint are computed before checking positions
@@ -3500,6 +3509,7 @@ a.footer-contact-value:hover {
 (function() {
   const heroImage = document.querySelector('.hero-image');
   const infoStrip = document.querySelector('.info-strip');
+  const scrollCue = document.querySelector('.hero-scroll-cue');
   const heroContainer = document.querySelector('.hero-container');
   if (!heroImage || !heroContainer) return;
 
@@ -3512,19 +3522,50 @@ a.footer-contact-value:hover {
     var progress = Math.min(1, scrollY / (heroH * 0.6));
 
     // Hero image: fades out + slight scale down + moves up slower (parallax)
-    heroImage.style.opacity = Math.max(0, 1 - progress * 1.5);
+    heroImage.style.opacity = Math.max(0, 1 - progress * 2);
     heroImage.style.transform = 'translateY(' + (scrollY * parallaxFactor) + 'px) scale(' + (1 - progress * 0.05) + ')';
 
-    // Info strip: fades out slightly later
+    // Info strip: fades out together with hero (no delay)
     if (infoStrip) {
-      var stripProgress = Math.max(0, (progress - 0.2) / 0.6);
-      infoStrip.style.opacity = Math.max(0, 1 - stripProgress * 1.8);
+      infoStrip.style.opacity = Math.max(0, 1 - progress * 2.5);
       infoStrip.style.transform = 'translateY(' + (scrollY * 0.15) + 'px)';
+    }
+
+    // Scroll cue: fades out fastest
+    if (scrollCue) {
+      scrollCue.style.opacity = Math.max(0, 1 - progress * 4);
+      scrollCue.style.transform = 'translateY(' + (scrollY * 0.1) + 'px)';
     }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+})();
+</script>
+
+<!-- Hero scroll-cue click — animate hero out, smooth scroll to about -->
+<script>
+(function() {
+  var cue = document.getElementById('heroScrollCue');
+  var hero = document.querySelector('.hero-container');
+  if (!cue || !hero) return;
+
+  cue.addEventListener('click', function() {
+    var projects = document.getElementById('projects');
+    if (!projects) return;
+    var start = window.scrollY;
+    var end = projects.getBoundingClientRect().top + start;
+    var duration = 1200;
+    var startTime = null;
+    function ease(t) { return t * (2 - t); }
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var p = Math.min(1, (ts - startTime) / duration);
+      window.scrollTo({ top: start + (end - start) * ease(p), behavior: 'instant' });
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
 })();
 </script>
 
