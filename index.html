@@ -205,6 +205,24 @@ a { color: inherit; text-decoration: none; }
   transition-delay: 0.2s;
 }
 
+/* Mobile nav icon — brand arrow, hidden on desktop */
+.nav-mobile-icon {
+  display: none;
+  width: 18px;
+  height: 17px;
+  position: relative;
+  z-index: 2;
+}
+.nav-mobile-icon svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(90deg);
+  fill: rgba(55, 50, 75, 0.40);
+  filter:
+    drop-shadow(0 0.5px 0 rgba(255, 255, 255, 0.35))
+    drop-shadow(0 -0.5px 0 rgba(0, 0, 0, 0.10));
+}
+
 .nav-links {
   display: flex;
   justify-content: center;
@@ -2013,13 +2031,22 @@ a.footer-contact-value:hover {
   body { font-size: 15px; }
   .hide-mobile { display: none; }
 
-  /* ── Nav: pill stays, hamburger opens overlay ── */
-  .glass-nav { top: 12px; right: 16px; }
-  .glass-nav.expanded {
-    width: 52px;
+  /* ── Nav: pill with brand arrow icon ── */
+  .glass-nav {
+    top: 12px;
     right: 16px;
-    padding: 0 15px;
-    justify-content: flex-end;
+    width: 48px;
+    height: 44px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 10px;
+    overflow: visible;
+  }
+  .glass-nav.expanded {
+    width: 48px;
+    right: 16px;
+    padding: 0;
+    justify-content: center;
     border-radius: 10px;
     background: rgba(138, 136, 152, 0.14);
     border-color: rgba(255, 255, 255, 0.14);
@@ -2029,16 +2056,8 @@ a.footer-contact-value:hover {
       inset 0 1px 0 rgba(255, 255, 255, 0.18),
       inset 0 -1px 0 rgba(0, 0, 0, 0.05);
   }
-  .glass-nav.expanded .nav-hamburger {
-    opacity: 1;
-    position: relative;
-    pointer-events: auto;
-  }
-  .glass-nav.expanded .nav-logo {
-    opacity: 0;
-    pointer-events: none;
-    display: none;
-  }
+  .nav-mobile-icon { display: block; }
+  .glass-nav .nav-links { display: none; }
   .glass-nav.expanded .nav-links {
     opacity: 0;
     pointer-events: none;
@@ -2357,6 +2376,9 @@ a.footer-contact-value:hover {
      HERO — Option D: Sticky nav + frosted logo
      ═══════════════════════════════════════ -->
 <nav class="glass-nav" id="glassNav">
+  <div class="nav-mobile-icon">
+    <svg viewBox="0 0 107 103"><path d="M107 0.016C106.409 1.761 105.134 3.7 104.282 5.427C101.965 10.123 99.564 14.807 97.078 19.48L76.509 59.387L57.914 95.553C57.112 97.056 56.444 98.675 55.631 100.185C55.249 100.895 54.733 102.277 54.1 102.863C53.696 103.013 53.68 102.995 53.196 103C52.403 102.649 50.687 98.742 50.264 97.932L42.875 83.479L23.299 45.554C22.487 43.701 21.45 41.876 20.483 40.041L16.872 33.067L7.41 14.61L2.308 4.665C1.509 3.062 0.619 1.667 0 0.011C1.336 0.02 2.672 0.024 4.007 0.024C4.419 0.689 4.729 1.647 5.04 2.351C5.837 4.192 6.694 6.026 7.608 7.852C12.28 17.017 18.832 27.453 28.638 35.481C33.357 39.344 40.55 43.956 49.559 44.968C54.885 45.567 60.141 44.87 64.648 43.33C85.464 36.215 98.171 12.15 103.008 0C104.339 0.009 105.669 0.014 107 0.016Z"/></svg>
+  </div>
   <div class="nav-links">
     <a href="#projects" class="nav-link">Projects</a>
     <a href="#about" class="nav-link">About</a>
@@ -2658,41 +2680,50 @@ a.footer-contact-value:hover {
   </button>
   <div class="carousel-track">
 
-    <!-- Cluster 1: The FUTURES — top-heavy -->
-    <div class="carousel-cluster" style="width:680px;">
-      <div class="carousel-img" style="width:460px;height:298px;top:20px;left:0;z-index:3;--spread-x:-18px;--spread-y:-6px">
+    <!-- Cluster 1: The FUTURES — 4 images -->
+    <div class="carousel-cluster" style="width:820px;">
+      <div class="carousel-img" style="width:340px;height:227px;top:20px;left:0;z-index:4;--spread-x:-18px;--spread-y:-6px">
         <img src="images/carousel/futures-hero.png" alt="The FUTURES Exhibition" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:310px;height:183px;top:180px;left:350px;z-index:5;--spread-x:22px;--spread-y:-6px">
+      <div class="carousel-img" style="width:310px;height:183px;top:80px;left:370px;z-index:5;--spread-x:22px;--spread-y:-6px">
         <img src="images/carousel/futures-exterior.png" alt="Smithsonian AIB Exterior" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:340px;height:227px;top:330px;left:120px;z-index:4;--spread-x:8px;--spread-y:10px">
+      <div class="carousel-img" style="width:420px;height:272px;top:270px;left:60px;z-index:4;--spread-x:-8px;--spread-y:10px">
         <img src="images/carousel/futures-installation.png" alt="FUTURES Installation" loading="lazy">
       </div>
+      <div class="carousel-img" style="width:240px;height:170px;top:300px;left:500px;z-index:3;--spread-x:14px;--spread-y:6px">
+        <img src="images/carousel/futures-overview.webp" alt="FUTURES Exhibition Overview" loading="lazy">
+      </div>
     </div>
 
-    <!-- Cluster 2: Fashion's Alchemists — bottom-heavy -->
-    <div class="carousel-cluster" style="width:640px;">
-      <div class="carousel-img" style="width:440px;height:248px;top:310px;left:40px;z-index:3;--spread-x:6px;--spread-y:8px">
-        <img src="images/carousel/fa-exhibition.jpg" alt="Fashion's Alchemists Exhibition" loading="lazy">
+    <!-- Cluster 2: Fashion's Alchemists — expanded 5 images -->
+    <div class="carousel-cluster" style="width:960px;">
+      <div class="carousel-img" style="width:280px;height:370px;top:16px;left:0;z-index:2;--spread-x:-14px;--spread-y:-6px">
+        <img src="images/carousel/fa-artist-studio.jpeg" alt="Artist Studio" loading="lazy" style="object-fit: contain;">
       </div>
-      <div class="carousel-img" style="width:230px;height:288px;top:140px;left:390px;z-index:5;--spread-x:18px;--spread-y:-6px">
-        <img src="images/carousel/fa-fashion-portrait.png" alt="Fashion Portrait" loading="lazy">
+      <div class="carousel-img" style="width:420px;height:236px;top:40px;left:300px;z-index:3;--spread-x:8px;--spread-y:-6px">
+        <img src="images/carousel/fa-mushroom-dress.jpg" alt="Fashion's Alchemists Installation" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:300px;height:194px;top:20px;left:200px;z-index:4;--spread-x:10px;--spread-y:-6px">
+      <div class="carousel-img" style="width:230px;height:170px;top:340px;left:0;z-index:4;--spread-x:-10px;--spread-y:4px">
         <img src="images/carousel/fa-digital-lab.png" alt="Digital Lab" loading="lazy">
       </div>
+      <div class="carousel-img" style="width:220px;height:275px;top:200px;left:250px;z-index:7;--spread-x:-8px;--spread-y:8px">
+        <img src="images/carousel/moda-yuhan.jpeg" alt="Yuhan Fashion Design" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:400px;height:240px;top:320px;left:500px;z-index:5;--spread-x:10px;--spread-y:10px">
+        <img src="images/carousel/fa-exhibition.jpg" alt="Fashion's Alchemists Exhibition" loading="lazy">
+      </div>
     </div>
 
-    <!-- Cluster 3: VR / SXSW — top-heavy -->
-    <div class="carousel-cluster" style="width:660px;">
-      <div class="carousel-img" style="width:420px;height:315px;top:130px;left:120px;z-index:3;--spread-x:4px;--spread-y:-6px">
+    <!-- Cluster 3: VR / SXSW — spread layout -->
+    <div class="carousel-cluster" style="width:760px;">
+      <div class="carousel-img" style="width:340px;height:220px;top:16px;left:0;z-index:5;--spread-x:-14px;--spread-y:-6px">
+        <img src="images/carousel/xr-forest.jpg" alt="XR Forest Experience" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:280px;height:180px;top:120px;left:300px;z-index:3;--spread-x:8px;--spread-y:-4px">
         <img src="images/carousel/sxsw-paramount.png" alt="SXSW Paramount Theatre" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:310px;height:195px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
-        <img src="images/carousel/vr-jellyfish.png" alt="VR Jellyfish Experience" loading="lazy">
-      </div>
-      <div class="carousel-img" style="width:300px;height:169px;top:390px;left:340px;z-index:4;--spread-x:22px;--spread-y:8px">
+      <div class="carousel-img" style="width:440px;height:290px;top:280px;left:180px;z-index:4;--spread-x:16px;--spread-y:8px">
         <img src="images/carousel/vr-embrace.png" alt="VR Embrace" loading="lazy">
       </div>
     </div>
@@ -2703,85 +2734,102 @@ a.footer-contact-value:hover {
         <img src="images/carousel/golden-tree.png" alt="Golden Tree Installation" loading="lazy">
       </div>
       <div class="carousel-img" style="width:290px;height:276px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
-        <img src="images/carousel/milken-blue-sculpture.png" alt="Milken Center Sculpture" loading="lazy">
+        <img src="images/carousel/milken-ceiling.webp" alt="Milken Center Ceiling Installation" loading="lazy">
       </div>
       <div class="carousel-img" style="width:330px;height:184px;top:190px;left:250px;z-index:4;--spread-x:20px;--spread-y:-6px">
         <img src="images/carousel/night-display.png" alt="Night Display" loading="lazy">
       </div>
     </div>
 
-    <!-- Cluster 5: Moda Morphosis — top-heavy -->
-    <div class="carousel-cluster" style="width:700px;">
-      <div class="carousel-img" style="width:460px;height:307px;top:250px;left:0;z-index:3;--spread-x:-16px;--spread-y:8px">
-        <img src="images/carousel/moda-sculptures.png" alt="Moda Morphosis Sculptures" loading="lazy">
+    <!-- Cluster 5: Moda Morphosis — 4 images -->
+    <div class="carousel-cluster" style="width:860px;">
+      <div class="carousel-img" style="width:460px;height:306px;top:16px;left:0;z-index:4;--spread-x:-10px;--spread-y:-6px">
+        <img src="images/carousel/moda-new.png" alt="Moda Morphosis Fashion" loading="lazy" style="object-fit: contain; object-position: center;">
       </div>
-      <div class="carousel-img" style="width:320px;height:213px;top:140px;left:370px;z-index:4;--spread-x:22px;--spread-y:-6px">
+      <div class="carousel-img" style="width:300px;height:200px;top:50px;left:480px;z-index:3;--spread-x:16px;--spread-y:-4px">
         <img src="images/carousel/moda-cocktail.png" alt="Moda Morphosis Event" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:290px;height:290px;top:10px;left:120px;z-index:5;--spread-x:4px;--spread-y:-6px">
-        <img src="images/carousel/moda-holographic.png" alt="Holographic Display" loading="lazy">
+      <div class="carousel-img" style="width:250px;height:250px;top:280px;left:0;z-index:5;--spread-x:-8px;--spread-y:8px">
+        <img src="images/carousel/moda-holographic.png" alt="Moda Morphosis Holographic" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:220px;height:275px;top:300px;left:300px;z-index:6;--spread-x:8px;--spread-y:8px">
+        <img src="images/carousel/fa-fashion-portrait.png" alt="Co-Creation Fashion Portrait" loading="lazy" style="object-fit: contain;">
       </div>
     </div>
 
     <!-- ═══ Duplicate set for seamless loop ═══ -->
 
-    <div class="carousel-cluster" style="width:680px;">
-      <div class="carousel-img" style="width:460px;height:298px;top:20px;left:0;z-index:3;--spread-x:-18px;--spread-y:-6px">
+    <!-- Cluster 1 copy -->
+    <div class="carousel-cluster" style="width:820px;">
+      <div class="carousel-img" style="width:340px;height:227px;top:20px;left:0;z-index:4;--spread-x:-18px;--spread-y:-6px">
         <img src="images/carousel/futures-hero.png" alt="The FUTURES Exhibition" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:310px;height:183px;top:180px;left:350px;z-index:5;--spread-x:22px;--spread-y:-6px">
+      <div class="carousel-img" style="width:310px;height:183px;top:80px;left:370px;z-index:5;--spread-x:22px;--spread-y:-6px">
         <img src="images/carousel/futures-exterior.png" alt="Smithsonian AIB Exterior" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:340px;height:227px;top:330px;left:120px;z-index:4;--spread-x:8px;--spread-y:10px">
+      <div class="carousel-img" style="width:420px;height:272px;top:270px;left:60px;z-index:4;--spread-x:-8px;--spread-y:10px">
         <img src="images/carousel/futures-installation.png" alt="FUTURES Installation" loading="lazy">
       </div>
+      <div class="carousel-img" style="width:240px;height:170px;top:300px;left:500px;z-index:3;--spread-x:14px;--spread-y:6px">
+        <img src="images/carousel/futures-overview.webp" alt="FUTURES Exhibition Overview" loading="lazy">
+      </div>
     </div>
 
-    <div class="carousel-cluster" style="width:640px;">
-      <div class="carousel-img" style="width:440px;height:248px;top:310px;left:40px;z-index:3;--spread-x:6px;--spread-y:8px">
-        <img src="images/carousel/fa-exhibition.jpg" alt="Fashion's Alchemists Exhibition" loading="lazy">
+    <!-- Cluster 2 copy -->
+    <div class="carousel-cluster" style="width:960px;">
+      <div class="carousel-img" style="width:280px;height:370px;top:16px;left:0;z-index:2;--spread-x:-14px;--spread-y:-6px">
+        <img src="images/carousel/fa-artist-studio.jpeg" alt="Artist Studio" loading="lazy" style="object-fit: contain;">
       </div>
-      <div class="carousel-img" style="width:230px;height:288px;top:140px;left:390px;z-index:5;--spread-x:18px;--spread-y:-6px">
-        <img src="images/carousel/fa-fashion-portrait.png" alt="Fashion Portrait" loading="lazy">
+      <div class="carousel-img" style="width:420px;height:236px;top:40px;left:300px;z-index:3;--spread-x:8px;--spread-y:-6px">
+        <img src="images/carousel/fa-mushroom-dress.jpg" alt="Fashion's Alchemists Installation" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:300px;height:194px;top:20px;left:200px;z-index:4;--spread-x:10px;--spread-y:-6px">
+      <div class="carousel-img" style="width:230px;height:170px;top:340px;left:0;z-index:4;--spread-x:-10px;--spread-y:4px">
         <img src="images/carousel/fa-digital-lab.png" alt="Digital Lab" loading="lazy">
       </div>
+      <div class="carousel-img" style="width:220px;height:275px;top:200px;left:250px;z-index:7;--spread-x:-8px;--spread-y:8px">
+        <img src="images/carousel/moda-yuhan.jpeg" alt="Yuhan Fashion Design" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:400px;height:240px;top:320px;left:500px;z-index:5;--spread-x:10px;--spread-y:10px">
+        <img src="images/carousel/fa-exhibition.jpg" alt="Fashion's Alchemists Exhibition" loading="lazy">
+      </div>
     </div>
 
-    <div class="carousel-cluster" style="width:660px;">
-      <div class="carousel-img" style="width:420px;height:315px;top:130px;left:120px;z-index:3;--spread-x:4px;--spread-y:-6px">
+    <!-- Cluster 3 copy -->
+    <div class="carousel-cluster" style="width:760px;">
+      <div class="carousel-img" style="width:340px;height:220px;top:16px;left:0;z-index:5;--spread-x:-14px;--spread-y:-6px">
+        <img src="images/carousel/xr-forest.jpg" alt="XR Forest Experience" loading="lazy">
+      </div>
+      <div class="carousel-img" style="width:280px;height:180px;top:120px;left:300px;z-index:3;--spread-x:8px;--spread-y:-4px">
         <img src="images/carousel/sxsw-paramount.png" alt="SXSW Paramount Theatre" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:310px;height:195px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
-        <img src="images/carousel/vr-jellyfish.png" alt="VR Jellyfish Experience" loading="lazy">
-      </div>
-      <div class="carousel-img" style="width:300px;height:169px;top:390px;left:340px;z-index:4;--spread-x:22px;--spread-y:8px">
+      <div class="carousel-img" style="width:440px;height:290px;top:280px;left:180px;z-index:4;--spread-x:16px;--spread-y:8px">
         <img src="images/carousel/vr-embrace.png" alt="VR Embrace" loading="lazy">
       </div>
     </div>
 
+    <!-- Cluster 4 copy -->
     <div class="carousel-cluster" style="width:620px;">
       <div class="carousel-img" style="width:390px;height:218px;top:340px;left:80px;z-index:3;--spread-x:6px;--spread-y:8px">
         <img src="images/carousel/golden-tree.png" alt="Golden Tree Installation" loading="lazy">
       </div>
       <div class="carousel-img" style="width:290px;height:276px;top:16px;left:0;z-index:5;--spread-x:-18px;--spread-y:-6px">
-        <img src="images/carousel/milken-blue-sculpture.png" alt="Milken Center Sculpture" loading="lazy">
+        <img src="images/carousel/milken-ceiling.webp" alt="Milken Center Ceiling Installation" loading="lazy">
       </div>
       <div class="carousel-img" style="width:330px;height:184px;top:190px;left:250px;z-index:4;--spread-x:20px;--spread-y:-6px">
         <img src="images/carousel/night-display.png" alt="Night Display" loading="lazy">
       </div>
     </div>
 
-    <div class="carousel-cluster" style="width:700px;">
-      <div class="carousel-img" style="width:460px;height:307px;top:250px;left:0;z-index:3;--spread-x:-16px;--spread-y:8px">
-        <img src="images/carousel/moda-sculptures.png" alt="Moda Morphosis Sculptures" loading="lazy">
+    <!-- Cluster 5 copy -->
+    <div class="carousel-cluster" style="width:800px;">
+      <div class="carousel-img" style="width:460px;height:306px;top:16px;left:0;z-index:4;--spread-x:-10px;--spread-y:-6px">
+        <img src="images/carousel/moda-new.png" alt="Moda Morphosis Fashion" loading="lazy" style="object-fit: contain; object-position: center;">
       </div>
-      <div class="carousel-img" style="width:320px;height:213px;top:140px;left:370px;z-index:4;--spread-x:22px;--spread-y:-6px">
+      <div class="carousel-img" style="width:300px;height:200px;top:50px;left:480px;z-index:3;--spread-x:16px;--spread-y:-4px">
         <img src="images/carousel/moda-cocktail.png" alt="Moda Morphosis Event" loading="lazy">
       </div>
-      <div class="carousel-img" style="width:290px;height:290px;top:10px;left:120px;z-index:5;--spread-x:4px;--spread-y:-6px">
-        <img src="images/carousel/moda-holographic.png" alt="Holographic Display" loading="lazy">
+      <div class="carousel-img" style="width:220px;height:220px;top:160px;left:360px;z-index:5;--spread-x:8px;--spread-y:8px">
+        <img src="images/carousel/fa-fashion-portrait.png" alt="Co-Creation Fashion Portrait" loading="lazy">
       </div>
     </div>
 
