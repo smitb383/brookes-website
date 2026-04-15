@@ -274,11 +274,33 @@ a { color: inherit; text-decoration: none; }
 
 .hero-image {
   position: relative;
-  margin-top: 0;
-  flex: 0 0 68vh;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+  margin: 0 auto;
+  width: 80%;
+  max-width: 1080px;
+  flex: 0 0 52vh;
+  overflow: visible;
+  -webkit-mask-image:
+    radial-gradient(ellipse 90% 85% at 50% 38%, black 30%, transparent 68%);
+  mask-image:
+    radial-gradient(ellipse 90% 85% at 50% 38%, black 30%, transparent 68%);
+}
+.hero-image::before,
+.hero-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-image::before {
+  left: 0;
+  background: linear-gradient(to right, var(--hero-edge) 0%, transparent 100%);
+}
+.hero-image::after {
+  right: 0;
+  background: linear-gradient(to left, var(--hero-edge) 0%, transparent 100%);
 }
 .hero-image img,
 .hero-image video {
@@ -2411,8 +2433,8 @@ a.footer-contact-value:hover {
 
       <!-- Left: body text -->
       <div class="about-text reveal">
-        <p>I'm a creative producer & director with over 7 years of experience delivering events, exhibitions, and experiences for cultural institutions & brands. I recently founded my own creative studio and developed a government-backed exhibition and events program in Singapore featuring 50 international designers.</p>
-        <p>I have a background in design & emerging technology, and I'm currently integrating generative AI tools into my creative direction and production practice to produce branding, websites, motion graphics, and visual identities across personal and client projects.</p>
+        <p>For the past 7 years I have created and produced exhibitions, installations, and cultural experiences for institutions and brands. Recently I founded a creative studio and developed a government-backed exhibition, gala, and events program for Singapore's Gardens by the Bay, bringing together 50+ international artists and designers.</p>
+        <p>I have a background in design and technology from Parsons and am dedicated to creating physical cultural experiences that blend media and activate the senses, merging analog and digital mediums. I work with artists, designers, and brands across formats spanning interactive and multi-media installation, bio-material, kinetic and robotic systems, immersive and mixed reality film, wearable design, olfactory, and beyond.</p>
       </div>
 
       <!-- Vertical divider -->
